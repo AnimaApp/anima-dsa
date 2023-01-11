@@ -1,3 +1,4 @@
+import { getCurrentHub } from '@sentry/node';
 import nf, { Response } from 'node-fetch';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
 import { transformDStoJSON, log } from './../helpers/';
@@ -14,12 +15,17 @@ export const getStorybookByHash = async (
   token: string,
   hash: string,
 ): Promise<Response> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook?hash=${hash}`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
   });
 };
 
@@ -28,12 +34,17 @@ export const createStorybook = async (
   hash: string,
   ds_tokens: Record<string, unknown>,
 ): Promise<StorybookEntity | null> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   const res = await nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers: headers,
     body: JSON.stringify({
       storybook_hash: hash,
       ds_tokens: JSON.stringify(ds_tokens),
@@ -66,6 +77,8 @@ export const updateDSTokenIfNeeded = async ({
   token: string;
 }): Promise<void> => {
   const { ds_tokens, id, upload_status } = storybook;
+  const uploadSpan = getCurrentHub().getScope()?.getSpan();
+  const span = uploadSpan?.startChild({ op: 'update-ds-token-if-needed' });
   let transformedToken = {};
   try {
     transformedToken = transformDStoJSON(currentDSToken);
@@ -76,12 +89,19 @@ export const updateDSTokenIfNeeded = async ({
   const ds_tokensAsString = JSON.stringify(transformedToken);
 
   if (ds_tokens !== ds_tokensAsString) {
+    const spanUpdateStorybook = span?.startChild({ op: 'update-storybook' });
     const response = await updateStorybook(token, id, {
       ds_tokens: ds_tokensAsString,
       upload_status: upload_status,
     });
     if (response.status !== 200) {
+      if (spanUpdateStorybook) {
+        spanUpdateStorybook.status = 'error';
+        spanUpdateStorybook.finish();
+      }
       throw new Error('Network request failed, response status !== 200');
+    } else {
+      spanUpdateStorybook?.finish();
     }
   }
 };
@@ -91,6 +111,11 @@ export const getOrCreateStorybook = async (
   hash: string,
   raw_ds_tokens: Record<string, unknown> = {},
 ): Promise<getOrCreateStorybookResponse> => {
+  const transaction = getCurrentHub().getScope()?.getTransaction();
+  const spanGetOrCreate = transaction?.startChild({
+    op: 'get-or-create-storybook',
+  });
+
   const res = await getStorybookByHash(token, hash);
   let data: StorybookEntity | null = null;
 
@@ -105,7 +130,11 @@ export const getOrCreateStorybook = async (
   if (res.status === 200) {
     data = await res.json();
   } else if (res.status === 404) {
+    const spanCreateStorybook = spanGetOrCreate?.startChild({
+      op: 'create-storybook',
+    });
     data = await createStorybook(token, hash, ds_tokens);
+    spanCreateStorybook?.finish();
   }
 
   const {
@@ -114,6 +143,9 @@ export const getOrCreateStorybook = async (
     upload_status = 'init',
     ds_tokens: dsTokens,
   } = data ?? {};
+
+  transaction?.setData('storybookID', id);
+  spanGetOrCreate?.finish();
 
   return {
     storybookId: id,
@@ -129,12 +161,17 @@ export const updateStorybook = async (
   id: string,
   fields: Partial<StorybookEntity>,
 ): Promise<Response> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook/${id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
     body: JSON.stringify(fields),
   });
 };
