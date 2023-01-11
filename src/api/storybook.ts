@@ -15,12 +15,17 @@ export const getStorybookByHash = async (
   token: string,
   hash: string,
 ): Promise<Response> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook?hash=${hash}`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
   });
 };
 
@@ -29,12 +34,17 @@ export const createStorybook = async (
   hash: string,
   ds_tokens: Record<string, unknown>,
 ): Promise<StorybookEntity | null> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   const res = await nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers: headers,
     body: JSON.stringify({
       storybook_hash: hash,
       ds_tokens: JSON.stringify(ds_tokens),
@@ -151,12 +161,17 @@ export const updateStorybook = async (
   id: string,
   fields: Partial<StorybookEntity>,
 ): Promise<Response> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
   return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook/${id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token,
-    },
+    headers,
     body: JSON.stringify(fields),
   });
 };
