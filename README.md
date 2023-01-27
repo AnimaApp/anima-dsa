@@ -1,18 +1,14 @@
 <div align="center">
-<br />
   <h1>
-  <img src="https://user-images.githubusercontent.com/1323193/201663351-171f5916-bf03-44e0-9d9a-f5c69d3e3ec8.svg#gh-light-mode-only" width="250" alt="Anima Command line interface" />
-  <img src="https://user-images.githubusercontent.com/1323193/201663360-76c32bdb-c4e4-43af-bcf7-5db760c9b71f.svg#gh-dark-mode-only" width="250" alt="Anima Command line interface" />
-</h1>
+    <img src="https://user-images.githubusercontent.com/1323193/201663351-171f5916-bf03-44e0-9d9a-f5c69d3e3ec8.svg#gh-light-mode-only" width="250" alt="Anima CLI" />
+  </h1>
 </div>
 
-**Anima Storybook CLI** is a command line interface that transforms [Storybook](https://storybook.js.org) stories into Figma components for a better design-development workflow.
+**Anima Storybook CLI** is a command line tool that works in conjunction with the [Anima Figma Plugin](https://www.figma.com/community/plugin/857346721138427857) to transform [Storybook](https://storybook.js.org) stories into Figma components for a better design-development workflow.
 
-Learn more about the motivations and benefits in our [our blog post](https://blog.animaapp.com/design-with-your-live-code-components-7f61e99b9bf0).
+Learn more about the motivations and benefits on [our blog](https://blog.animaapp.com/design-with-your-live-code-components-7f61e99b9bf0).
 
-## Index
-<details>
-<summary>Table of Contents</summary>
+## Table of Contents
 
 - [Quick start](#quick-start)
 - [Setup](#setup)
@@ -25,80 +21,88 @@ Learn more about the motivations and benefits in our [our blog post](https://blo
 - [Alternative configuration](#alternative-configuration)
 
 
-</details>
+## Quick Start
 
-## Quick start
+You will be switching between Figma and your local Terminal!
 
-1. Get your team's Anima Token in the [Anima Plugin](https://www.figma.com/community/plugin/857346721138427857) under the "Storybook" section.
-2. Build your storybook, usually `npm run build-storybook`
-3. Then run `npx anima-storybook-cli sync -t <ANIMA_TOKEN_HERE>` in your Storybook project.
-4. On a Figma file, open the Anima plugin in the Storybook section and select the components you want to sync.
-5. That's it! You can now use your Storybook components in Figma.
+1. **Figma:** Install the [Anima Plugin](https://www.figma.com/community/plugin/857346721138427857).
+2. **Figma:** Create a new Figma project. This is where all your sync'ed Storybook components will live.
+3. **Figma:** Run the Anima Plugin, go to the *Storybook* section and copy your unique **Anima token**.
+4. **Terminal:** Build your storybook instance, it's usually `npm run build-storybook`.
+5. **Terminal:** Run `npx anima-storybook-cli sync -t <ANIMA_TOKEN_HERE>`.
+6. **Figma:** Follow the remaining instructions in Figma and you can importing your Storybook components to Figma. 🎉
+
 
 ## Setup
 
-### 1. Install the CLI
+### 1. Installing the CLI
 
-Run the following command (of your preferred package manager) in the project that has Storybook installed:
+Run the following command (of your preferred package manager) in the codebase where Storybook installed:
+
+#### NPM
 
 ```sh
 npm install --save-dev anima-storybook-cli
 ```
 
+#### Yarn
 ```sh
 yarn add -D anima-storybook-cli
 ```
 
+#### pNPM
 ```sh
 pnpm add -D anima-storybook-cli
 ```
 
-### 2. Add Anima Token
 
-Get your team's Anima Token that can be retrieved from the [Anima Plugin](https://www.figma.com/community/plugin/857346721138427857) under the "Storybook" section.
+### 2. Add your unique Anima Token
 
-Then, add it as an Environment Variable:
+Every Anima team has a unique **Anima Token**. You can retrieved your teams token through the [Anima Figma Plugin](https://www.figma.com/community/plugin/857346721138427857) under the *Storybook* section. If it's your first time using the plugin, you will find it on the first onboarding screen, however, you can also retrieve the token at any time from the dropdown menu.
 
-#### If you're running locally, add the token to an `.env` file in the root of your project
+The Anima Storybook CLI accepts the Anima Token using the `-t` flag:
+
+```sh
+npm run anima-storybook sync -t <ANIMA_TOKEN_HERE>
+```
+
+For convenience we recommend you add your Anima token as an environment variable!
+
+#### Adding an environment variable to your local environment
+
+Create a `.env` file in the root of your Storybook project with the following contents:
 
 ```sh
 #.env
 STORYBOOK_ANIMA_TOKEN="PASTE_ANIMA_TOKEN_HERE"
 ```
 
->Alternatively you can use the `-t` flag when running the CLI command, i.e.:
-
->```sh
->npm run anima-storybook sync -t <ANIMA_TOKEN_HERE>
->```
-
 <details>
+<summary>If you're running on a CI, add the token as an environment variable … </summary>
 
-<summary>If you're running on a CI, add the token as an Environment Variable … </summary>
+#### in a CircleCI step ([how to add environment variables in a circleCI](https://circleci.com/docs/set-environment-variable/#set-an-environment-variable-in-a-project))
 
-#### in a circleCI step ([how to add Environment Variables in a circleCI](https://circleci.com/docs/set-environment-variable/#set-an-environment-variable-in-a-project))
-
-#### in a GitHub Action step ([how to add Environment Variables in GitHub Actions](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository))
+#### in a GitHub Action step ([how to add environment variables in GitHub Actions](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository))
 
 ```yml
 # .github/workflows/main.yml
 env:
   STORYBOOK_ANIMA_TOKEN: ${{ secrets.STORYBOOK_ANIMA_TOKEN }}
 ```
-
 </details>
+
 
 ## Usage
 
 ```sh
-[pkg manager] anima-storybook sync [option]
+[pkg manager] anima-storybook sync [options]
 ```
 
-### We recommend adding the following script to your `package.json`
+The Anima Storybook CLI syncronises a built instance of Storybook with the Anima Figma Plugin, generating Figma components from Storybook stories.
 
-So it can be easily integrated with your Continuous Integration solution.
+So it can be easily integrated with your Continuous Integration solution, and for your own personal convenience, building your Storybook before syncing it with Animas ensure that your always up to date.
 
-Running the build of your storybook before syncing it with anima ensure that your storybook is always up to date.
+####  We recommend adding the following script to your `package.json`
 
 ```js
 "scripts": {
@@ -107,13 +111,13 @@ Running the build of your storybook before syncing it with anima ensure that you
 }
 ```
 
-then run easily it with:
+You then have a convenient command for syncronising:
 
 ```sh
 npm run sync
 ```
 
-## Commands and Options
+## Commands & Options
 
 ### `sync`
 
@@ -123,21 +127,19 @@ Command to sync the storybook project to Anima team so that it can be then gener
 anima-storybook sync [option]
 ```
 
-Example of possible commands
+| Options           | Short | Description                                                                                     |   Type   |
+| :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
+| `--token`         | `-t`  | Provide Anima's token if it was not set as Environment variable                                 | `string` |
+| `--directory`     | `-d`  | To specify the storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
+| `--design-tokens` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |       | Provide a path of your Design Tokens file, i.e. `./design-tokens.json`                          | `string` |
+
+### Usage examples:
 
 ```sh
 npx anima-storybook sync --token <anima_token> 
 npx anima-storybook sync --directory <storybook_static_dir> #default is storybook-static
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 ```
-
-### Options
-
-| Options           | Short | Description                                                                                     |   Type   |
-| :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
-| `--token`         | `-t`  | Provide Anima's token if it was not set as Environment variable                                 | `string` |
-| `--directory`     | `-d`  | To specify the storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
-| `--design-tokens` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |       | Provide a path of your Design Tokens file, i.e. `./design-tokens.json`                          | `string` |
 
 ## Alternative configuration
 
@@ -150,14 +152,17 @@ module.exports = {
 };
 ```
 
-## How to write _better_ Storybook Stories
+--- 
 
-To leverage the full power of Anima storybook integration _(i.e. generating Figma component with variants from your Storybook stories)_,  we recommend writing your stories in the following way:
+# Writing _better_ Storybook Stories
 
-### 1.  Specify `ArgTypes` to define the props of your component
+Anima uses Storybooks story [controls](https://storybook.js.org/docs/react/essentials/controls) to generate Figma component [variants](https://help.figma.com/hc/en-us/articles/360056440594-Create-and-use-variants), so it's important to properly configure your stories.
 
-Try to set control type of `select` for props that have a limited number of values    
-Example:
+We recommend writing your stories in the following way:
+
+## 1.  Specify `ArgTypes` to define the props of your component
+
+Define a control type of `select` for props that have a number of values for example:
   
   > ```js
   > // Button.stories.js|jsx|ts|tsx
@@ -178,17 +183,53 @@ Example:
   > };
   > ```
 
-### 2. Use single story per component
+**🚨 STORYBOOK BUG ALERT 🚨**
+
+The documented way to define a control type of `boolean` for a prop is:
+
+```jsx
+// Button.stories.js|jsx|ts|tsx
+
+//...
+
+export default {
+  // ...
+  argTypes: {
+    // ...
+    disabled: {
+      control: 'boolean',
+    },
+  },
+};
+```
+
+We've discovered that this causes problems not only in our plugin but also in Storybook and we've [logged an issue](https://github.com/storybookjs/storybook/issues/18796). To get the correct behaviour we recommend changing the definition to:
+
+```jsx
+// Button.stories.js|jsx|ts|tsx
+
+//...
+
+export default {
+  // ...
+  argTypes: {
+    // ...
+    disabled: {
+      type: 'boolean',
+    },
+  },
+};
+```
+
+## 2. Use single story per component
 
 Instead of creating a story for each variant of a component, it is preferable to create just one story and use the `args` property to define the default values of your props.
 
 This will make it easier to find components to generate in Figma with the Anima plugin.
 
-You can achieve this in two ways:
+There are two ways to achieve this and both will have the same result:
 
-#### 2.1. Name your single story `Default`
-
-So the way it appears in Figma is as `Components/Button/Default` so that we can ignore the "Default" and just use the parent folder name as the component name in Figma.
+### 2.1. Name your single story `Default`
 
 ```jsx
 // Button.stories.js|jsx|ts|tsx
@@ -214,9 +255,7 @@ Default.args = {
 };
 ```
 
-#### 2.2. Use the single story hoisting feature from Storybook ([more info here](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting))
-
-So the way it appears in Figma is as `Components/Button`
+### 2.2. Use the single story hoisting feature from Storybook ([more info here](https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#single-story-hoisting))
 
 ```jsx
 // Button.stories.js|jsx|ts|tsx
@@ -241,3 +280,4 @@ Button.args = {
   label: 'Button',
 };
 ```
+
