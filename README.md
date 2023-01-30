@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    <img src="https://user-images.githubusercontent.com/824169/215443601-be3cf79f-e5ae-4583-ba75-7964774b2ab3.svg#gh-light-mode-only" width="250" alt="Anima CLI" />
+    <img src="https://user-images.githubusercontent.com/824169/215443601-be3cf79f-e5ae-4583-ba75-7964774b2ab3.svg" width="250" alt="Anima CLI" />
   </h1>
 </div>
 
