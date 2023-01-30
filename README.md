@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    <img src="https://user-images.githubusercontent.com/1323193/201663351-171f5916-bf03-44e0-9d9a-f5c69d3e3ec8.svg#gh-light-mode-only" width="250" alt="Anima CLI" />
+    <img src="https://user-images.githubusercontent.com/824169/215443601-be3cf79f-e5ae-4583-ba75-7964774b2ab3.svg" width="250" alt="Anima CLI" />
   </h1>
 </div>
 
@@ -12,13 +12,21 @@ Learn more about the motivations and benefits on [our blog](https://blog.animaap
 
 - [Quick start](#quick-start)
 - [Setup](#setup)
-  - [1. Install the CLI](#1-install-the-cli)
-  - [2. Add Anima Token](#2-add-anima-token)
+  - [1. Installing the CLI](#1-installing-the-cli)
+  - [2. Add your unique Anima Token](#2-add-your-unique-anima-token)
+    - [Adding an environment variable to your local environment](#adding-an-environment-variable-to-your-local-environment)
 - [Usage](#usage)
-- [Commands and Options](#commands-and-options)
-  - [`sync`](#sync)
+  - [We recommend adding the following script to your package.json](#we-recommend-adding-the-following-script-to-your-packagejson)
+- [Commands and Options](#commands--options)
+  - [sync](#sync)
     - [Options](#options)
+  - [Usage examples](#usage-examples)
 - [Alternative configuration](#alternative-configuration)
+- [Writing _better_ Storybook Stories](#writing-better-storybook-stories)
+  - [1.  Specify ArgTypes to define the props of your component](#1--specify-argtypes-to-define-the-props-of-your-component)
+  - [2. Use single story per component](#2-use-single-story-per-component)
+    - [2.1. Name your single story Default](#21-name-your-single-story-default)
+    - [2.2. Use the single story hoisting feature from Storybook](#22-use-the-single-story-hoisting-feature-from-storybook-more-info-here)
 
 
 ## Quick Start
@@ -129,6 +137,8 @@ Command to sync the storybook project to Anima team so that it can be then gener
 anima-storybook sync [option]
 ```
 
+#### Options
+
 | Options           | Short | Description                                                                                     |   Type   |
 | :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
 | `--token`         | `-t`  | Provide Anima's token if it was not set as Environment variable                                 | `string` |
@@ -162,7 +172,7 @@ Anima uses Storybooks story [controls](https://storybook.js.org/docs/react/essen
 
 We recommend writing your stories in the following way:
 
-## 1.  Specify `ArgTypes` to define the props of your component
+## 1.  Specify ArgTypes to define the props of your component
 
 Define a control type of `select` for props that have a number of values for example:
   
