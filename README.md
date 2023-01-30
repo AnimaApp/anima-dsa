@@ -37,24 +37,17 @@ You will be switching between Figma and your local Terminal!
 
 ### 1. Installing the CLI
 
-Run the following command (of your preferred package manager) in the codebase where Storybook installed:
-
-#### NPM
+Run one of the following commands (of your preferred package manager) in the Storybook root folder:
 
 ```sh
 npm install --save-dev anima-storybook-cli
 ```
-
-#### Yarn
 ```sh
 yarn add -D anima-storybook-cli
 ```
-
-#### pNPM
 ```sh
 pnpm add -D anima-storybook-cli
 ```
-
 
 ### 2. Add your unique Anima Token
 
@@ -89,6 +82,15 @@ STORYBOOK_ANIMA_TOKEN="PASTE_ANIMA_TOKEN_HERE"
 env:
   STORYBOOK_ANIMA_TOKEN: ${{ secrets.STORYBOOK_ANIMA_TOKEN }}
 ```
+</details>
+
+<details>
+<summary>If you're behind a firewall</summary>
+
+#### Whitelist Anima's servers
+
+* api.animaapp.com (52.89.118.22)
+* s3.animaapp.com (35.160.8.22)
 </details>
 
 
@@ -182,6 +184,7 @@ Define a control type of `select` for props that have a number of values for exa
   >   },
   > };
   > ```
+
 
 **🚨 STORYBOOK BUG ALERT 🚨**
 
