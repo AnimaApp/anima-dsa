@@ -156,6 +156,23 @@ export const getOrCreateStorybook = async (
   };
 };
 
+export const getTeamStories = async (
+  token: string,
+): Promise<Response> => {
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
+  return nf(`${STORYBOOK_SERVICE_BASE_URL}/stories_processing`, {
+    method: 'GET',
+    headers,
+  });
+};
+
 export const updateStorybook = async (
   token: string,
   id: string,

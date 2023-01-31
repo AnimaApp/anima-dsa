@@ -11,6 +11,7 @@ import {
 } from '../api';
 import { zipDir, hashBuffer, uploadBuffer, log } from '../helpers';
 import * as Sentry from '@sentry/node';
+import { waitProcessingStories } from '../helpers/waitAllProcessingStories';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -176,8 +177,27 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     });
   }
 
-  loader.stop();
   spanUpload.finish();
+
+  loader.stop();
+  stage = 'Processing stories';
+  loader = ora(`${stage}...`).start();
+
+  const waitProcessSpan = transaction.startChild({
+    op: 'waitProcessingStories',
+  });
+  // --- Start wait sync
+  await waitProcessingStories(token, {
+    onCheckStories: (stories) => {
+      loader.stop();
+      stage = `Processing ${stories.length} stories 🚀`;
+      loader = ora(`${stage}...`).start();
+    },
+  });
+
+  loader.stop();
+  waitProcessSpan.finish();
+  // --- Cleaning and goodbye ---
   transaction.status = 'ok';
   transaction.finish();
   log.green(
