@@ -68,8 +68,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   log.green(`  - ${stage} ...OK`);
 
   const { results: stories } = await res.json() as { results: any[] };
-
-  log.yellow(`  - ${stories.length} stories - are still processing`);
+  log.yellow(`  - Processing stories: ${stories.length} remaining`);
 
   loader.stop();
 
