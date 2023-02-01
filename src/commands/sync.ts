@@ -190,7 +190,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   await waitProcessingStories(token, {
     onCheckStories: (stories) => {
       loader.stop();
-      stage = `Processing ${stories.length} stories 🚀`;
+      stage = `Processing stories: ${stories.length} remaining`;
       loader = ora(`${stage}...`).start();
     },
   });
