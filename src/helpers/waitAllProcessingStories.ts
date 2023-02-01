@@ -1,7 +1,7 @@
-import { getTeamStories } from '../api';
+import { getTeamProcessingStories } from '../api';
 
 const INTERVAL_TIME = 5000;
-const SLEEP_TIME = 3000;
+const SLEEP_TIME = 8000;
 
 interface Story extends Record<string, unknown> {
   id: string;
@@ -23,7 +23,7 @@ export const waitProcessingStories = async (
   return new Promise<void>((res, rej) => {
     const interval = setInterval(async () => {
       try {
-        const response = await getTeamStories(teamToken);
+        const response = await getTeamProcessingStories(teamToken);
         if (!response.ok) {
           throw new Error('Impossible to retrieve the stories of the team');
         }

@@ -1,6 +1,6 @@
 import { Arguments, CommandBuilder } from 'yargs';
 import ora from 'ora';
-import { authenticate, getTeamStories } from '../api';
+import { authenticate, getTeamProcessingStories } from '../api';
 import * as Sentry from '@sentry/node';
 import { loadAnimaConfig, log } from '../helpers';
 
@@ -56,7 +56,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   log.green(`  - ${stage} ...OK`);
 
-  const res = await getTeamStories(token);
+  const res = await getTeamProcessingStories(token);
 
   if (res.status !== 200) {
     throw new Error(

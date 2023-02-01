@@ -156,7 +156,7 @@ export const getOrCreateStorybook = async (
   };
 };
 
-export const getTeamStories = async (
+export const getTeamProcessingStories = async (
   token: string,
 ): Promise<Response> => {
   const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
