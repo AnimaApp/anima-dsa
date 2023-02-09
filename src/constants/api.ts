@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-if (process.env.DEBUG) {
+if (process.env.ANIMA_DEBUG) {
   process.env.ANIMA_API_ENV = 'debug';
 }
 if (!process.env.ANIMA_API_ENV) {
