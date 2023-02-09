@@ -62,7 +62,8 @@
     "ora": "^5.4.1",
     "pkg-types": "^0.3.5",
     "short-unique-id": "^4.4.4",
-    "yargs": "17.0.1"
+    "yargs": "17.0.1",
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@types/archiver": "^5.3.1",
