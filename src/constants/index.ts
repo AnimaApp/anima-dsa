@@ -1,4 +1,4 @@
-export const API_URL = process.env.DEBUG
-  ? 'http://localhost:5007'
-  : 'https://api.animaapp.com';
+import { API_URL } from './api';
+
 export const STORYBOOK_SERVICE_BASE_URL = `${API_URL}/services/s2f`;
+export { API_URL };
