@@ -3,6 +3,7 @@ import ora from 'ora';
 import { authenticate, getTeamProcessingStories } from '../api';
 import * as Sentry from '@sentry/node';
 import { loadAnimaConfig, log } from '../helpers';
+import { exitProcess } from '../helpers/exit';
 
 export const command = 'status';
 export const desc = 'Status of components';
@@ -36,7 +37,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     log.yellow(
       `Storybook token not found. Please provide a token using the --token flag or the STORYBOOK_ANIMA_TOKEN environment variable.`,
     );
-    process.exit(1);
+    await exitProcess();
   }
 
   // validate token with the api
@@ -51,7 +52,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         "The Storybook token you provided 'HIDDEN' is invalid. Please check your token and try again.",
       ),
     );
-    process.exit(1);
+    await exitProcess();
   }
 
   log.green(`  - ${stage} ...OK`);
