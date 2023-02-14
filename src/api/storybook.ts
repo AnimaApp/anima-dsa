@@ -3,10 +3,11 @@ import nf, { Response } from 'node-fetch';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
 import { transformDStoJSON, log } from './../helpers/';
 
-interface StorybookEntity {
+export interface StorybookEntity {
   upload_status: string;
   upload_signed_url: string;
   id: string;
+  status: string;
   preload_stories: boolean;
   ds_tokens: string;
 }
