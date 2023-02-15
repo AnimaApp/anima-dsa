@@ -17,4 +17,4 @@ jobs:
       - name: Tests
         run: yarn test
         env:
-          ANIMA_TOKEN: ${{ secrets.ANIMA_TOKEN }}
+          TEST_TOKEN: ${{ secrets.TEST_TOKEN }}

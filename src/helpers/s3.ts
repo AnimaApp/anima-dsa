@@ -1,5 +1,7 @@
 import { execSync } from 'child_process';
 
+export const isS3Url = (str: string): boolean => str.startsWith('s3://');
+
 export const downloadFromUrl = async (
   s3Url: string,
   path: string,
@@ -9,3 +11,8 @@ export const downloadFromUrl = async (
     stdio: 'inherit',
   });
 };
+
+let _usingS3Url = false;
+export const setUsingS3Url = (status: boolean): boolean =>
+  (_usingS3Url = status);
+export const isUsingS3Url = (): boolean => _usingS3Url;
