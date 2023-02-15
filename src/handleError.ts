@@ -1,6 +1,7 @@
 import { captureException } from '@sentry/node';
 import chalk from 'chalk';
 import { EOL } from 'os';
+import { exitProcess } from './helpers/exit';
 
 const printMessage = (message: string) => {
   process.stderr.write(chalk.red(`Error: ${message}`) + EOL);
@@ -15,7 +16,7 @@ export default async (message: string, error: Error): Promise<never> => {
   captureException(error);
   if (message) {
     printMessage(message);
-    process.exit(1);
+    return await exitProcess();
   }
 
   let errorMessage = 'Unknown error occurred';
@@ -23,5 +24,5 @@ export default async (message: string, error: Error): Promise<never> => {
   errorMessage = error.message;
 
   printMessage(errorMessage);
-  process.exit(1);
+  return await exitProcess();
 };

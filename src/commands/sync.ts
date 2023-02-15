@@ -3,6 +3,7 @@ import { Arguments, CommandBuilder } from 'yargs';
 import ora from 'ora';
 import fs from 'fs-extra';
 import { DEFAULT_BUILD_DIR, getBuildDir } from '../helpers/build';
+import { exitProcess } from '../helpers/exit';
 import {
   authenticate,
   getOrCreateStorybook,
@@ -15,6 +16,7 @@ import { waitProcessingStories } from '../helpers/waitAllProcessingStories';
 import { TMP_DIR } from '../constants';
 import { isS3Url } from '../helpers/isS3URL';
 import { downloadFromUrl } from '../helpers/downloadS3FromURL';
+
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -57,7 +59,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     log.yellow(
       `Storybook token not found. Please provide a token using the --token flag or the STORYBOOK_ANIMA_TOKEN environment variable.`,
     );
-    process.exit(1);
+    await exitProcess();
   }
 
   // check if build directory exists
@@ -78,7 +80,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     Sentry.captureException(new Error('Cannot find build directory'));
     transaction.status = 'error';
     transaction.finish();
-    process.exit(1);
+    await exitProcess();
   }
 
   const authSpan = transaction.startChild({ op: 'authenticate' });
@@ -97,7 +99,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     authSpan.status = 'error';
     authSpan.finish();
     transaction.finish();
-    process.exit(1);
+    await processExit();
   }
   authSpan.finish();
 
@@ -145,7 +147,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     spanGetDSToken.status = 'error';
     spanGetDSToken.finish();
     transaction.finish();
-    process.exit(1);
+    await exitProcess();
   }
 
   spanGetDSToken.finish();
