@@ -12,6 +12,9 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.yarnpkg.com'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        aws-region: us-west-2
       - name: Install dependencies and build 🔧
         run: yarn install && npm run build
       - name: Tests

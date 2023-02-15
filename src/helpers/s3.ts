@@ -7,7 +7,7 @@ export const downloadFromUrl = async (
   path: string,
 ): Promise<void> => {
   console.log('Download bundle');
-  execSync(`aws s3 sync ${s3Url} ${path}`, {
+  execSync(`aws s3 sync ${s3Url} ${path} --no-sign-request`, {
     stdio: 'inherit',
   });
 };
