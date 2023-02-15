@@ -5,7 +5,9 @@ workflows:
   storybook-cli:
     jobs:
       - build-and-test:
-          context: anima-prod
+          context: 
+            - anima-prod
+            - AWS
 jobs:
   build-and-test:
     docker:
