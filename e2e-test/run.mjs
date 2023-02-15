@@ -9,7 +9,7 @@ const storyHashReg = new RegExp(/hash => (.*)/);
 // Create a new team and fetch web token
 console.log('Setup, running sync');
 const output = execSync(
-  `node ./dist/cli.js sync -d ./e2e-test/storybook-static/ -t ${token} --debug`,
+  `node ./dist/cli.js sync -d "s3://anima-uploads/e2e-tests/storybook-sample" -t ${token} --debug`,
 );
 
 const result = storyHashReg.exec(output.toString());

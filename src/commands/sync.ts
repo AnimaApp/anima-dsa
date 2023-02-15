@@ -12,6 +12,9 @@ import {
 import { zipDir, hashBuffer, uploadBuffer, log } from '../helpers';
 import * as Sentry from '@sentry/node';
 import { waitProcessingStories } from '../helpers/waitAllProcessingStories';
+import { TMP_DIR } from '../constants';
+import { isS3Url } from '../helpers/isS3URL';
+import { downloadFromUrl } from '../helpers/downloadS3FromURL';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -58,12 +61,18 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   }
 
   // check if build directory exists
-  const BUILD_DIR = getBuildDir(_argv.directory as string | undefined);
+  let BUILD_DIR: string;
+  if (isS3Url(_argv.directory as string)) {
+    await downloadFromUrl(_argv.directory as string, TMP_DIR);
+    BUILD_DIR = TMP_DIR;
+  } else {
+    BUILD_DIR = getBuildDir(_argv.directory as string | undefined);
+  }
+
   if (!fs.existsSync(BUILD_DIR)) {
     loader.stop();
     log.yellow(
-      `Cannot find build directory: "${
-        _argv.directory ?? DEFAULT_BUILD_DIR
+      `Cannot find build directory: "${_argv.directory ?? DEFAULT_BUILD_DIR
       }". Please build storybook before running this command `,
     );
     Sentry.captureException(new Error('Cannot find build directory'));
