@@ -90,7 +90,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     authSpan.status = 'error';
     authSpan.finish();
     transaction.finish();
-    await processExit();
+    await exitProcess();
   }
   authSpan.finish();
 
