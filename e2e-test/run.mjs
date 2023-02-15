@@ -5,8 +5,6 @@ if (!token) throw new Error('Anima team token for test not found');
 const storyHashReg = new RegExp(/hash => (.*)/);
 
 // --- Setup ---
-// TODO
-// Create a new team and fetch web token
 console.log('Setup, running sync');
 const output = execSync(
   `node ./dist/cli.js sync -d "s3://anima-uploads/e2e-tests/storybook-sample" -t ${token} --debug`,
