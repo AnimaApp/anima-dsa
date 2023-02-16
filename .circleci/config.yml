@@ -8,6 +8,19 @@ workflows:
           context: 
             - anima-prod
             - AWS
+  storybook-cli-nightly-test:
+    triggers:
+      - schedule:
+          cron: "0 3 * * *"
+          filters:
+            branches:
+              only: master 
+    jobs:
+      - build-and-test:
+          context:
+            - anima-prod
+            - AWS
+
 jobs:
   build-and-test:
     docker:
@@ -30,10 +43,3 @@ jobs:
       - run:
           name: "Run tests"
           command: "yarn test"
-  storybook-cli-nightly-test:
-    triggers:
-      - schedule:
-          cron: "0 3 * * *"
-          filters:
-            branches:
-              only: master 
