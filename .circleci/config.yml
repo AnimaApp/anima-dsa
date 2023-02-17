@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@3.1
+workflows:
+  storybook-cli:
+    jobs:
+      - build-and-test:
+          context: 
+            - anima-prod
+            - AWS
+  storybook-cli-nightly-test:
+    triggers:
+      - schedule:
+          cron: "0 3 * * *"
+          filters:
+            branches:
+              only: master 
+    jobs:
+      - build-and-test:
+          context:
+            - anima-prod
+            - AWS
+
+jobs:
+  build-and-test:
+    docker:
+      - image: node:16
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: "Install Ubuntu dependencies"
+          command: |
+            apt-get -y update
+            apt-get install -y jq
+      - run:
+          name: "Install dependencies"
+          command: "yarn install --frozen-lockfile"
+      - run:
+          name: "Build"
+          command: "yarn build"
+      - run:
+          name: "Run tests"
+          command: "yarn test"

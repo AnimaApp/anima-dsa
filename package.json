@@ -46,6 +46,7 @@
     "format": "prettier --loglevel warn --write \"**/*.{ts,js,json,yaml}\"",
     "format:check": "prettier --loglevel warn --check \"**/*.{ts,js,json,yaml}\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "node ./e2e-test/run.mjs",
     "lint:check": "eslint \"src/**/*.ts\""
   },
   "dependencies": {
@@ -66,8 +67,10 @@
     "zod": "^3.20.6"
   },
   "devDependencies": {
+    "@jest/globals": "^29.4.2",
     "@types/archiver": "^5.3.1",
     "@types/fs-extra": "9.0.12",
+    "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.189",
     "@types/node": "^18.11.5",
     "@types/yargs": "17.0.2",
@@ -75,7 +78,9 @@
     "@typescript-eslint/parser": "4.28.2",
     "eslint": "7.30.0",
     "eslint-config-prettier": "8.3.0",
+    "jest": "^29.4.2",
     "prettier": "2.3.2",
+    "ts-jest": "^29.0.5",
     "typescript": "4.3.5"
   }
 }

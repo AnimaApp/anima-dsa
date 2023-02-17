@@ -13,7 +13,13 @@ import {
 import { zipDir, hashBuffer, uploadBuffer, log } from '../helpers';
 import * as Sentry from '@sentry/node';
 import { waitProcessingStories } from '../helpers/waitAllProcessingStories';
-
+import { TMP_DIR } from '../constants';
+import {
+  isS3Url,
+  downloadFromUrl,
+  setUsingS3Url,
+  isUsingS3Url,
+} from '../helpers/s3';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -60,7 +66,16 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   }
 
   // check if build directory exists
-  const BUILD_DIR = getBuildDir(_argv.directory as string | undefined);
+  let BUILD_DIR: string;
+  if (isS3Url(_argv.directory as string)) {
+    console.log('Using s3 url, creating tmp dir');
+    setUsingS3Url(true);
+    await downloadFromUrl(_argv.directory as string, TMP_DIR);
+    BUILD_DIR = TMP_DIR;
+  } else {
+    BUILD_DIR = getBuildDir(_argv.directory as string | undefined);
+  }
+
   if (!fs.existsSync(BUILD_DIR)) {
     loader.stop();
     log.yellow(
@@ -207,6 +222,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   );
   log.green('  - Done');
 
+  if (isUsingS3Url()) {
+    console.log('Cleaning tmp dir');
+    fs.rmSync(TMP_DIR, { recursive: true, force: true });
+  }
   if (__DEBUG__) {
     console.log('_id =>', storybookId);
     console.log('hash =>', zipHash);
