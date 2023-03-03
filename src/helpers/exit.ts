@@ -10,3 +10,13 @@ export const exitProcess = async (): Promise<never> => {
   }
   process.exit(1);
 };
+
+export const overrideKillSignals = (): void => {
+  const processToCatch = ['SIGINT', 'SIGQUIT', 'SIGTERM'];
+  processToCatch.map((name) => {
+    process.on(name, async () => {
+      console.log(`Terminating, ${name} received\n`);
+      await exitProcess();
+    });
+  });
+};
