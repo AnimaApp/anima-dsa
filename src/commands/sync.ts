@@ -67,7 +67,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   // check if build directory exists
   let BUILD_DIR: string;
-  if (isS3Url(_argv.directory as string)) {
+  if (_argv.directory && isS3Url(_argv.directory as string)) {
     console.log('Using s3 url, creating tmp dir');
     setUsingS3Url(true);
     await downloadFromUrl(_argv.directory as string, TMP_DIR);
@@ -107,6 +107,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     transaction.finish();
     await exitProcess();
   }
+  Sentry.configureScope((scope) => {
+    scope.setUser({ id: undefined, team_id: response.data.team_id });
+    scope.setTag("teamId", response.data.team_id);
+  });
   authSpan.finish();
 
   log.green(`  - ${stage} ...OK`);
