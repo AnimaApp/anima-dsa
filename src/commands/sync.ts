@@ -108,7 +108,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     await exitProcess();
   }
   Sentry.configureScope((scope) => {
-    scope.setUser({ id: undefined, team_id: response.data.team_id });
+    scope.setUser({ id: response.data.team_slug, team_id: response.data.team_id });
     scope.setTag("teamId", response.data.team_id);
   });
   authSpan.finish();
