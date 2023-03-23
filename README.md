@@ -153,7 +153,7 @@ npx anima-storybook sync --directory <storybook_static_dir> #default is storyboo
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 ```
 
-### `generate_dstoken`
+### `generate_tokens`
 
 Command to generate a design-tokens file from your framework theme file.
 
