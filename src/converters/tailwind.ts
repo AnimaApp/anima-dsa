@@ -17,6 +17,7 @@ type TailwindConfig = z.infer<typeof schemaTailwind>;
 
 export class TailwindConverter implements IConverter {
   framework = 'tailwind' as const;
+  delimiter = '-';
   config: TailwindConfig | null = null;
 
   async loadConfig(configPath: string): Promise<TailwindConfig> {
@@ -29,7 +30,7 @@ export class TailwindConverter implements IConverter {
     const tailwindTokenColor: Record<string, string> = flatten(
       this.config?.theme.colors,
       {
-        delimiter: '-',
+        delimiter: this.delimiter,
         transformKey: kebabCase,
       },
     );

@@ -1,8 +1,11 @@
+import * as Sentry from '@sentry/node';
 import { Arguments, CommandBuilder } from 'yargs';
 import ora from 'ora';
 import { frameworks, getConverter } from '../converters';
+import { exitProcess } from '../helpers/exit';
 import { z } from 'zod';
 import { writeFileSync } from 'fs';
+import { log } from '../helpers';
 
 export const command = 'generate-dstoken';
 export const desc = 'Generate design tokens for a framework';
@@ -42,17 +45,20 @@ interface ArgsHandler {
 }
 
 export const handler = async (_argv: Arguments<ArgsHandler>): Promise<void> => {
-  const validatedArgs = validateArgs(_argv);
-  const { framework, config, output } = validatedArgs;
+  try {
+    const validatedArgs = validateArgs(_argv);
+    const { framework, config, output } = validatedArgs;
 
-  const stage = `Checking ${framework} config at ${config}`;
-  const loader = ora(`${stage}...\n`).start();
-
-  const converter = getConverter(framework);
-  await converter.loadConfig(config);
-  const dsTokens = await converter.convertColorToDS();
-
-  loader.text = 'Create design token file';
-  writeFileSync(output, JSON.stringify(dsTokens, null, 2));
-  loader.stop();
+    console.log(`Checking ${framework} config at ${config}`);
+    const converter = getConverter(framework);
+    await converter.loadConfig(config);
+    const dsTokens = await converter.convertColorToDS();
+    console.log('Create design token file');
+    writeFileSync(output, JSON.stringify(dsTokens, null, 2));
+    console.log(`Design tokens created at path ${output}`);
+  } catch (e) {
+    Sentry.captureException(e);
+    console.error(e);
+    exitProcess();
+  }
 };

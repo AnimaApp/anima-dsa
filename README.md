@@ -153,6 +153,22 @@ npx anima-storybook sync --directory <storybook_static_dir> #default is storyboo
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 ```
 
+### `generate_dstoken`
+
+Command to generate a design-tokens file from your framework theme file.
+
+```
+anima-storybook generate-dstoken -f tailwind -c ./tailwind.config.cjs -o ./design-tokens.json
+```
+
+#### Options
+
+| Options               | Short | Description                                                                                     |   Type   |
+| :----------------     | :---: | :---------------------------------------------------------------------------------------------- | :------: |
+| `--framework`         | `-f`  | Provide your framework name i.e. `tailwind`                                                     | `string` |
+| `--config`            | `-c`  | Provide your framework config file i.e. `./tailwind.config.cjs`                                 | `string` |
+| `--output`            | `-o`  | Provide an output path of your Design Tokens file, i.e. `./design-tokens.json`                  | `string` |
+
 ## Alternative configuration
 
 You can also create an `anima.config.js` file in your root directory, and save the configuration values like design tokens.
