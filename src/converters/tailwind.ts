@@ -6,10 +6,13 @@ import type { IConverter } from './types';
 import type { DSTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD } from '../helpers';
 import { formatColorToTokenValue } from './utils';
+import { TOKEN_COLOR_TYPE } from '../constants';
 
+// TODO: Enhance Tailwind theme with all the values
 const schemaTailwind = z.object({
   theme: z.object({
     colors: z.record(z.string(), z.any()),
+    extend: z.record(z.string(), z.any()).optional(),
   }),
 });
 
@@ -49,7 +52,7 @@ const {
 } = require("anima-storybook-cli/dist/lib/getTwColorsTheme");
 const dsToken = require("./design-tokens.json");
 
-const theme = getTwColorsTheme(dsToken);
+const colors = getTwColorsTheme(dsToken);
 
 module.exports = {
   content: [
@@ -57,7 +60,7 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: theme,
+    colors: colors,
   },
 };
 `;
@@ -68,9 +71,10 @@ module.exports = {
   ): TailwindConfig['theme']['colors'] {
     const twTokens: { [key: string]: unknown | string } = {};
     for (const key in dsTokens) {
-      twTokens[key] = dsTokens[key].value;
+      if (dsTokens[key].type === TOKEN_COLOR_TYPE) {
+        twTokens[key] = dsTokens[key].value;
+      }
     }
-    console.log(unflatten({ 'color-primary-100': '#f3f4f6' }));
     const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(
       twTokens,
       { delimiter: TailwindConverter.delimiter, object: true },
