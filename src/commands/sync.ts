@@ -113,34 +113,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     scope.setTag("teamId", response.data.team_id);
   });
   authSpan.finish();
-  try {
-    const response = await authenticate(token);
-    loader.stop();
-    if (!response.success) {
-      log.red(
-        `The Storybook token you provided "${token}" is invalid. Please check your token and try again.`,
-      );
-      Sentry.captureException(
-        new Error(
-          "The Storybook token you provided 'HIDDEN' is invalid. Please check your token and try again.",
-        ),
-      );
-      authSpan.status = 'error';
-      authSpan.finish();
-      transaction.finish();
-      await exitProcess();
-    }
-  } catch (error) {
-    log.red(
-      `Something went wrong. We've been notified and will look into it as soon as possible`,
-    );
-    Sentry.captureException(error);
-    authSpan.status = 'error';
-    authSpan.finish();
-    transaction.finish();
-    await exitProcess();
-  }
-
+ 
   log.green(`  - ${stage} ...OK`);
 
   const spanZipBuild = transaction.startChild({ op: 'zip-build-and-hash' });
