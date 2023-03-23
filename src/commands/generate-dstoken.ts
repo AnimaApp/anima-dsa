@@ -5,7 +5,7 @@ import { exitProcess } from '../helpers/exit';
 import { z } from 'zod';
 import { writeFileSync } from 'fs';
 
-export const command = 'generate-dstoken';
+export const command = 'generate-tokens';
 export const desc = 'Generate design tokens for a framework';
 
 const validateArgs = z.object({
