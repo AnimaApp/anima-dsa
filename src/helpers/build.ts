@@ -28,6 +28,9 @@ export const buildStorybook = (
 };
 
 export const getBuildDir = (buildDir?: string): string => {
+  if (buildDir?.startsWith('/')) {
+    return buildDir;
+  }
   return path.join(process.cwd(), buildDir ?? DEFAULT_BUILD_DIR);
 };
 

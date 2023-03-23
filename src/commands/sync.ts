@@ -29,10 +29,11 @@ export const builder: CommandBuilder = (yargs) =>
     .options({
       token: { type: 'string', alias: 't' },
       directory: { type: 'string', alias: 'd' },
+      basePath: { type: 'string', alias: 'b' },
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
-    .example([['$0 sync -t <storybook-token> -d <build-directory>']]);
+    .example([['$0 sync -t <storybook-token> -d <build-directory> -b /']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
   const transaction = Sentry.startTransaction({
@@ -112,6 +113,33 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     scope.setTag("teamId", response.data.team_id);
   });
   authSpan.finish();
+  try {
+    const response = await authenticate(token);
+    loader.stop();
+    if (!response.success) {
+      log.red(
+        `The Storybook token you provided "${token}" is invalid. Please check your token and try again.`,
+      );
+      Sentry.captureException(
+        new Error(
+          "The Storybook token you provided 'HIDDEN' is invalid. Please check your token and try again.",
+        ),
+      );
+      authSpan.status = 'error';
+      authSpan.finish();
+      transaction.finish();
+      await exitProcess();
+    }
+  } catch (error) {
+    log.red(
+      `Something went wrong. We've been notified and will look into it as soon as possible`,
+    );
+    Sentry.captureException(error);
+    authSpan.status = 'error';
+    authSpan.finish();
+    transaction.finish();
+    await exitProcess();
+  }
 
   log.green(`  - ${stage} ...OK`);
 
@@ -162,7 +190,8 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   spanGetDSToken.finish();
 
-  const data = await getOrCreateStorybook(token, zipHash, designTokens);
+  const basePath = _argv.basePath as string | undefined;
+  const data = await getOrCreateStorybook(token, zipHash, designTokens, basePath);
 
   const spanUpload = transaction.startChild({
     op: 'upload-process',
