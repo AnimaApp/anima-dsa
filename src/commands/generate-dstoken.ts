@@ -2,7 +2,6 @@ import * as Sentry from '@sentry/node';
 import { Arguments, CommandBuilder } from 'yargs';
 import { frameworks, getConverter } from '../converters';
 import { exitProcess } from '../helpers/exit';
-import { TAILWIND_CONFIG_FILE } from '../constants/sample';
 import { z } from 'zod';
 import { writeFileSync } from 'fs';
 
