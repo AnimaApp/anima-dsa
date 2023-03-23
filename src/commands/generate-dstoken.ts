@@ -51,7 +51,7 @@ export const handler = async (_argv: Arguments<ArgsHandler>): Promise<void> => {
     const converter = getConverter(framework);
     await converter.loadConfig(config);
     const dsTokens = await converter.convertColorToDS();
-    console.log('Create design token file');
+    console.log('Creating design tokens file');
     writeFileSync(output, JSON.stringify(dsTokens, null, 2));
     console.log(`Design tokens created at path ${output}`);
     console.log(`You can now use your design tokens in your ${framework} config file like this:
