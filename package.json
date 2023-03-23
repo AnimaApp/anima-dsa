@@ -56,8 +56,10 @@
     "archiver": "^5.3.1",
     "c12": "^0.2.13",
     "expr-eval": "^2.0.2",
+    "flat": "^5.0.2",
     "form-data": "^4.0.0",
     "fs-extra": "10.0.0",
+    "kebab-case": "^1.0.2",
     "lodash": "^4.17.21",
     "node-fetch": "2",
     "ora": "^5.4.1",
@@ -69,6 +71,7 @@
   "devDependencies": {
     "@jest/globals": "^29.4.2",
     "@types/archiver": "^5.3.1",
+    "@types/flat": "^5.0.2",
     "@types/fs-extra": "9.0.12",
     "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.189",

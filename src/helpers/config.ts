@@ -30,7 +30,7 @@ export const loadAnimaConfig = async (): Promise<AnimaConfig> => {
     try {
       rcConfig = JSON.parse(readFileSync(rcFile, 'utf-8'));
       // eslint-disable-next-line no-empty
-    } catch (e) { }
+    } catch (e) {}
   }
 
   // load anima.config.json file
@@ -41,7 +41,7 @@ export const loadAnimaConfig = async (): Promise<AnimaConfig> => {
     try {
       jsonConfig = JSON.parse(readFileSync(jsonFile, 'utf-8'));
       // eslint-disable-next-line no-empty
-    } catch (e) { }
+    } catch (e) {}
   }
 
   return {
@@ -59,4 +59,8 @@ export const loadPackageJSON = async (): Promise<PackageJson | null> => {
   } catch (error) {
     return null;
   }
+};
+
+export const loadJSFileFromCWD = async (filePath: string): Promise<unknown> => {
+  return await import(process.cwd() + '/' + filePath);
 };
