@@ -1,5 +1,5 @@
 import kebabCase from 'kebab-case';
-import flatten from 'flat';
+import flatten, { unflatten } from 'flat';
 
 import { z } from 'zod';
 import type { IConverter } from './types';
@@ -13,12 +13,12 @@ const schemaTailwind = z.object({
   }),
 });
 
-type TailwindConfig = z.infer<typeof schemaTailwind>;
+export type TailwindConfig = z.infer<typeof schemaTailwind>;
 
 export class TailwindConverter implements IConverter {
   framework = 'tailwind' as const;
-  delimiter = '-';
   config: TailwindConfig | null = null;
+  static delimiter = '-';
 
   async loadConfig(configPath: string): Promise<TailwindConfig> {
     this.config = schemaTailwind.parse(await loadJSFileFromCWD(configPath));
@@ -30,7 +30,7 @@ export class TailwindConverter implements IConverter {
     const tailwindTokenColor: Record<string, string> = flatten(
       this.config?.theme.colors,
       {
-        delimiter: this.delimiter,
+        delimiter: TailwindConverter.delimiter,
         transformKey: kebabCase,
       },
     );
@@ -40,5 +40,20 @@ export class TailwindConverter implements IConverter {
       dsTokens[key] = formatColorToTokenValue(tailwindTokenColor[key]);
     });
     return dsTokens;
+  }
+
+  static convertDSColorToTheme(
+    dsTokens: DSTokenTheme,
+  ): TailwindConfig['theme']['colors'] {
+    const twTokens: { [key: string]: unknown | string } = {};
+    for (const key in dsTokens) {
+      twTokens[key] = dsTokens[key].value;
+    }
+    console.log(unflatten({ 'color-primary-100': '#f3f4f6' }));
+    const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(
+      twTokens,
+      { delimiter: TailwindConverter.delimiter, object: true },
+    );
+    return twTokensUnflatten;
   }
 }

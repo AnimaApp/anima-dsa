@@ -1,11 +1,10 @@
 import * as Sentry from '@sentry/node';
 import { Arguments, CommandBuilder } from 'yargs';
-import ora from 'ora';
 import { frameworks, getConverter } from '../converters';
 import { exitProcess } from '../helpers/exit';
+import { TAILWIND_CONFIG_FILE } from '../constants/sample';
 import { z } from 'zod';
 import { writeFileSync } from 'fs';
-import { log } from '../helpers';
 
 export const command = 'generate-dstoken';
 export const desc = 'Generate design tokens for a framework';
@@ -56,6 +55,9 @@ export const handler = async (_argv: Arguments<ArgsHandler>): Promise<void> => {
     console.log('Create design token file');
     writeFileSync(output, JSON.stringify(dsTokens, null, 2));
     console.log(`Design tokens created at path ${output}`);
+    console.log(`You can now use your design tokens in your ${framework} config file like this:
+${TAILWIND_CONFIG_FILE}
+`);
   } catch (e) {
     Sentry.captureException(e);
     console.error(e);
