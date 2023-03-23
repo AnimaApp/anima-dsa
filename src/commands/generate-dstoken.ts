@@ -35,7 +35,7 @@ export const builder: CommandBuilder = (yargs) =>
       },
     })
     .demandOption(['framework', 'config'])
-    .example([['$0 generate-dstoken -f tailwind -c ./tailwind.config.json']]);
+    .example([['$0 generate-tokens -f tailwind -c ./tailwind.config.json']]);
 
 interface ArgsHandler {
   framework: string;
