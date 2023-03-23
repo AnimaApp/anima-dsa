@@ -41,17 +41,25 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   }
 
   // validate token with the api
-  const response = await authenticate(token);
-  loader.stop();
-  if (!response.success) {
+  try {
+    const response = await authenticate(token);
+    loader.stop();
+    if (!response.success) {
+      log.red(
+        `The Storybook token you provided "${token}" is invalid. Please check your token and try again.`,
+      );
+      Sentry.captureException(
+        new Error(
+          "The Storybook token you provided 'HIDDEN' is invalid. Please check your token and try again.",
+        ),
+      );
+      await exitProcess();
+    }
+  } catch (error) {
     log.red(
-      `The Storybook token you provided "${token}" is invalid. Please check your token and try again.`,
+      `Something went wrong. We've been notified and will look into it as soon as possible`,
     );
-    Sentry.captureException(
-      new Error(
-        "The Storybook token you provided 'HIDDEN' is invalid. Please check your token and try again.",
-      ),
-    );
+    Sentry.captureException(error);
     await exitProcess();
   }
 

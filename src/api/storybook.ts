@@ -34,6 +34,7 @@ export const createStorybook = async (
   token: string,
   hash: string,
   ds_tokens: Record<string, unknown>,
+  basePath: string | undefined,
 ): Promise<StorybookEntity | null> => {
   const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
   const headers: { [key: string]: string } = {
@@ -49,6 +50,7 @@ export const createStorybook = async (
     body: JSON.stringify({
       storybook_hash: hash,
       ds_tokens: JSON.stringify(ds_tokens),
+      base_path: basePath,
     }),
   });
 
@@ -111,6 +113,7 @@ export const getOrCreateStorybook = async (
   token: string,
   hash: string,
   raw_ds_tokens: Record<string, unknown> = {},
+  basePath: string | undefined,
 ): Promise<getOrCreateStorybookResponse> => {
   const transaction = getCurrentHub().getScope()?.getTransaction();
   const spanGetOrCreate = transaction?.startChild({
@@ -134,7 +137,7 @@ export const getOrCreateStorybook = async (
     const spanCreateStorybook = spanGetOrCreate?.startChild({
       op: 'create-storybook',
     });
-    data = await createStorybook(token, hash, ds_tokens);
+    data = await createStorybook(token, hash, ds_tokens, basePath);
     spanCreateStorybook?.finish();
   }
 

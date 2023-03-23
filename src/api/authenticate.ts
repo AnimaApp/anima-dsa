@@ -4,9 +4,8 @@ import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const authenticate = async (storybookToken: string) => {
   const errorRes = { success: false, data: {} };
-
-  if (!storybookToken) return errorRes;
   try {
+    if (!storybookToken) return errorRes;
     const res = await nf(`${STORYBOOK_SERVICE_BASE_URL}/validate_token`, {
       method: 'GET',
       headers: {

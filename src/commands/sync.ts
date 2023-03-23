@@ -29,6 +29,7 @@ export const builder: CommandBuilder = (yargs) =>
     .options({
       token: { type: 'string', alias: 't' },
       directory: { type: 'string', alias: 'd' },
+      basePath: { type: 'string', alias: 'b' },
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
@@ -112,7 +113,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     scope.setTag("teamId", response.data.team_id);
   });
   authSpan.finish();
-
+ 
   log.green(`  - ${stage} ...OK`);
 
   const spanZipBuild = transaction.startChild({ op: 'zip-build-and-hash' });
@@ -162,7 +163,8 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   spanGetDSToken.finish();
 
-  const data = await getOrCreateStorybook(token, zipHash, designTokens);
+  const basePath = _argv.basePath as string | undefined;
+  const data = await getOrCreateStorybook(token, zipHash, designTokens, basePath);
 
   const spanUpload = transaction.startChild({
     op: 'upload-process',

@@ -17,11 +17,10 @@ switch (apiEnv) {
     API_URL = 'https://api.animaapp.com';
     break;
   case 'debug':
-    API_URL = 'http://localhost:5007';
+    API_URL = 'http://127.0.0.1:5007';
     break;
   case 'canary':
     API_URL = 'https://canary-api.animaapp.com';
     break;
 }
-
 export { API_URL };
