@@ -29,6 +29,7 @@ export const builder: CommandBuilder = (yargs) =>
     .options({
       token: { type: 'string', alias: 't' },
       directory: { type: 'string', alias: 'd' },
+      basePath: { type: 'string', alias: 'b' },
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
@@ -108,8 +109,11 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     await exitProcess();
   }
   Sentry.configureScope((scope) => {
-    scope.setUser({ id: undefined, team_id: response.data.team_id });
-    scope.setTag("teamId", response.data.team_id);
+    scope.setUser({
+      id: response.data.team_slug,
+      team_id: response.data.team_id,
+    });
+    scope.setTag('teamId', response.data.team_id);
   });
   authSpan.finish();
 
@@ -162,7 +166,13 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   spanGetDSToken.finish();
 
-  const data = await getOrCreateStorybook(token, zipHash, designTokens);
+  const basePath = _argv.basePath as string | undefined;
+  const data = await getOrCreateStorybook(
+    token,
+    zipHash,
+    designTokens,
+    basePath,
+  );
 
   const spanUpload = transaction.startChild({
     op: 'upload-process',
@@ -211,7 +221,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   await waitProcessingStories(token, {
     onCheckStories: (stories) => {
       loader.stop();
-      stage = `Processing stories: ${stories.length} remaining`;
+      stage =
+        stories.length > 0
+          ? `Processing stories: ${stories.length} remaining`
+          : 'Processing stories';
       loader = ora(`${stage}...`).start();
     },
   });
