@@ -161,6 +161,8 @@ Command to generate a design-tokens file from your framework theme file.
 anima-storybook generate-dstoken -f tailwind -c ./tailwind.config.cjs -o ./design-tokens.json
 ```
 
+This command will generate design tokens colors based on your tailwind config by using `theme.colors` and `theme.extend.colors`
+
 #### Options
 
 | Options               | Short | Description                                                                                     |   Type   |

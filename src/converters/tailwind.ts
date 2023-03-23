@@ -4,7 +4,7 @@ import flatten, { unflatten } from 'flat';
 import { z } from 'zod';
 import type { IConverter } from './types';
 import type { DSTokenTheme } from '../constants/types';
-import { loadJSFileFromCWD } from '../helpers';
+import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
 import { TOKEN_COLOR_TYPE } from '../constants';
 
@@ -30,8 +30,14 @@ export class TailwindConverter implements IConverter {
 
   async convertColorToDS(): Promise<DSTokenTheme> {
     if (!this.config) throw new Error('Config not loaded');
+    const extendColors = this.config.theme.extend?.colors;
+    const colors = this.config.theme.colors;
+    if (!extendColors)
+      log.yellow(
+        'No theme.extend.colors found in tailwind config but found theme.colors',
+      );
     const tailwindTokenColor: Record<string, string> = flatten(
-      this.config?.theme.colors,
+      { ...colors, ...extendColors },
       {
         delimiter: TailwindConverter.delimiter,
         transformKey: kebabCase,
