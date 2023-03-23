@@ -56,7 +56,7 @@ export const handler = async (_argv: Arguments<ArgsHandler>): Promise<void> => {
     writeFileSync(output, JSON.stringify(dsTokens, null, 2));
     console.log(`Design tokens created at path ${output}`);
     console.log(`You can now use your design tokens in your ${framework} config file like this:
-${TAILWIND_CONFIG_FILE}
+${converter.sampleConfigFile()}
 `);
   } catch (e) {
     Sentry.captureException(e);

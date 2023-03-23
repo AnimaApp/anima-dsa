@@ -5,4 +5,5 @@ export interface IConverter {
   framework: FrameworkList;
   loadConfig(configPath: string): Promise<unknown>;
   convertColorToDS(): Promise<DSTokenTheme>;
+  sampleConfigFile(): string;
 }
