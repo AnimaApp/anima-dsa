@@ -28,12 +28,9 @@ export const buildStorybook = (
 };
 
 export const getBuildDir = (buildDir?: string): string => {
-  const buildDirPath = buildDir ?? DEFAULT_BUILD_DIR
-  if (path.isAbsolute(buildDirPath)) return buildDirPath
+  const buildDirPath = buildDir ?? DEFAULT_BUILD_DIR;
+  if (path.isAbsolute(buildDirPath)) return buildDirPath;
   return path.join(process.cwd(), buildDirPath);
-    return buildDir;
-  }
-  return path.join(process.cwd(), buildDir ?? DEFAULT_BUILD_DIR);
 };
 
 export const setupTempDirectory = (
