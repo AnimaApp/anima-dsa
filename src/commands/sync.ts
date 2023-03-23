@@ -224,7 +224,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       stage =
         stories.length > 0
           ? `Processing stories: ${stories.length} remaining`
-          : 'Processing stories...';
+          : 'Processing stories';
       loader = ora(`${stage}...`).start();
     },
   });
