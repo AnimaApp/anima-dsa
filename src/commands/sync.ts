@@ -33,7 +33,7 @@ export const builder: CommandBuilder = (yargs) =>
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
-    .example([['$0 sync -t <storybook-token> -d <build-directory> -b /']]);
+    .example([['$0 sync -t <storybook-token> -d <build-directory>']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
   const transaction = Sentry.startTransaction({
