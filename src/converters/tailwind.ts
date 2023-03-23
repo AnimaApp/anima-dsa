@@ -3,7 +3,7 @@ import flatten, { unflatten } from 'flat';
 
 import { z } from 'zod';
 import type { IConverter } from './types';
-import type { DSTokenTheme } from '../constants/types';
+import type { DesignTokenTheme as DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
 import { TOKEN_COLOR_TYPE } from '../constants';
@@ -28,7 +28,7 @@ export class TailwindConverter implements IConverter {
     return this.config;
   }
 
-  async convertColorToDS(): Promise<DSTokenTheme> {
+  async convertColorToDesignTokens(): Promise<DesignTokenTheme> {
     if (!this.config) throw new Error('Config not loaded');
     const extendColors = this.config.theme.extend?.colors;
     const colors = this.config.theme.colors;
@@ -44,11 +44,11 @@ export class TailwindConverter implements IConverter {
       },
     );
 
-    const dsTokens: DSTokenTheme = {};
+    const designTokens: DesignTokenTheme = {};
     Object.keys(tailwindTokenColor).forEach((key) => {
-      dsTokens[key] = formatColorToTokenValue(tailwindTokenColor[key]);
+      designTokens[key] = formatColorToTokenValue(tailwindTokenColor[key]);
     });
-    return dsTokens;
+    return designTokens;
   }
 
   sampleConfigFile(): string {
@@ -72,13 +72,13 @@ module.exports = {
 `;
   }
 
-  static convertDSColorToTheme(
-    dsTokens: DSTokenTheme,
+  static convertDesignTokenColorsToTheme(
+    designTokens: DesignTokenTheme,
   ): TailwindConfig['theme']['colors'] {
     const twTokens: { [key: string]: unknown | string } = {};
-    for (const key in dsTokens) {
-      if (dsTokens[key].type === TOKEN_COLOR_TYPE) {
-        twTokens[key] = dsTokens[key].value;
+    for (const key in designTokens) {
+      if (designTokens[key].type === TOKEN_COLOR_TYPE) {
+        twTokens[key] = designTokens[key].value;
       }
     }
     const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(

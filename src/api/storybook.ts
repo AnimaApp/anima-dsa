@@ -66,7 +66,7 @@ interface getOrCreateStorybookResponse {
   storybookId: string | null | undefined;
   uploadUrl: string | null | undefined;
   uploadStatus: string;
-  dsTokens?: string;
+  designTokens?: string;
   hash: string;
 }
 
@@ -156,7 +156,7 @@ export const getOrCreateStorybook = async (
     uploadUrl: upload_signed_url,
     uploadStatus: upload_status,
     hash,
-    dsTokens,
+    designTokens: dsTokens,
   };
 };
 

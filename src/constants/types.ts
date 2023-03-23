@@ -7,4 +7,4 @@ interface TokenColorValue {
 
 export type TokenValue = TokenColorValue;
 
-export type DSTokenTheme = Record<string, TokenValue>;
+export type DesignTokenTheme = Record<string, TokenValue>;

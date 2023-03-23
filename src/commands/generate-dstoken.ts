@@ -3,7 +3,7 @@ import { Arguments, CommandBuilder } from 'yargs';
 import { frameworks, getConverter } from '../converters';
 import { exitProcess } from '../helpers/exit';
 import { z } from 'zod';
-import { writeFileSync } from 'fs';
+import { writeFileSync as designTokens } from 'fs';
 
 export const command = 'generate-tokens';
 export const desc = 'Generate design tokens for a framework';
@@ -50,9 +50,9 @@ export const handler = async (_argv: Arguments<ArgsHandler>): Promise<void> => {
     console.log(`Checking ${framework} config at ${config}`);
     const converter = getConverter(framework);
     await converter.loadConfig(config);
-    const dsTokens = await converter.convertColorToDS();
+    const designTokens = await converter.convertColorToDesignTokens();
     console.log('Creating design tokens file');
-    writeFileSync(output, JSON.stringify(dsTokens, null, 2));
+    designTokens(output, JSON.stringify(designTokens, null, 2));
     console.log(`Design tokens created at path ${output}`);
     console.log(`You can now use your design tokens in your ${framework} config file like this:
 ${converter.sampleConfigFile()}

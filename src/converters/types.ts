@@ -1,9 +1,9 @@
 import type { FrameworkList } from ".";
-import { DSTokenTheme } from "../constants/types";
+import { DesignTokenTheme } from "../constants/types";
 
 export interface IConverter {
   framework: FrameworkList;
   loadConfig(configPath: string): Promise<unknown>;
-  convertColorToDS(): Promise<DSTokenTheme>;
+  convertColorToDesignTokens(): Promise<DesignTokenTheme>;
   sampleConfigFile(): string;
 }
