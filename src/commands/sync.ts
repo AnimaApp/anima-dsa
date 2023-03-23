@@ -109,11 +109,14 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     await exitProcess();
   }
   Sentry.configureScope((scope) => {
-    scope.setUser({ id: response.data.team_slug, team_id: response.data.team_id });
-    scope.setTag("teamId", response.data.team_id);
+    scope.setUser({
+      id: response.data.team_slug,
+      team_id: response.data.team_id,
+    });
+    scope.setTag('teamId', response.data.team_id);
   });
   authSpan.finish();
- 
+
   log.green(`  - ${stage} ...OK`);
 
   const spanZipBuild = transaction.startChild({ op: 'zip-build-and-hash' });
@@ -164,7 +167,12 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   spanGetDSToken.finish();
 
   const basePath = _argv.basePath as string | undefined;
-  const data = await getOrCreateStorybook(token, zipHash, designTokens, basePath);
+  const data = await getOrCreateStorybook(
+    token,
+    zipHash,
+    designTokens,
+    basePath,
+  );
 
   const spanUpload = transaction.startChild({
     op: 'upload-process',
@@ -213,7 +221,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   await waitProcessingStories(token, {
     onCheckStories: (stories) => {
       loader.stop();
-      stage = `Processing stories: ${stories.length} remaining`;
+      stage =
+        stories.length > 0
+          ? `Processing stories: ${stories.length} remaining`
+          : 'Processing stories...';
       loader = ora(`${stage}...`).start();
     },
   });
