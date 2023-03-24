@@ -2,8 +2,8 @@ import type { DesignTokenTheme } from '../constants/types';
 import type { TailwindConfig } from '../converters/tailwind';
 import { TailwindConverter } from '../converters/tailwind';
 
-export const getTwColorsTheme = (
+export const getTailwindTheme = (
   dsToken: DesignTokenTheme,
-): TailwindConfig['theme']['colors'] => {
-  return TailwindConverter.convertDesignTokenColorsToTheme(dsToken);
+): TailwindConfig['theme'] => {
+  return TailwindConverter.convertDesignTokenToTheme(dsToken);
 };

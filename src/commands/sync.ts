@@ -178,7 +178,8 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     op: 'upload-process',
   });
   Sentry.getCurrentHub().configureScope((scope) => scope.setSpan(spanUpload));
-  const { storybookId, uploadUrl, designTokens } = data;
+  const { storybookId, uploadUrl } = data;
+  const currentDesignTokenStr = data.designTokens;
   let { uploadStatus } = data;
 
   __DEBUG__ && console.log('storybookId =>', storybookId);
@@ -197,7 +198,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     await updateDSTokenIfNeeded({
       storybook: {
         id: storybookId,
-        ds_tokens: designTokens,
+        ds_tokens: currentDesignTokenStr,
         upload_status: uploadStatus,
       },
       token,

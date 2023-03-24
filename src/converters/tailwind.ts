@@ -54,11 +54,11 @@ export class TailwindConverter implements IConverter {
   sampleConfigFile(): string {
     return `
 const {
-  getTwColorsTheme,
-} = require("anima-storybook-cli/dist/lib/getTwColorsTheme");
+  getTailwindTheme,
+} = require("anima-storybook-cli/dist/lib/tailwindTheme");
 const dsToken = require("./design-tokens.json");
 
-const colors = getTwColorsTheme(dsToken);
+const theme = getTailwindTheme(dsToken);
 
 module.exports = {
   content: [
@@ -66,10 +66,18 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: colors,
+    colors: theme.colors,
   },
 };
 `;
+  }
+
+  static convertDesignTokenToTheme(
+    designTokens: DesignTokenTheme,
+  ): TailwindConfig['theme'] {
+    const colors =
+      TailwindConverter.convertDesignTokenColorsToTheme(designTokens);
+    return { colors };
   }
 
   static convertDesignTokenColorsToTheme(
