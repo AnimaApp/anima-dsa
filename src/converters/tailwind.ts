@@ -3,7 +3,7 @@ import flatten, { unflatten } from 'flat';
 
 import { z } from 'zod';
 import type { IConverter } from './types';
-import type { DesignTokenTheme as DesignTokenTheme } from '../constants/types';
+import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
 import { TOKEN_COLOR_TYPE } from '../constants';
@@ -85,8 +85,8 @@ module.exports = {
   ): TailwindConfig['theme']['colors'] {
     const twTokens: { [key: string]: unknown | string } = {};
     for (const key in designTokens) {
-      if (designTokens[key].type === TOKEN_COLOR_TYPE) {
-        twTokens[key] = designTokens[key].value;
+      if (designTokens[key].$type === TOKEN_COLOR_TYPE) {
+        twTokens[key] = designTokens[key].$value;
       }
     }
     const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(
