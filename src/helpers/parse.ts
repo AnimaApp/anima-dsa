@@ -267,7 +267,7 @@ const getDSTokenType = (obj: { value: string; type: string }): DSTokenType => {
   return tokenType;
 };
 
-const convertToDSTokenMap = (pairs: Record<string, any>): DSTokenMap => {
+const convertToDesignTokensMap = (pairs: Record<string, any>): DSTokenMap => {
   return Object.keys(pairs).reduce<DSTokenMap>((prev, key) => {
     const type = getDSTokenType(pairs[key]);
 
@@ -286,5 +286,5 @@ export const flattenToPairs = (
 export const transformDStoJSON = (json: Record<string, any>): DSTokenMap => {
   if (!json || isEmpty(json)) return {};
   const resolvedPairs = flattenToPairs(json);
-  return convertToDSTokenMap(resolvedPairs);
+  return convertToDesignTokensMap(resolvedPairs);
 };
