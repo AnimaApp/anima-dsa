@@ -64,7 +64,7 @@ Every Anima team has a unique **Anima Token**. You can retrieved your teams toke
 The Anima Storybook CLI accepts the Anima Token using the `-t` flag:
 
 ```sh
-npm run anima-storybook sync -t <ANIMA_TOKEN_HERE>
+anima-storybook sync -t <ANIMA_TOKEN_HERE>
 ```
 
 For convenience we recommend you add your Anima token as an environment variable!
