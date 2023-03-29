@@ -1,11 +1,21 @@
 import { Octokit } from 'octokit';
-import type { IRepo, Request, WriteRequestParams } from '../types';
-import type { CreateBranchReturn, GetBranchRefReturn } from './types';
+import type {
+  GetFileContentParams,
+  IRepo,
+  Request,
+  WriteRequestParams,
+} from '../types';
+import type {
+  CreateBranchReturn,
+  GetBranchRefReturn,
+  GetFileReturn,
+} from './types';
 
-interface GithubArgs {
+interface GithubConfig {
   repo: string;
   owner: string;
   token: string;
+  baseBranch: string;
 }
 
 export class GithubRepo implements IRepo {
@@ -13,13 +23,29 @@ export class GithubRepo implements IRepo {
   octokit: Octokit;
   owner: string;
   repo: string;
+  baseBranch: string;
 
-  constructor({ repo, owner, token }: GithubArgs) {
+  constructor({ repo, owner, token, baseBranch }: GithubConfig) {
     this.octokit = new Octokit({
       auth: token,
     });
+    this.baseBranch = baseBranch;
     this.owner = owner;
     this.repo = repo;
+  }
+
+  async getFileContent(args: GetFileContentParams): Promise<string> {
+    const { filePath, branch = this.baseBranch } = args;
+    const file = await this.#getFile({ filePath, branch });
+    if (file.type === 'file') {
+      const { content } = file;
+      if (!content) {
+        throw new Error('The file content is empty');
+      }
+      return Buffer.from(content, 'base64').toString('utf8');
+    } else {
+      throw new Error("The file is a symlink or submodule, impossible to retrieve his content");
+    }
   }
 
   async getRequests(): Promise<Request[]> {
@@ -35,7 +61,14 @@ export class GithubRepo implements IRepo {
   }
 
   async writeRequest(args: WriteRequestParams): Promise<void> {
-    const { filePath, newfileContent, title, description, baseBranch, newBranch } = args;
+    const {
+      filePath,
+      newfileContent,
+      title,
+      description,
+      baseBranch = this.baseBranch,
+      newBranch,
+    } = args;
     const {
       object: { sha: baseBranchSha },
     } = await this.#getBranchRef(baseBranch);
@@ -97,6 +130,26 @@ export class GithubRepo implements IRepo {
     return baseRefData;
   }
 
+  async #getFile({
+    filePath,
+    branch,
+  }: {
+    filePath: string;
+    branch: string;
+  }): Promise<GetFileReturn> {
+    const { data: contentRes } = await this.octokit.rest.repos.getContent({
+      owner: this.owner,
+      repo: this.repo,
+      path: filePath,
+      ref: branch,
+    });
+    if (Array.isArray(contentRes)) {
+      throw new Error('Get file response is an array');
+    }
+    const file = contentRes;
+    return file;
+  }
+
   async #getShaFile({
     filePath,
     branch,
@@ -104,26 +157,13 @@ export class GithubRepo implements IRepo {
     filePath: string;
     branch: string;
   }): Promise<string | undefined> {
-    let shaFile: string | undefined;
     try {
-      const { data: contentRes } = await this.octokit.rest.repos.getContent({
-        owner: this.owner,
-        repo: this.repo,
-        path: filePath,
-        ref: branch,
-      });
-      if (Array.isArray(contentRes)) {
-        shaFile = contentRes[1].sha;
-      } else {
-        shaFile = contentRes.sha;
-      }
+      const file = await this.#getFile({ filePath, branch });
+      return file.sha;
     } catch (e) {
       console.log('File does not exist');
     }
-    if (shaFile) {
-      console.log('File exist, update it');
-    }
-    return shaFile;
+    return undefined;
   }
 
   async #createFileOrUpdateInBranch({
