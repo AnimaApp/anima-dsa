@@ -18,3 +18,5 @@ test('Check if storybook is ready', async () => {
   expect(storybook.upload_status).toBe("complete");
   expect(storybook.status).toBe("ready");
 });
+
+// TODO: verify stories are created
