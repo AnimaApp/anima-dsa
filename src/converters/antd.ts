@@ -17,7 +17,6 @@ export type AntdConfig = z.infer<typeof schemaAntd>;
 export class AntdConverter implements IConverter {
   framework = 'antd' as const;
   config: AntdConfig | null = null;
-  static delimiter = '-';
 
   async loadConfig(configPath: string): Promise<AntdConfig> {
     this.config = schemaAntd.parse(await loadJSFileFromCWD(configPath));
