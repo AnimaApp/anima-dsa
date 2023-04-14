@@ -1,11 +1,8 @@
-import kebabCase from 'kebab-case';
-
 import { z } from 'zod';
 import type { IConverter } from './types';
 import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-import { TOKEN_COLOR_TYPE } from '../constants';
 
 // TODO: Enhance Antd theme with all the values
 const schemaAntd = z.object({
@@ -65,24 +62,5 @@ const App: React.FC = () => (
 
 export default App;
 `;
-  }
-
-  static convertDesignTokenToTheme(
-    designTokens: DesignTokenTheme,
-  ): AntdConfig {
-    const tokens = AntdConverter.convertDesignTokenColorsToTheme(designTokens);
-    return { token: tokens };
-  }
-
-  static convertDesignTokenColorsToTheme(
-    designTokens: DesignTokenTheme,
-  ): AntdConfig['token'] {
-    const antdTokens: Record<string, string> = {};
-    for (const key in designTokens) {
-      if (designTokens[key].$type === TOKEN_COLOR_TYPE) {
-        antdTokens[key] = designTokens[key].$value;
-      }
-    }
-    return antdTokens;
   }
 }

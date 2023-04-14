@@ -1,4 +1,4 @@
-import { TOKEN_COLOR_TYPE } from '.';
+import { TOKEN_COLOR_TYPE } from './design-tokens';
 
 interface TokenColorValue {
   $value: string;
