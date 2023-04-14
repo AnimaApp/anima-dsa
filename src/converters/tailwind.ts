@@ -6,7 +6,7 @@ import type { IConverter } from './types';
 import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-import { TOKEN_COLOR_TYPE } from '../constants';
+import { TOKEN_COLOR_TYPE } from '../constants/design-tokens';
 
 // TODO: Enhance Tailwind theme with all the values
 const schemaTailwind = z.object({
