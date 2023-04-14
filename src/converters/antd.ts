@@ -29,7 +29,7 @@ export class AntdConverter implements IConverter {
     const colors: Record<string, string> = {};
     Object.entries(tokens).forEach(([key, value]) => {
       if (key.includes('color')) {
-        colors[kebabCase(key)] = value;
+        colors[key] = value;
       }
     });
     const designTokens: DesignTokenTheme = {};
