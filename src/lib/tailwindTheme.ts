@@ -1,9 +1,9 @@
-import type { DesignTokenTheme } from '../constants/types';
+import { type DesignTokenMap } from '@animaapp/token-core';
 import type { TailwindConfig } from '../converters/tailwind';
 import { TailwindConverter } from '../converters/tailwind';
 
 export const getTailwindTheme = (
-  dsToken: DesignTokenTheme,
+  dsToken: DesignTokenMap,
 ): TailwindConfig['theme'] => {
   return TailwindConverter.convertDesignTokenToTheme(dsToken);
 };

@@ -46,6 +46,7 @@
     "format": "prettier --loglevel warn --write \"**/*.{ts,js,json,yaml}\"",
     "format:check": "prettier --loglevel warn --check \"**/*.{ts,js,json,yaml}\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
+    "unit:test": "jest '__tests__/.*.spec.ts'",
     "test": "node ./e2e-test/run.mjs",
     "lint:check": "eslint \"src/**/*.ts\""
   },
@@ -69,6 +70,7 @@
     "zod": "^3.20.6"
   },
   "devDependencies": {
+    "@animaapp/token-core": "^1.0.6",
     "@jest/globals": "^29.4.2",
     "@types/archiver": "^5.3.1",
     "@types/flat": "^5.0.2",

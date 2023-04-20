@@ -3,10 +3,13 @@ import flatten, { unflatten } from 'flat';
 
 import { z } from 'zod';
 import type { IConverter } from './types';
-import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-import { TOKEN_COLOR_TYPE } from '../constants/design-tokens';
+import {
+  isDesignToken,
+  type DesignToken,
+  type DesignTokenMap,
+} from '@animaapp/token-core';
 
 // TODO: Enhance Tailwind theme with all the values
 const schemaTailwind = z.object({
@@ -21,14 +24,14 @@ export type TailwindConfig = z.infer<typeof schemaTailwind>;
 export class TailwindConverter implements IConverter {
   framework = 'tailwind' as const;
   config: TailwindConfig | null = null;
-  static delimiter = '-';
+  static delimiter = '.';
 
   async loadConfig(configPath: string): Promise<TailwindConfig> {
     this.config = schemaTailwind.parse(await loadJSFileFromCWD(configPath));
     return this.config;
   }
 
-  async convertColorToDesignTokens(): Promise<DesignTokenTheme> {
+  async convertColorToDesignTokens(): Promise<DesignTokenMap> {
     if (!this.config) throw new Error('Config not loaded');
     const extendColors = this.config.theme.extend?.colors;
     const colors = this.config.theme.colors;
@@ -44,10 +47,11 @@ export class TailwindConverter implements IConverter {
       },
     );
 
-    const designTokens: DesignTokenTheme = {};
+    let designTokens: DesignTokenMap = {};
     Object.keys(tailwindTokenColor).forEach((key) => {
       designTokens[key] = formatColorToTokenValue(tailwindTokenColor[key]);
     });
+    designTokens = unflatten(designTokens, { delimiter: TailwindConverter.delimiter, object: true });
     return designTokens;
   }
 
@@ -73,7 +77,7 @@ module.exports = {
   }
 
   static convertDesignTokenToTheme(
-    designTokens: DesignTokenTheme,
+    designTokens: DesignTokenMap,
   ): TailwindConfig['theme'] {
     const colors =
       TailwindConverter.convertDesignTokenColorsToTheme(designTokens);
@@ -81,18 +85,23 @@ module.exports = {
   }
 
   static convertDesignTokenColorsToTheme(
-    designTokens: DesignTokenTheme,
+    designTokens: DesignTokenMap,
   ): TailwindConfig['theme']['colors'] {
-    const twTokens: { [key: string]: unknown | string } = {};
-    for (const key in designTokens) {
-      if (designTokens[key].$type === TOKEN_COLOR_TYPE) {
-        twTokens[key] = designTokens[key].$value;
-      }
-    }
-    const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(
-      twTokens,
-      { delimiter: TailwindConverter.delimiter, object: true },
-    );
-    return twTokensUnflatten;
+    const twThemeTokens: { [key: string]: unknown | string } = {};
+    populateTree(designTokens, twThemeTokens);
+    return twThemeTokens;
   }
 }
+
+function populateTree(designTokens: DesignTokenMap, toPopulate: { [key: string]: unknown | string }) {
+  for (const key in designTokens) {
+    const value = designTokens[key];
+    if (isDesignToken(value)) {
+      toPopulate[key] = value.$value;
+    } else if (value != null) {
+      const newGroup = {};
+      toPopulate[key] = newGroup;
+      populateTree(value, newGroup);
+    }
+  }
+};
