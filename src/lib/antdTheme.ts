@@ -1,6 +1,5 @@
-import { TOKEN_COLOR_TYPE } from '../constants/design-tokens';
-import type { DesignTokenMap } from '@animaapp/token-core';
-import type { AntdConfig } from '../converters/antd';
+import { DesignTokenMap, isDesignToken } from '@animaapp/token-core';
+import { ANTD_TOKEN_KEY, AntdConfig } from '../converters/antd';
 
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
@@ -19,9 +18,13 @@ const convertDesignTokenColorsToTheme = (
   designTokens: DesignTokenMap,
 ): AntdConfig['token'] => {
   const antdTokens: Record<string, string> = {};
-  for (const key in designTokens) {
-    if (designTokens[key].$type === TOKEN_COLOR_TYPE) {
-      antdTokens[key] = designTokens[key].$value;
+  const tokens = designTokens[ANTD_TOKEN_KEY];
+  if (isDesignToken(tokens)) return {};
+  for (const key in tokens) {
+    const token = tokens[key];
+    if (token == null) continue;
+    if (isDesignToken(token) && typeof token.$value === 'string') {
+      antdTokens[key] = token.$value;
     }
   }
   return antdTokens;

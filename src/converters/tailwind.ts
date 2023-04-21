@@ -7,7 +7,6 @@ import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
 import {
   isDesignToken,
-  type DesignToken,
   type DesignTokenMap,
 } from '@animaapp/token-core';
 

@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import type { IConverter } from './types';
-import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD } from '../helpers';
 import { formatColorToTokenValue } from './utils';
+import { DesignTokenMap } from '@animaapp/token-core';
+
+export const ANTD_TOKEN_KEY = 'seed';
 
 // TODO: Enhance Antd theme with all the values
 const schemaAntd = z.object({
@@ -20,7 +22,7 @@ export class AntdConverter implements IConverter {
     return this.config;
   }
 
-  async convertColorToDesignTokens(): Promise<DesignTokenTheme> {
+  async convertColorToDesignTokens(): Promise<DesignTokenMap> {
     if (!this.config) throw new Error('Config not loaded');
     const tokens = this.config.token;
     const colors: Record<string, string> = {};
@@ -29,11 +31,11 @@ export class AntdConverter implements IConverter {
         colors[key] = value;
       }
     });
-    const designTokens: DesignTokenTheme = {};
+    const designTokens: DesignTokenMap = {};
     Object.entries(colors).forEach(([key, value]) => {
       designTokens[key] = formatColorToTokenValue(value);
     });
-    return designTokens;
+    return { [ANTD_TOKEN_KEY]: designTokens };
   }
 
   sampleConfigFile(): string {

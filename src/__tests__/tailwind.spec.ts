@@ -1,5 +1,4 @@
 import { TailwindConverter } from '../converters/tailwind';
-import { getAntdTheme } from '../lib/antdTheme';
 import { getTailwindTheme } from '../lib/tailwindTheme';
 
 const configPath = './src/__tests__/test-tailwind.config.js';
@@ -34,7 +33,7 @@ describe('tailwind converters', () => {
     const tailwConv = new TailwindConverter();
     await tailwConv.loadConfig(configPath);
     const designTokens = await tailwConv.convertColorToDesignTokens();
-    expect(designTokens).toMatchObject({});
+    expect(designTokens).toMatchObject(tokens);
   });
   test('convert design tokens to tailwind theme', async () => {
     const theme = getTailwindTheme(tokens);
