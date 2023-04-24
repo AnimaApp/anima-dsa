@@ -1,7 +1,6 @@
 import { getCurrentHub } from '@sentry/node';
 import nf, { Response } from 'node-fetch';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
-import { transformDStoJSON, log } from './../helpers/';
 
 export interface StorybookEntity {
   upload_status: string;
@@ -82,14 +81,8 @@ export const updateDSTokenIfNeeded = async ({
   const { ds_tokens, id, upload_status } = storybook;
   const uploadSpan = getCurrentHub().getScope()?.getSpan();
   const span = uploadSpan?.startChild({ op: 'update-ds-token-if-needed' });
-  let transformedToken = {};
-  try {
-    transformedToken = transformDStoJSON(currentDSToken);
-  } catch (e) {
-    log.red('[Update design tokens] Invalid tokens file');
-  }
 
-  const ds_tokensAsString = JSON.stringify(transformedToken);
+  const ds_tokensAsString = JSON.stringify(currentDSToken);
 
   if (ds_tokens !== ds_tokensAsString) {
     const spanUpdateStorybook = span?.startChild({ op: 'update-storybook' });
@@ -123,21 +116,13 @@ export const getOrCreateStorybook = async (
   const res = await getStorybookByHash(token, hash);
   let data: StorybookEntity | null = null;
 
-  let ds_tokens = {};
-
-  try {
-    ds_tokens = transformDStoJSON(raw_ds_tokens);
-  } catch (e) {
-    log.red('[Create design tokens] Invalid tokens file');
-  }
-
   if (res.status === 200) {
     data = await res.json();
   } else if (res.status === 404) {
     const spanCreateStorybook = spanGetOrCreate?.startChild({
       op: 'create-storybook',
     });
-    data = await createStorybook(token, hash, ds_tokens, basePath);
+    data = await createStorybook(token, hash, raw_ds_tokens, basePath);
     spanCreateStorybook?.finish();
   }
 
