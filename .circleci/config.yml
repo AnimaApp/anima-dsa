@@ -30,9 +30,9 @@ jobs:
       - aws-cli/setup:
           profile-name: default
       - run: |
-          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-          echo "@animaapp:registry=https://npm.pkg.github.com" >> ~/.npmrc
-          echo "//npm.pkg.github.com:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ./.npmrc
+          echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
+          echo "//npm.pkg.github.com:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
       - run:
           name: "Install Ubuntu dependencies"
           command: |
