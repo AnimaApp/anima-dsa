@@ -35,4 +35,24 @@ describe('antd converters', () => {
       colorSuccess: '#ffffff',
     });
   });
+  test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {
+    const invalidToken = {
+      test: "etc",
+      seed: {
+        $value: "lol",
+      },
+    }
+    // @ts-expect-error testing fail
+    expect(() => getAntdTheme(invalidToken)).toThrow(/\$value as a root key/);
+  });
+  test('convert invalid design tokens to antd theme, no tokens (fail)', async () => {
+    const invalidToken = {
+      test: "etc",
+      seed: {
+        primaryColor: "lol",
+      },
+    }
+    // @ts-expect-error testing fail
+    expect(() => getAntdTheme(invalidToken)).toThrow(/Unexpected value in design/);
+  });
 });

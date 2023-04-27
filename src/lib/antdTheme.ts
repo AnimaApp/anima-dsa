@@ -19,10 +19,24 @@ const convertDesignTokenColorsToTheme = (
 ): AntdConfig['token'] => {
   const antdTokens: Record<string, string> = {};
   const tokens = designTokens[ANTD_TOKEN_KEY];
-  if (isDesignToken(tokens)) return {};
+  if (!tokens) {
+    console.warn(
+      `Couldn't find any antd seed tokens (${ANTD_TOKEN_KEY})`,
+    );
+    return {};
+  }
+  if (isDesignToken(tokens)) {
+    throw new Error(
+      `$value as a root key in the antd keys (${ANTD_TOKEN_KEY})`,
+    );
+  }
   for (const key in tokens) {
     const token = tokens[key];
     if (token == null) continue;
+    if (typeof token !== 'object')
+      throw new Error(
+        `Unexpected value in design tokens json file for key = ${key} expecting object`,
+      );
     if (isDesignToken(token) && typeof token.$value === 'string') {
       antdTokens[key] = token.$value;
     }

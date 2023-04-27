@@ -3,6 +3,11 @@ import { getTailwindTheme } from '../lib/tailwindTheme';
 
 const configPath = './src/__tests__/test-tailwind.config.js';
 
+const invalidTokens = {
+  $value: "lol",
+  test: "etc",
+};
+
 const tokens = {
   transparent: {
     $value: 'transparent',
@@ -46,5 +51,9 @@ describe('tailwind converters', () => {
         300: '#67e8f9',
       },
     });
+  });
+  test('convert false design tokens to tailwind theme (fail)', async () => {
+    // @ts-expect-error testing fail
+    expect(() => getTailwindTheme(invalidTokens)).toThrowError(/Unexpected value.* value = lol .* key = \$value/);;
   });
 });

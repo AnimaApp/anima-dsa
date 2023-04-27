@@ -5,5 +5,5 @@ import { TailwindConverter } from '../converters/tailwind';
 export const getTailwindTheme = (
   dsToken: DesignTokenMap,
 ): TailwindConfig['theme'] => {
-  return TailwindConverter.convertDesignTokenToTheme(dsToken);
+  return TailwindConverter.convertDesignTokensToTheme(dsToken);
 };

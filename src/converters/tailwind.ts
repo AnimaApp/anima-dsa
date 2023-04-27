@@ -75,7 +75,7 @@ module.exports = {
 `;
   }
 
-  static convertDesignTokenToTheme(
+  static convertDesignTokensToTheme(
     designTokens: DesignTokenMap,
   ): TailwindConfig['theme'] {
     const colors =
@@ -97,10 +97,12 @@ function populateTree(designTokens: DesignTokenMap, toPopulate: { [key: string]:
     const value = designTokens[key];
     if (isDesignToken(value)) {
       toPopulate[key] = value.$value;
-    } else if (value != null) {
+    } else if (value != null && typeof value === 'object') {
       const newGroup = {};
       toPopulate[key] = newGroup;
       populateTree(value, newGroup);
+    } else {
+      throw new Error(`Unexpected value in design tokens json file for value = ${value} and key = ${key}`);
     }
   }
 };
