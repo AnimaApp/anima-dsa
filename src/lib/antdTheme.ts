@@ -4,10 +4,10 @@ import { ANTD_TOKEN_KEY, AntdConfig } from '../converters/antd';
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
 ): AntdConfig => {
-  return convertDesignTokenToTheme(dsToken);
+  return convertDesignTokensToTheme(dsToken);
 };
 
-const convertDesignTokenToTheme = (
+const convertDesignTokensToTheme = (
   designTokens: DesignTokenMap,
 ): AntdConfig => {
   const tokens = convertDesignTokenColorsToTheme(designTokens);
