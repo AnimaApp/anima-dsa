@@ -46,5 +46,8 @@ jobs:
           name: "Build"
           command: "yarn build"
       - run:
-          name: "Run tests"
+          name: "Run e2e tests"
           command: "yarn test"
+      - run:
+          name: "Run unit tests"
+          command: "yarn unit:test"
