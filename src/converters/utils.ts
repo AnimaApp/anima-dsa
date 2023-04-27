@@ -1,4 +1,4 @@
-import { DesignToken } from "@animaapp/token-core";
+import { type DesignToken } from "@animaapp/token-core";
 import { TOKEN_COLOR_TYPE } from "../constants/design-tokens";
 
 export const formatColorToTokenValue = (currentValue: string): DesignToken => ({
