@@ -18,7 +18,7 @@ let [, storybookHash] = result;
 console.log('Run the tests');
 // --- Tests ---
 // Run tests Check if stories are well created and synced and finished processing
-execSync(`TOKEN=${token} HASH=${storybookHash} yarn jest --testPathIgnorePatterns="/__tests__/" ./ `, {
+execSync(`TOKEN=${token} HASH=${storybookHash} yarn jest . --testPathIgnorePatterns="/__tests__/"`, {
   stdio: 'inherit',
 });
 
@@ -35,7 +35,7 @@ if (!result) throw new Error('storybook hash not found');
 console.log('Run the tests');
 // --- Tests ---
 // Run tests Check if stories are well created and synced and finished processing
-execSync(`TOKEN=${token} HASH=${storybookHash} yarn jest --testPathIgnorePatterns="/__tests__/" ./`, {
+execSync(`TOKEN=${token} HASH=${storybookHash} yarn jest . --testPathIgnorePatterns="/__tests__/"`, {
   stdio: 'inherit',
 });
 
