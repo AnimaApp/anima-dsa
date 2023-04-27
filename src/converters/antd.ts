@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { IConverter } from './types';
 import { loadJSFileFromCWD } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-import { DesignTokenMap } from '@animaapp/token-core';
+import type { DesignTokenMap } from '@animaapp/token-core';
 
 export const ANTD_TOKEN_KEY = 'seed';
 
