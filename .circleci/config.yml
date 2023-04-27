@@ -32,7 +32,8 @@ jobs:
       - run: |
           echo "registry=https://registry.npmjs.org/" >> ./.npmrc
           echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
-          echo "//npm.pkg.github.com:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
+          echo "always-auth=true"
       - run:
           name: "Install Ubuntu dependencies"
           command: |
