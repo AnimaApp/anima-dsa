@@ -1,4 +1,5 @@
 import { TailwindConverter } from '../converters/tailwind';
+import { describe, expect, test } from 'vitest';
 
 const configPath = './src/__tests__/test-tailwind.config.js';
 

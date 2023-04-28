@@ -2,5 +2,5 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  transformIgnorePatterns: ['/node_modules/(?!@animaapp/token-core)'],
+  transformIgnorePatterns: ['/node_modules/(?!@animaapp/token-core|@animaapp/framework-helpers)'],
 };
