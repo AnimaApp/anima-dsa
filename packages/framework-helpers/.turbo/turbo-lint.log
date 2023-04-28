@@ -1,4 +1,0 @@
-
-> anima-framework-helpers@1.0.0 lint /Users/aymeric/Documents/Professional/anima-storybook-cli/packages/anima-framework-helpers
-> eslint "src/**/*.ts" --fix
-

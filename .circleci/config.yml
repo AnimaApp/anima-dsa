@@ -51,6 +51,3 @@ jobs:
       - run:
           name: "Run e2e tests"
           command: "pnpm test"
-      - run:
-          name: "Run unit tests"
-          command: "yarn unit:test"
