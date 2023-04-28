@@ -1,4 +1,4 @@
-import { DesignTokenMap, isDesignToken } from '@animaapp/token-core';
+import { type DesignTokenMap } from '@animaapp/token-core';
 import { ANTD_TOKEN_KEY, AntdConfig } from '../converters/antd';
 
 export const getAntdTheme = <T extends DesignTokenMap>(
@@ -25,7 +25,7 @@ const convertDesignTokenColorsToTheme = (
     );
     return {};
   }
-  if (isDesignToken(tokens)) {
+  if ("$value" in tokens) {
     throw new Error(
       `$value as a root key in the antd keys (${ANTD_TOKEN_KEY})`,
     );
@@ -37,7 +37,7 @@ const convertDesignTokenColorsToTheme = (
       throw new Error(
         `Unexpected value in design tokens json file for key = ${key} expecting object`,
       );
-    if (isDesignToken(token) && typeof token.$value === 'string') {
+    if ("$value" in token && typeof token.$value === 'string') {
       antdTokens[key] = token.$value;
     }
   }
