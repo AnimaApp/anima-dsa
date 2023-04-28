@@ -40,14 +40,17 @@ jobs:
             apt-get -y update
             apt-get install -y jq
       - run:
+          name: 'Install pnpm'
+          command: 'npm i -g pnpm@latest'
+      - run:
           name: "Install dependencies"
-          command: "yarn install --frozen-lockfile"
+          command: "pnpm i"
       - run:
           name: "Build"
-          command: "yarn build"
+          command: "pnpm build"
       - run:
           name: "Run e2e tests"
-          command: "yarn test"
+          command: "pnpm test"
       - run:
           name: "Run unit tests"
           command: "yarn unit:test"

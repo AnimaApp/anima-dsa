@@ -1,0 +1,20 @@
+
+> @animaapp/framework-helpers@1.0.0 test /Users/aymeric/Documents/Professional/anima-storybook-cli/packages/framework-helpers
+> jest '__tests__/.*.spec.ts'
+
+watchman warning:  Recrawled this watch 59 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/aymeric/Documents/Professional/anima-storybook-cli' ; watchman watch-project '/Users/aymeric/Documents/Professional/anima-storybook-cli'`
+
+ts-jest[versions] (WARN) Version 5.0.2 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=4.3.0 <5.0.0-0). Please do not report issues in ts-jest if you are using unsupported versions.
+ts-jest[versions] (WARN) Version 5.0.2 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=4.3.0 <5.0.0-0). Please do not report issues in ts-jest if you are using unsupported versions.
+PASS src/__tests__/antd.spec.ts
+PASS src/__tests__/tailwind.spec.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        1.751 s, estimated 2 s
+Ran all test suites matching /__tests__\/.*.spec.ts/i.

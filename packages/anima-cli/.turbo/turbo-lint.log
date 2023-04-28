@@ -1,0 +1,10 @@
+
+> anima-storybook-cli@0.11.0 lint /Users/aymeric/Documents/Professional/anima-storybook-cli/packages/anima-cli
+> eslint "src/**/*.ts" --fix
+
+
+/Users/aymeric/Documents/Professional/anima-storybook-cli/packages/anima-cli/src/commands/status.ts
+  79:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 1 problem (0 errors, 1 warning)
+

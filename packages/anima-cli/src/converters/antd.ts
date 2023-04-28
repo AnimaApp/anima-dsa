@@ -1,17 +1,8 @@
-import { z } from 'zod';
 import type { DesignTokenMap } from '@animaapp/token-core';
+import { type AntdConfig, schemaAntd, ANTD_TOKEN_KEY } from '@animaapp/framework-helpers';
 import type { IConverter } from './types';
 import { loadJSFileFromCWD } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-
-export const ANTD_TOKEN_KEY = 'seed';
-
-// TODO: Enhance Antd theme with all the values
-const schemaAntd = z.object({
-  token: z.record(z.string(), z.string()),
-});
-
-export type AntdConfig = z.infer<typeof schemaAntd>;
 
 export class AntdConverter implements IConverter {
   framework = 'antd' as const;

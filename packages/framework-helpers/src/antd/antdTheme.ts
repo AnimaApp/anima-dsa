@@ -1,5 +1,6 @@
 import { type DesignTokenMap } from '@animaapp/token-core';
-import { ANTD_TOKEN_KEY, AntdConfig } from '../converters/antd';
+import { type AntdConfig } from './types';
+import { ANTD_TOKEN_KEY } from './constants';
 
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
