@@ -255,7 +255,7 @@ const getMostRecentStorybook = async (token: string): Promise<Response> => {
   if (traceHeader) {
     headers['sentry-trace'] = traceHeader;
   }
-  return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook-list?${query}`, {
+  return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybooks?${query}`, {
     method: 'GET',
     headers,
   });
