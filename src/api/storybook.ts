@@ -189,7 +189,7 @@ export const getOrCreateStorybookForDesignTokens = async (
 
   const { results } = await res.json();
 
-  if (!results.length) {
+  if (results.length) {
     data = results[0];
   } else {
     const spanCreateStorybook = spanGetOrCreate?.startChild({
@@ -255,7 +255,7 @@ const getMostRecentStorybook = async (token: string): Promise<Response> => {
   if (traceHeader) {
     headers['sentry-trace'] = traceHeader;
   }
-  return nf(`${STORYBOOK_SERVICE_BASE_URL}/stories?${query}`, {
+  return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook-list?${query}`, {
     method: 'GET',
     headers,
   });
