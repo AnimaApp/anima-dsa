@@ -135,8 +135,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   const currentDesignTokens = storybook.designTokens;
 
-  console.log(designTokens);
-
   if (storybook.storybookId) {
     await updateDSTokenIfNeeded({
       storybook: {
@@ -151,8 +149,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       log.yellow(`Fail to update designTokens, ${e.message}`);
     });
   }
-
-  console.log('ooo');
 
   spanUpload.finish();
 

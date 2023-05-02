@@ -181,12 +181,17 @@ export const getOrCreateStorybookForDesignTokens = async (
 
   const hash = hashString(token);
 
-  if (res.status === 200) {
-    const { results } = await res.json();
-    data = results[0] ?? null;
+  if (res.status !== 200) {
+    throw new Error(
+      'We had an issue making a request to our server. Please try again, or reach out to the Anima team if the problem persists',
+    );
   }
 
-  if (res.status === 404) {
+  const { results } = await res.json();
+
+  if (!results.length) {
+    data = results[0];
+  } else {
     const spanCreateStorybook = spanGetOrCreate?.startChild({
       op: 'create-storybook',
     });
@@ -203,7 +208,7 @@ export const getOrCreateStorybookForDesignTokens = async (
   const {
     id,
     upload_signed_url,
-    upload_status = 'init',
+    upload_status = 'complete',
     ds_tokens: dsTokens,
   } = data ?? {};
 
