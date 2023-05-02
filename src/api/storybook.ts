@@ -35,6 +35,7 @@ interface CreateStorybookParams {
   ds_tokens: string;
   base_path?: string;
   status?: 'ready';
+  upload_status?: 'complete';
 }
 
 export const createStorybook = async (
@@ -193,6 +194,7 @@ export const getOrCreateStorybookForDesignTokens = async (
     data = await createStorybook(token, {
       ds_tokens: JSON.stringify(raw_ds_tokens),
       storybook_hash: hash,
+      status: 'ready',
       upload_status: 'complete',
     });
     spanCreateStorybook?.finish();
