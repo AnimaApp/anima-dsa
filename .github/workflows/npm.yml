@@ -14,8 +14,8 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.yarnpkg.com'
       - name: Install dependencies and build 🔧
-        run: yarn install && npm run build
+        run: pnpm i && pnpm build
       - name: Publish package on NPM 📦
-        run: npm publish
+        run: pnpm publish --filter "@animaapp/framework-helpers" --filter "anima-storybook-cli" --no-git-checks --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
