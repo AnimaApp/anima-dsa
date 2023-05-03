@@ -1,7 +1,7 @@
 import { getCurrentHub } from '@sentry/node';
 import nf, { Response } from 'node-fetch';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
-import { transformDStoJSON, log } from './../helpers/';
+import { transformDStoJSON, log, hashString } from './../helpers/';
 
 export interface StorybookEntity {
   upload_status: string;
@@ -30,11 +30,17 @@ export const getStorybookByHash = async (
   });
 };
 
+interface CreateStorybookParams {
+  storybook_hash: string;
+  ds_tokens: string;
+  base_path?: string;
+  status?: 'ready';
+  upload_status?: 'complete';
+}
+
 export const createStorybook = async (
   token: string,
-  hash: string,
-  ds_tokens: Record<string, unknown>,
-  basePath: string | undefined,
+  params: CreateStorybookParams,
 ): Promise<StorybookEntity | null> => {
   const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
   const headers: { [key: string]: string } = {
@@ -47,11 +53,7 @@ export const createStorybook = async (
   const res = await nf(`${STORYBOOK_SERVICE_BASE_URL}/storybook`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify({
-      storybook_hash: hash,
-      ds_tokens: JSON.stringify(ds_tokens),
-      base_path: basePath,
-    }),
+    body: JSON.stringify(params),
   });
 
   if (res.status === 200) {
@@ -95,7 +97,7 @@ export const updateDSTokenIfNeeded = async ({
     const spanUpdateStorybook = span?.startChild({ op: 'update-storybook' });
     const response = await updateStorybook(token, id, {
       ds_tokens: ds_tokensAsString,
-      upload_status: upload_status,
+      upload_status,
     });
     if (response.status !== 200) {
       if (spanUpdateStorybook) {
@@ -137,7 +139,11 @@ export const getOrCreateStorybook = async (
     const spanCreateStorybook = spanGetOrCreate?.startChild({
       op: 'create-storybook',
     });
-    data = await createStorybook(token, hash, ds_tokens, basePath);
+    data = await createStorybook(token, {
+      storybook_hash: hash,
+      ds_tokens: JSON.stringify(ds_tokens),
+      base_path: basePath,
+    });
     spanCreateStorybook?.finish();
   }
 
@@ -145,6 +151,64 @@ export const getOrCreateStorybook = async (
     id,
     upload_signed_url,
     upload_status = 'init',
+    ds_tokens: dsTokens,
+  } = data ?? {};
+
+  transaction?.setData('storybookID', id);
+  spanGetOrCreate?.finish();
+
+  return {
+    storybookId: id,
+    uploadUrl: upload_signed_url,
+    uploadStatus: upload_status,
+    hash,
+    designTokens: dsTokens,
+  };
+};
+
+export const getOrCreateStorybookForDesignTokens = async (
+  token: string,
+  raw_ds_tokens: Record<string, unknown> = {},
+): Promise<getOrCreateStorybookResponse> => {
+  const transaction = getCurrentHub().getScope()?.getTransaction();
+  const spanGetOrCreate = transaction?.startChild({
+    op: 'get-or-create-storybook-for-design-tokens',
+  });
+
+  const res = await getMostRecentStorybook(token);
+
+  let data: StorybookEntity | null = null;
+
+  const hash = hashString(token);
+
+  if (res.status !== 200) {
+    throw new Error(
+      'We had an issue making a request to our server. Please try again, or reach out to the Anima team if the problem persists',
+    );
+  }
+
+  const { results } = await res.json();
+
+  if (results.length) {
+    data = results[0];
+  } else {
+    const spanCreateStorybook = spanGetOrCreate?.startChild({
+      op: 'create-storybook',
+    });
+
+    data = await createStorybook(token, {
+      ds_tokens: JSON.stringify(raw_ds_tokens),
+      storybook_hash: hash,
+      status: 'ready',
+      upload_status: 'complete',
+    });
+    spanCreateStorybook?.finish();
+  }
+
+  const {
+    id,
+    upload_signed_url,
+    upload_status = 'complete',
     ds_tokens: dsTokens,
   } = data ?? {};
 
@@ -172,6 +236,26 @@ export const getTeamProcessingStories = async (
     headers['sentry-trace'] = traceHeader;
   }
   return nf(`${STORYBOOK_SERVICE_BASE_URL}/stories_processing`, {
+    method: 'GET',
+    headers,
+  });
+};
+
+const getMostRecentStorybook = async (token: string): Promise<Response> => {
+  const query = new URLSearchParams({
+    order_by: '-updated_at',
+    limit: '1',
+  }).toString();
+
+  const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + token,
+  };
+  if (traceHeader) {
+    headers['sentry-trace'] = traceHeader;
+  }
+  return nf(`${STORYBOOK_SERVICE_BASE_URL}/storybooks?${query}`, {
     method: 'GET',
     headers,
   });
