@@ -9,7 +9,7 @@ import {
 } from '../api';
 import { log } from '../helpers';
 import * as Sentry from '@sentry/node';
-import { getFileIfExists } from '../helpers/file-system';
+import { getFileOrThrow } from '../helpers/file-system';
 
 export const command = 'sync-design-tokens';
 export const desc = 'Sync your design tokens to Figma';
@@ -60,7 +60,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   try {
     designTokens =
-      (await getFileIfExists<Record<string, unknown>>(designTokensPath)) ?? {};
+      (await getFileOrThrow<Record<string, unknown>>(designTokensPath)) ?? {};
   } catch (error) {
     const errorMessage = `Fail to read design tokens at path "${designTokensPath}"`;
     loader.stop();
@@ -129,7 +129,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   );
 
   const spanUpload = transaction.startChild({
-    op: 'upload-process',
+    op: 'update-design-tokens',
   });
   Sentry.getCurrentHub().configureScope((scope) => scope.setSpan(spanUpload));
 

@@ -172,7 +172,7 @@ export const getOrCreateStorybookForDesignTokens = async (
 ): Promise<getOrCreateStorybookResponse> => {
   const transaction = getCurrentHub().getScope()?.getTransaction();
   const spanGetOrCreate = transaction?.startChild({
-    op: 'get-or-create-storybook',
+    op: 'get-or-create-storybook-for-design-tokens',
   });
 
   const res = await getMostRecentStorybook(token);
