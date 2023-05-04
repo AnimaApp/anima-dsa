@@ -1,34 +1,25 @@
 import kebabCase from 'kebab-case';
 import flatten, { unflatten } from 'flat';
 
-import { z } from 'zod';
 import type { IConverter } from './types';
-import type { DesignTokenTheme } from '../constants/types';
 import { loadJSFileFromCWD, log } from '../helpers';
 import { formatColorToTokenValue } from './utils';
-import { TOKEN_COLOR_TYPE } from '../constants/design-tokens';
-
-// TODO: Enhance Tailwind theme with all the values
-const schemaTailwind = z.object({
-  theme: z.object({
-    colors: z.record(z.string(), z.any()),
-    extend: z.record(z.string(), z.any()).optional(),
-  }),
-});
-
-export type TailwindConfig = z.infer<typeof schemaTailwind>;
+import {
+  type DesignTokenMap,
+} from '@animaapp/token-core';
+import { schemaTailwind, type TailwindConfig } from '@animaapp/framework-helpers';
 
 export class TailwindConverter implements IConverter {
   framework = 'tailwind' as const;
   config: TailwindConfig | null = null;
-  static delimiter = '-';
+  static delimiter = '.';
 
   async loadConfig(configPath: string): Promise<TailwindConfig> {
     this.config = schemaTailwind.parse(await loadJSFileFromCWD(configPath));
     return this.config;
   }
 
-  async convertColorToDesignTokens(): Promise<DesignTokenTheme> {
+  async convertColorToDesignTokens(): Promise<DesignTokenMap> {
     if (!this.config) throw new Error('Config not loaded');
     const extendColors = this.config.theme.extend?.colors;
     const colors = this.config.theme.colors;
@@ -44,10 +35,11 @@ export class TailwindConverter implements IConverter {
       },
     );
 
-    const designTokens: DesignTokenTheme = {};
+    let designTokens: DesignTokenMap = {};
     Object.keys(tailwindTokenColor).forEach((key) => {
       designTokens[key] = formatColorToTokenValue(tailwindTokenColor[key]);
     });
+    designTokens = unflatten(designTokens, { delimiter: TailwindConverter.delimiter, object: true });
     return designTokens;
   }
 
@@ -70,29 +62,5 @@ module.exports = {
   },
 };
 `;
-  }
-
-  static convertDesignTokenToTheme(
-    designTokens: DesignTokenTheme,
-  ): TailwindConfig['theme'] {
-    const colors =
-      TailwindConverter.convertDesignTokenColorsToTheme(designTokens);
-    return { colors };
-  }
-
-  static convertDesignTokenColorsToTheme(
-    designTokens: DesignTokenTheme,
-  ): TailwindConfig['theme']['colors'] {
-    const twTokens: { [key: string]: unknown | string } = {};
-    for (const key in designTokens) {
-      if (designTokens[key].$type === TOKEN_COLOR_TYPE) {
-        twTokens[key] = designTokens[key].$value;
-      }
-    }
-    const twTokensUnflatten: TailwindConfig['theme']['colors'] = unflatten(
-      twTokens,
-      { delimiter: TailwindConverter.delimiter, object: true },
-    );
-    return twTokensUnflatten;
   }
 }

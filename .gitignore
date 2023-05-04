@@ -2,8 +2,9 @@
 *-error.log
 /.nyc_output
 /coverage
-/bin
-/dist
-/build
-/tmp
+bin
+dist
+build
+tmp
 node_modules
+.turbo

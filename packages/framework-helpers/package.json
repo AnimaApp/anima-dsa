@@ -1,0 +1,38 @@
+{
+  "name": "@animaapp/framework-helpers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "@animaapp/token-core": "^1.0.6",
+    "@jest/globals": "^29.4.2",
+    "@types/jest": "^29.4.0",
+    "@typescript-eslint/eslint-plugin": "4.28.2",
+    "@typescript-eslint/parser": "4.28.2",
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "8.3.0",
+    "jest": "^29.4.2",
+    "prettier": "2.3.2",
+    "ts-jest": "^29.0.5",
+    "typescript": "^5.0.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "format": "prettier --loglevel warn --write \"**/*.{ts,js,json,yaml}\"",
+    "format:check": "prettier --loglevel warn --check \"**/*.{ts,js,json,yaml}\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "jest '__tests__/.*.spec.ts'",
+    "lint:check": "eslint \"src/**/*.ts\""
+  },
+  "files": [
+    "/dist"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.20.6"
+  }
+}

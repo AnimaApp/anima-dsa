@@ -1,9 +1,9 @@
+import { DesignTokenMap } from "@animaapp/token-core";
 import type { FrameworkList } from ".";
-import { DesignTokenTheme } from "../constants/types";
 
 export interface IConverter {
   framework: FrameworkList;
   loadConfig(configPath: string): Promise<unknown>;
-  convertColorToDesignTokens(): Promise<DesignTokenTheme>;
+  convertColorToDesignTokens(): Promise<DesignTokenMap>;
   sampleConfigFile(): string;
 }

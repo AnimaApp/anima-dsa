@@ -29,17 +29,25 @@ jobs:
       - checkout
       - aws-cli/setup:
           profile-name: default
+      - run: |
+          echo "registry=https://registry.npmjs.org/" >> ./.npmrc
+          echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
+          echo "always-auth=true" >> ./.npmrc
       - run:
           name: "Install Ubuntu dependencies"
           command: |
             apt-get -y update
             apt-get install -y jq
       - run:
+          name: 'Install pnpm'
+          command: 'npm i -g pnpm@latest'
+      - run:
           name: "Install dependencies"
-          command: "yarn install --frozen-lockfile"
+          command: "pnpm i"
       - run:
           name: "Build"
-          command: "yarn build"
+          command: "pnpm build"
       - run:
-          name: "Run tests"
-          command: "yarn test"
+          name: "Run e2e tests"
+          command: "pnpm test"
