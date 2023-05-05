@@ -1,5 +1,5 @@
 import { type DesignToken, type DesignTokenAlias, type DesignTokenMap } from "@animaapp/token-core";
-import { DesignTokenValue } from "@animaapp/token-core/dist/types/value";
+import { type DesignTokenValue } from "@animaapp/token-core/dist/types/value";
 
 // we are not using the one from token-core because we want to keep token-core as dev dep for now
 export const isDesignToken = (value: unknown): value is DesignToken => {
@@ -9,7 +9,7 @@ export const isDesignToken = (value: unknown): value is DesignToken => {
   return false;
 };
 
-export const isTokenAlias = (value: DesignTokenValue): value is DesignTokenAlias => typeof value === 'string' && value.startsWith('{');
+export const isTokenValueAlias = (value: DesignTokenValue): value is DesignTokenAlias => typeof value === 'string' && value.startsWith('{');
 
 export const resolveAlias = (designTokens: DesignTokenMap, aliasValue: DesignTokenAlias): DesignToken => {
   const newValue = get(designTokens, aliasValue.slice(1, -1));

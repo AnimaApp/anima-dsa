@@ -1,6 +1,6 @@
 import { type DesignTokenMap } from '@animaapp/token-core';
 import type { TailwindConfig } from './types';
-import { get, isDesignToken, isTokenAlias, resolveAlias } from '../utils';
+import { get, isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
 
 export const getTailwindTheme = (
   dsToken: DesignTokenMap,
@@ -28,7 +28,7 @@ function populateTree(designTokens: DesignTokenMap, toPopulate: { [key: string]:
   for (const key in designTokens) {
     const value = designTokens[key];
     if (isDesignToken(value)) {
-      if (isTokenAlias(value.$value)) {
+      if (isTokenValueAlias(value.$value)) {
         toPopulate[key] = resolveAlias(designTokens, value.$value).$value;
       } else {
         toPopulate[key] = value.$value;
