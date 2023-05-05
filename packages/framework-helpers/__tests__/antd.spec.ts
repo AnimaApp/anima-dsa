@@ -1,4 +1,4 @@
-import { getAntdTheme } from '../antd/antdTheme';
+import { getAntdTheme } from '../src/antd/antdTheme';
 
 const tokens = {
   seed: {

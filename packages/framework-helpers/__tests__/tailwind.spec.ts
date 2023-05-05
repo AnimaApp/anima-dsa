@@ -1,4 +1,4 @@
-import { getTailwindTheme } from '../tailwind/tailwindTheme';
+import { getTailwindTheme } from '../src/tailwind/tailwindTheme';
 
 const invalidTokens = {
   $value: "lol",
