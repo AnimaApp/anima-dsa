@@ -28,6 +28,10 @@ const tokens = {
       $type: 'color',
     },
   },
+  primary: {
+    $value: '{tahiti.100}',
+    $type: 'color',
+  },
 } as const;
 
 describe('tailwind converters', () => {
@@ -41,6 +45,7 @@ describe('tailwind converters', () => {
         200: '#a5f3fc',
         300: '#67e8f9',
       },
+      primary: '#cffafe',
     });
   });
   test('convert false design tokens to tailwind theme (fail)', async () => {
