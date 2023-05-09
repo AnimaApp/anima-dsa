@@ -81,8 +81,8 @@ importers:
         version: 3.20.6
     devDependencies:
       '@animaapp/token-core':
-        specifier: ^1.0.6
-        version: 1.0.6
+        specifier: ^1.0.16
+        version: 1.0.16
       '@jest/globals':
         specifier: ^29.4.2
         version: 29.4.2
@@ -185,6 +185,25 @@ packages:
       '@octokit/rest': 19.0.7
       buffer: 6.0.3
       octokit: 2.0.14
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
+  /@animaapp/store-provider@1.0.8:
+    resolution: {integrity: sha512-UmLb5MjvycG06oKTqSYQzt4onZe4r7ofy1xG+PlvwgWSu6g6nFrsQ4X53SLa5gpVrvx8yElmEKLQAfhuAQZDMQ==, tarball: https://npm.pkg.github.com/download/@animaapp/store-provider/1.0.8/05517b4f24506dfc8621803ae5ab3d165570efd8}
+    dependencies:
+      '@octokit/rest': 19.0.7
+      buffer: 6.0.3
+      octokit: 2.0.14
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
+  /@animaapp/token-core@1.0.16:
+    resolution: {integrity: sha512-pw0aZKUoLHzCXizslJ+SfuYbWlo7jPG770rf7bqLjR7R5rxseXvfFZv74me+LRXYGqK8W8ug7hnGPZ3foUUFqw==, tarball: https://npm.pkg.github.com/download/@animaapp/token-core/1.0.16/be740ff2b5130d1cd6b7cf03fed3b928640ee3cd}
+    dependencies:
+      '@animaapp/store-provider': 1.0.8
+      lodash.clonedeep: 4.5.0
     transitivePeerDependencies:
       - encoding
     dev: true

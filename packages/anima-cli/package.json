@@ -70,7 +70,7 @@
     "zod": "^3.20.6"
   },
   "devDependencies": {
-    "@animaapp/token-core": "^1.0.6",
+    "@animaapp/token-core": "^1.0.16",
     "@jest/globals": "^29.4.2",
     "@types/archiver": "^5.3.1",
     "@types/flat": "^5.0.2",
