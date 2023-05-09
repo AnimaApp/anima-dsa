@@ -15,7 +15,7 @@ jobs:
           registry-url: 'https://registry.yarnpkg.com'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GH_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PACKAGE_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
       - name: Creating .npmrc
         run: |
           cat << EOF > "./.npmrc"
