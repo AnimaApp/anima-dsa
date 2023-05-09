@@ -13,6 +13,12 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.yarnpkg.com'
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+           registry=https://registry.npmjs.org/
+           @animaapp:registry=https://npm.pkg.github.com
+          EOF
       - name: Install dependencies and build 🔧
         run: npm i -g pnpm && pnpm i && pnpm build
       - name: Publish package on NPM 📦
