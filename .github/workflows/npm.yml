@@ -13,15 +13,18 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.yarnpkg.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Creating .npmrc
         run: |
           cat << EOF > "$HOME/.npmrc"
            registry=https://registry.npmjs.org/
            @animaapp:registry=https://npm.pkg.github.com
+           //npm.pkg.github.com/:_authToken=$GH_PACKAGE_TOKEN
+           //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           EOF
       - name: Install dependencies and build 🔧
         run: npm i -g pnpm && pnpm i && pnpm build
       - name: Publish package on NPM 📦
         run: pnpm publish --filter "@animaapp/framework-helpers" --filter "anima-storybook-cli" --no-git-checks --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
