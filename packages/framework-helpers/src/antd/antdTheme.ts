@@ -1,6 +1,7 @@
 import { type DesignTokenMap } from '@animaapp/token-core';
 import { type AntdConfig } from './types';
 import { ANTD_TOKEN_KEY } from './constants';
+import { isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
 
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
@@ -38,8 +39,17 @@ const convertDesignTokenColorsToTheme = (
       throw new Error(
         `Unexpected value in design tokens json file for key = ${key} expecting object`,
       );
-    if ("$value" in token && typeof token.$value === 'string') {
-      antdTokens[key] = token.$value;
+    if (isDesignToken(token)) {
+      let newValue = token.$value;
+      if (isTokenValueAlias(newValue)) {
+        newValue = resolveAlias(designTokens, newValue).$value;
+      }
+      if (typeof newValue !== 'string') {
+        throw new Error(
+          `Unexpected value in design tokens json file for key = ${key} expecting string got: ${JSON.stringify(newValue)}, new formats will come soon`,
+        );
+      }
+      antdTokens[key] = newValue;
     }
   }
   return antdTokens;
