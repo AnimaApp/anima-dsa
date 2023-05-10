@@ -1,6 +1,14 @@
 import { getAntdTheme } from '../src/antd/antdTheme';
 
 const tokens = {
+  colors: {
+    blue: {
+      1: {
+        $value: "#000000",
+        $type: "color",
+      },
+    }
+  },
   seed: {
     colorPrimary: {
       $value: '#ffffff',
@@ -15,7 +23,7 @@ const tokens = {
       $type: 'color',
     },
     colorError: {
-      $value: '{seed.colorPrimary}',
+      $value: '{colors.blue.1}',
       $type: 'color',
     },
   },
@@ -28,7 +36,7 @@ describe('antd converters', () => {
       colorPrimary: '#ffffff',
       colorBgBase: '#ffffff',
       colorSuccess: '#ffffff',
-      colorError: '#ffffff',
+      colorError: '#000000',
     });
   });
   test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {
