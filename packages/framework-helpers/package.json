@@ -17,6 +17,9 @@
     "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
   },
+ "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
