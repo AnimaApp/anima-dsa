@@ -4,10 +4,17 @@ orbs:
 workflows:
   storybook-cli:
     jobs:
-      - build-and-test:
+      - build-and-lint:
           context: 
             - anima-prod
             - AWS
+      - tests:
+          context: 
+            - anima-prod
+            - AWS
+          requires:
+            - build-and-lint
+
   storybook-cli-nightly-test:
     triggers:
       - schedule:
@@ -16,15 +23,21 @@ workflows:
             branches:
               only: master 
     jobs:
-      - build-and-test:
+      - build-and-lint:
+          context: 
+            - anima-prod
+            - AWS
+      - tests:
           context:
             - anima-prod
             - AWS
-
+          requires:
+            - build-and-lint
 jobs:
-  build-and-test:
+  build-and-lint:
     docker:
       - image: node:16
+    working_directory: /mnt/project
     steps:
       - checkout
       - aws-cli/setup:
@@ -48,6 +61,18 @@ jobs:
       - run:
           name: "Build"
           command: "pnpm build"
-      - run:
-          name: "Run e2e tests"
-          command: "pnpm test"
+      - persist_to_workspace:
+          root: /mnt
+          paths:
+            - project
+    tests:
+      docker:
+        - image: node:16
+      working_directory: /mnt/project
+      steps:
+        - attach_workspace:
+            at: /mnt
+        - run:
+            name: "Run all tests"
+            command: "pnpm test"
+      
