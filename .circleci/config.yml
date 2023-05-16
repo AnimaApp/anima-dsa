@@ -65,14 +65,14 @@ jobs:
           root: /mnt
           paths:
             - project
-    tests:
-      docker:
-        - image: node:16
-      working_directory: /mnt/project
-      steps:
-        - attach_workspace:
-            at: /mnt
-        - run:
-            name: "Run all tests"
-            command: "pnpm test"
+  tests:
+    docker:
+      - image: node:16
+    working_directory: /mnt/project
+    steps:
+      - attach_workspace:
+          at: /mnt
+      - run:
+          name: "Run all tests"
+          command: "pnpm test"
       
