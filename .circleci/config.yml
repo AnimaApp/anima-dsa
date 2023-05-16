@@ -40,8 +40,6 @@ jobs:
     working_directory: /mnt/project
     steps:
       - checkout
-      - aws-cli/setup:
-          profile-name: default
       - run: |
           echo "registry=https://registry.npmjs.org/" >> ./.npmrc
           echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
@@ -55,9 +53,15 @@ jobs:
       - run:
           name: 'Install pnpm'
           command: 'npm i -g pnpm@latest'
+      - restore_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: "Install dependencies"
           command: "pnpm i"
+      - save_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
       - run:
           name: "Build"
           command: "pnpm build"
@@ -72,6 +76,11 @@ jobs:
     steps:
       - attach_workspace:
           at: /mnt
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: 'Install pnpm'
+          command: 'npm i -g pnpm@latest'
       - run:
           name: "Run all tests"
           command: "pnpm test"
