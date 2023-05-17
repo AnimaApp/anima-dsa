@@ -1,15 +1,7 @@
 import nf, { type Response } from 'node-fetch';
 import { getCurrentHub } from '@sentry/node';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
-
-type Status = 'paused' | 'ready' | 'init' | 'failed';
-export type Story = {
-  id: string;
-  name: string;
-  status: Status;
-  status_blueprint: Status;
-  status_code_snippets: Status;
-};
+import { type Story } from './types';
 
 export const getTeamStories = async (token: string): Promise<Story[]> => {
   const traceHeader = getCurrentHub().getScope()?.getSpan()?.toTraceparent();

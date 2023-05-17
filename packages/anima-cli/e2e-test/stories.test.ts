@@ -2,7 +2,7 @@ import { getStorybookByHash, getTeamStories, type Story, type StorybookEntity } 
 import { expect, beforeAll, test, describe } from "vitest";
 import ds_tokens from './test-ds-tokens.json';
 import ds_tokens_update from './test-ds-tokens-update.json';
-import { syncOnlyTokens, syncWithDesignTokens } from './utils';
+import testUtils from './utils';
 
 const TOKEN = process.env.TEST_TOKEN;
 const TIMEOUT = 1000 * 60 * 3; // 5 minutes
@@ -15,9 +15,9 @@ describe('Test storybook with base path', () => {
   let stories: Story[];
 
   beforeAll(async () => {
-    const syncResult = syncWithDesignTokens({
+    const syncResult = testUtils.syncWithDesignTokens({
       isUsingBasePath: true,
-      designTokenVersion: 'init',
+      designTokenVersion: 'INIT',
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
@@ -50,9 +50,9 @@ describe('Test storybook without base path', () => {
   let stories: Story[];
 
   beforeAll(async () => {
-    const syncResult = syncWithDesignTokens({
+    const syncResult = testUtils.syncWithDesignTokens({
       isUsingBasePath: false,
-      designTokenVersion: 'init',
+      designTokenVersion: 'INIT',
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
@@ -79,9 +79,9 @@ describe('Test storybook without base path', () => {
   });
 
   test('Update ds tokens and resync', async () => {
-    const { storybookHash } = syncWithDesignTokens({
+    const { storybookHash } = testUtils.syncWithDesignTokens({
       isUsingBasePath: false,
-      designTokenVersion: 'update',
+      designTokenVersion: 'UPDATE',
     })
     const res = await getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
@@ -92,8 +92,8 @@ describe('Test storybook without base path', () => {
 
 describe('Sync only tokens', () => {
   test('Sync only tokens init', async () => {
-    const { storybookHash } = syncOnlyTokens({
-      designTokenVersion: 'init',
+    const { storybookHash } = testUtils.syncOnlyTokens({
+      designTokenVersion: 'INIT',
     });
     const res = await getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
@@ -102,8 +102,8 @@ describe('Sync only tokens', () => {
   });
 
   test('Sync only tokens update', async () => {
-    const { storybookHash } = syncOnlyTokens({
-      designTokenVersion: 'update',
+    const { storybookHash } = testUtils.syncOnlyTokens({
+      designTokenVersion: 'UPDATE',
     });
     const res = await getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
