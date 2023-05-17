@@ -67,7 +67,7 @@ export const parseBuildDirArg = async (
 export const validateBuildDir = (buildDir: string): void => {
   if (!fs.existsSync(buildDir)) {
     throw new BuildDirError(
-      `Cannot find build storybook: "${buildDir}". Please build storybook before running this command `,
+      `Cannot find storybook's build directory: "${buildDir}". Please build storybook before running this command `,
       buildDir,
     );
   }
