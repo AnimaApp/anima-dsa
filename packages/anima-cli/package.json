@@ -18,6 +18,9 @@
     "type": "git",
     "url": "https://github.com/AnimaApp/anima-storybook-cli"
   },
+ "publishConfig": {
+    "@animaapp:registry": "https://registry.npmjs.org/"
+  },
   "author": "Anima",
   "keywords": [
     "storybook-addons",
