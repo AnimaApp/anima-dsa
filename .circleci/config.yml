@@ -4,10 +4,17 @@ orbs:
 workflows:
   storybook-cli:
     jobs:
-      - build-and-test:
+      - build-and-lint:
           context: 
             - anima-prod
             - AWS
+      - tests:
+          context: 
+            - anima-prod
+            - AWS
+          requires:
+            - build-and-lint
+
   storybook-cli-nightly-test:
     triggers:
       - schedule:
@@ -16,19 +23,23 @@ workflows:
             branches:
               only: master 
     jobs:
-      - build-and-test:
+      - build-and-lint:
+          context: 
+            - anima-prod
+            - AWS
+      - tests:
           context:
             - anima-prod
             - AWS
-
+          requires:
+            - build-and-lint
 jobs:
-  build-and-test:
+  build-and-lint:
     docker:
       - image: node:16
+    working_directory: /mnt/project
     steps:
       - checkout
-      - aws-cli/setup:
-          profile-name: default
       - run: |
           echo "registry=https://registry.npmjs.org/" >> ./.npmrc
           echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
@@ -42,12 +53,35 @@ jobs:
       - run:
           name: 'Install pnpm'
           command: 'npm i -g pnpm@latest'
+      - restore_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: "Install dependencies"
           command: "pnpm i"
+      - save_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
       - run:
           name: "Build"
           command: "pnpm build"
+      - persist_to_workspace:
+          root: /mnt
+          paths:
+            - project
+  tests:
+    docker:
+      - image: node:16
+    working_directory: /mnt/project
+    steps:
+      - attach_workspace:
+          at: /mnt
+      - aws-cli/setup:
+          profile-name: default
       - run:
-          name: "Run e2e tests"
+          name: 'Install pnpm'
+          command: 'npm i -g pnpm@latest'
+      - run:
+          name: "Run all tests"
           command: "pnpm test"
+      

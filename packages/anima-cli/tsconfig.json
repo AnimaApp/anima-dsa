@@ -4,6 +4,7 @@
     "module": "CommonJS",
     "outDir": "./dist",
     "importHelpers": false,
+    "resolveJsonModule": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
