@@ -9,6 +9,7 @@ export interface StorybookEntity {
   id: string;
   status: string;
   preload_stories: boolean;
+  storybook_hash: string;
   ds_tokens: string;
 }
 
@@ -165,8 +166,6 @@ export const getOrCreateStorybookForDesignTokens = async (
 
   let data: StorybookEntity | null = null;
 
-  const hash = hashString(token);
-
   if (res.status !== 200) {
     throw new Error(
       'We had an issue making a request to our server. Please try again, or reach out to the Anima team if the problem persists',
@@ -178,6 +177,9 @@ export const getOrCreateStorybookForDesignTokens = async (
   if (results.length) {
     data = results[0];
   } else {
+    // Not a good solution for hashing, we probably need to separate DS from storybook
+    const hash = hashString(token);
+
     const spanCreateStorybook = spanGetOrCreate?.startChild({
       op: 'create-storybook',
     });
@@ -196,6 +198,7 @@ export const getOrCreateStorybookForDesignTokens = async (
     upload_signed_url,
     upload_status = 'complete',
     ds_tokens: dsTokens,
+    storybook_hash = '',
   } = data ?? {};
 
   transaction?.setData('storybookID', id);
@@ -205,7 +208,7 @@ export const getOrCreateStorybookForDesignTokens = async (
     storybookId: id,
     uploadUrl: upload_signed_url,
     uploadStatus: upload_status,
-    hash,
+    hash: storybook_hash,
     designTokens: dsTokens,
   };
 };

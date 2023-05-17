@@ -2,7 +2,7 @@ import { getStorybookByHash, getTeamStories, type Story, type StorybookEntity } 
 import { expect, beforeAll, test, describe } from "vitest";
 import ds_tokens from './test-ds-tokens.json';
 import ds_tokens_update from './test-ds-tokens-update.json';
-import { syncWithDesignTokens } from './utils';
+import { syncOnlyTokens, syncWithDesignTokens } from './utils';
 
 const TOKEN = process.env.TEST_TOKEN;
 const TIMEOUT = 1000 * 60 * 3; // 5 minutes
@@ -90,3 +90,24 @@ describe('Test storybook without base path', () => {
   });
 });
 
+describe('Sync only tokens', () => {
+  test('Sync only tokens init', async () => {
+    const { storybookHash } = syncOnlyTokens({
+      designTokenVersion: 'init',
+    });
+    const res = await getStorybookByHash(TOKEN, storybookHash);
+    if (!res.ok) throw new Error('Failed to get Storybook');
+    const storybook = await res.json();
+    expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens);
+  });
+
+  test('Sync only tokens update', async () => {
+    const { storybookHash } = syncOnlyTokens({
+      designTokenVersion: 'update',
+    });
+    const res = await getStorybookByHash(TOKEN, storybookHash);
+    if (!res.ok) throw new Error('Failed to get Storybook');
+    const storybook = await res.json();
+    expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens_update);
+  });
+})

@@ -127,6 +127,9 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     token,
     designTokens,
   );
+  if (__DEBUG__) {
+    console.log('hash =>', storybook.hash);
+  }
 
   const spanUpload = transaction.startChild({
     op: 'update-design-tokens',

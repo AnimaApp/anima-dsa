@@ -14,16 +14,34 @@ const getCommand = (isUsingBasePath: boolean, tokenPath: string) =>
     ? `node ./dist/cli.js sync -d "s3://anima-uploads/e2e-tests/storybook-sample-base-path" -t ${token} --debug -b /styleguide --design-tokens ${tokenPath}`
     : `node ./dist/cli.js sync -d "s3://anima-uploads/e2e-tests/storybook-sample" -t ${token} --debug --design-tokens ${tokenPath}`;
 
+type TokenVersion = keyof typeof tokenVersionMap;
+
 interface SyncWithDesignTokensParams {
   isUsingBasePath: boolean;
-  designTokenVersion: 'init' | 'update';
+  designTokenVersion: TokenVersion;
 }
 
 export const syncWithDesignTokens = ({
   isUsingBasePath,
   designTokenVersion,
 }: SyncWithDesignTokensParams): { storybookHash: string } => {
-  const output = execSync(getCommand(isUsingBasePath, tokenVersionMap[designTokenVersion]));
+  const output = execSync(
+    getCommand(isUsingBasePath, tokenVersionMap[designTokenVersion]),
+  );
+  const result = storyHashReg.exec(output.toString());
+  if (!result) throw new Error('storybook hash not found');
+  const [, storybookHash] = result;
+  return { storybookHash };
+};
+
+export const syncOnlyTokens = ({
+  designTokenVersion,
+}: {
+  designTokenVersion: TokenVersion;
+}) => {
+  const output = execSync(
+    `node ./dist/cli.js sync-design-tokens -t ${token} --debug --design-tokens ${tokenVersionMap[designTokenVersion]}`,
+  );
   const result = storyHashReg.exec(output.toString());
   if (!result) throw new Error('storybook hash not found');
   const [, storybookHash] = result;
