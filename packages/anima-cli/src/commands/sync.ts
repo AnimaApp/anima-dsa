@@ -28,12 +28,12 @@ export const builder: CommandBuilder = (yargs) =>
   yargs
     .options({
       token: { type: 'string', alias: 't' },
-      directory: { type: 'string', alias: 'd' },
+      storybook: { type: 'string', alias: 's' },
       basePath: { type: 'string', alias: 'b' },
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
-    .example([['$0 sync -t <storybook-token> -d <build-directory>']]);
+    .example([['$0 sync -t <storybook-token> -s <storybook-build-dir>']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
   const transaction = Sentry.startTransaction({
@@ -68,20 +68,20 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   // check if build directory exists
   let BUILD_DIR: string;
-  if (_argv.directory && isS3Url(_argv.directory as string)) {
+  if (_argv.storybook && isS3Url(_argv.storybook as string)) {
     console.log('Using s3 url, creating tmp dir');
     setUsingS3Url(true);
-    await downloadFromUrl(_argv.directory as string, TMP_DIR);
+    await downloadFromUrl(_argv.storybook as string, TMP_DIR);
     BUILD_DIR = TMP_DIR;
   } else {
-    BUILD_DIR = getBuildDir(_argv.directory as string | undefined);
+    BUILD_DIR = getBuildDir(_argv.storybook as string | undefined);
   }
 
   if (!fs.existsSync(BUILD_DIR)) {
     loader.stop();
     log.yellow(
-      `Cannot find build directory: "${
-        _argv.directory ?? DEFAULT_BUILD_DIR
+      `Cannot find build storybook: "${
+        _argv.storybook ?? DEFAULT_BUILD_DIR
       }". Please build storybook before running this command `,
     );
     Sentry.captureException(new Error('Cannot find build directory'));

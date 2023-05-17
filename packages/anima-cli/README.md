@@ -142,14 +142,14 @@ anima-storybook sync [option]
 | Options           | Short | Description                                                                                     |   Type   |
 | :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
 | `--token`         | `-t`  | Provide Anima's token if it was not set as Environment variable                                 | `string` |
-| `--directory`     | `-d`  | To specify the storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
+| `--storybook`     | `-s`  | To specify the storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
 | `--design-tokens` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |       | Provide a path of your Design Tokens file, i.e. `./design-tokens.json`                          | `string` |
 
 ### Usage examples:
 
 ```sh
 npx anima-storybook sync --token <anima_token> 
-npx anima-storybook sync --directory <storybook_static_dir> #default is storybook-static
+npx anima-storybook sync --storybook <storybook_static_dir> #default is storybook-static
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 ```
 
