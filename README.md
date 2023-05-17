@@ -12,7 +12,7 @@ Learn more about the motivations and benefits on [our blog](https://blog.animaap
 
 ## Table of Contents
 
-- [Anima Storybook CLI](#anima-storybook-cli)
+- [Anima Storybook CLI](#anima-cli)
   - [Table of Contents](#table-of-contents)
   - [Quick Start](#quick-start)
   - [Setup](#setup)
@@ -46,7 +46,7 @@ You will be switching between Figma and your local Terminal!
 2. **Figma:** Create a new Figma project. This is where all your sync'ed Storybook components will live.
 3. **Figma:** Run the Anima Plugin, go to the _Storybook_ section and copy your unique **Anima token**.
 4. **Terminal:** Build your storybook instance, it's usually `npm run build-storybook`.
-5. **Terminal:** Run `npx anima-storybook-cli sync -t <ANIMA_TOKEN_HERE>`.
+5. **Terminal:** Run `npx @animaapp/anima-cli sync -t <ANIMA_TOKEN_HERE>`.
 6. **Figma:** Follow the remaining instructions in Figma and you can importing your Storybook components to Figma. 🎉
 
 ## Setup
@@ -56,15 +56,15 @@ You will be switching between Figma and your local Terminal!
 Run one of the following commands (of your preferred package manager) in the Storybook root folder:
 
 ```sh
-npm install --save-dev anima-storybook-cli
+npm install --save-dev @animaapp/anima-cli
 ```
 
 ```sh
-yarn add -D anima-storybook-cli
+yarn add -D @animaapp/anima-cli
 ```
 
 ```sh
-pnpm add -D anima-storybook-cli
+pnpm add -D @animaapp/anima-cli
 ```
 
 ### 2. Add your unique Anima Token
