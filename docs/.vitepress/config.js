@@ -17,14 +17,14 @@ export default defineConfig({
         items: [
           {
             text: 'Overview',
-            link: '/guide/overview',
-            collapsed: true,
+            collapsed: false,
             items: [
               {
                 text: 'What is Anima DSA?',
-                link: '/guide/overview#what-is-anima-dsa',
+                link: '/guide/overview',
               },
-              { text: 'Who is it for?', link: '/guide/overview#who-is-it-for' },
+              { text: 'Who is it for?', link: '/guide/who-is-it-for' },
+              { text: 'Features', link: '/guide/features' },
             ],
           },
           { text: 'Getting started', link: '/guide/getting-started' },
@@ -45,10 +45,10 @@ export default defineConfig({
       {
         text: 'Anima CLI',
         items: [
-          { text: 'Overview', link: '/guide/anima-cli' },
-          { text: 'Setup', link: '/guide/anima-cli#setup' },
-          { text: 'Usage', link: '/guide/anima-cli#usage' },
-          { text: 'Command API', link: '/guide/anima-cli#commands' },
+          { text: 'Guide', link: '/guide/anima-cli' },
+          // { text: 'Setup', link: '/guide/anima-cli#setup' },
+          // { text: 'Usage', link: '/guide/anima-cli#usage' },
+          // { text: 'Command API', link: '/guide/anima-cli#commands' },
         ],
       },
       {

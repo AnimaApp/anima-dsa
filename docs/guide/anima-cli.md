@@ -8,7 +8,7 @@ Anima CLI is a command line tool that works in conjunction with the [Anima Figma
 Run the following command in the the folder you have Storybook installed:
 
 ```sh
-    npx @animaapp/anima-cli sync -t <your-anima-team-token>
+    npx @animaapp/anima-cli sync -t <anima-team-token> --storybook
 ```
 
 ::: tip Heads up!
@@ -92,7 +92,7 @@ To attach your design tokens to your components, run the following command:
     anima sync --design-tokens ./design-tokens.json
 ```
 
-## Commands API
+## Command API
 
 ## `anima sync `
 
@@ -124,6 +124,6 @@ Command to generate Design Tokens from your framework config file.
 
 | Option        | Description                                                                    |   Type   |
 | :------------ | :----------------------------------------------------------------------------- | :------: |
-| `--framework`, `-f`  | Provide your framework name i.e. `tailwind`                                    | `string` |
+| `--framework`, `-f`  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Provide your framework name i.e. `tailwind`                                    | `string` |
 | `--config` , `-c`  | Provide your framework config file i.e. `./tailwind.config.cjs`                | `string` |
 | `--output` , `-o`   | Provide an output path of your Design Tokens file, i.e. `./design-tokens.json` | `string` |
