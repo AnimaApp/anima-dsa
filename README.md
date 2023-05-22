@@ -46,7 +46,7 @@ You will be switching between Figma and your local Terminal!
 2. **Figma:** Create a new Figma project. This is where all your sync'ed Storybook components will live.
 3. **Figma:** Run the Anima Plugin, go to the _Storybook_ section and copy your unique **Anima token**.
 4. **Terminal:** Build your storybook instance, it's usually `npm run build-storybook`.
-5. **Terminal:** Run `npx @animaapp/anima-cli sync -t <ANIMA_TOKEN_HERE>`.
+5. **Terminal:** Run `npx @animaapp/anima-cli sync -t <anima_team_token>`.
 6. **Figma:** Follow the remaining instructions in Figma and you can importing your Storybook components to Figma. 🎉
 
 ## Setup
@@ -170,7 +170,7 @@ anim-storybook sync-design-tokens [option]
 ### Usage examples:
 
 ```sh
-npx anima-storybook sync --token <anima_token>
+npx anima-storybook sync --token <anima_team_token>
 npx anima-storybook sync --storybook <storybook_static_dir> #default is storybook-static
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 

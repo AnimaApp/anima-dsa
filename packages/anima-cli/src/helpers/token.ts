@@ -8,7 +8,7 @@ export class TokenError extends Error {
 
 export const getToken = (argv: Record<string, unknown>) => {
   const token = (argv.token ??
-    process.env.STORYBOOK_ANIMA_TOKEN ??
+    process.env.ANIMA_TEAM_TOKEN ??
     '') as string;
   if (isDebug()) {
     console.log('token =>', token);
