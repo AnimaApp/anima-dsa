@@ -9,10 +9,7 @@
     "dev": "turbo dev",
     "test": "turbo test",
     "build": "turbo build",
-    "lint": "turbo lint",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "lint": "turbo lint"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +20,6 @@
     "eslint-config-prettier": "8.3.0",
     "prettier": "^2.8.7",
     "turbo": "^1.9.3",
-    "typescript": "^5.0.2",
-    "vitepress": "1.0.0-alpha.75"
+    "typescript": "^5.0.2"
   }
 }
