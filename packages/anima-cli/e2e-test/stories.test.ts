@@ -99,7 +99,7 @@ describe('Sync only tokens', () => {
     if (!res.ok) throw new Error('Failed to get Storybook');
     const storybook = await res.json();
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens);
-  });
+  }, 10000);
 
   test('Sync only tokens update', async () => {
     const { storybookHash } = testUtils.syncOnlyTokens({
