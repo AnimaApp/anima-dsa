@@ -170,7 +170,7 @@ anim-storybook sync-design-tokens [option]
 ### Usage examples:
 
 ```sh
-npx anima-storybook sync --token <anima_token>
+npx anima-storybook sync --token <anima_team_token>
 npx anima-storybook sync --storybook <storybook_static_dir> #default is storybook-static
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 
