@@ -29,18 +29,21 @@ Then run the following command:
 
 Where `<framework-name>` is the name of the framework you are using and `<path-to-config-file>` is the path to your framework config file.
 
-::: details Examples,
-### TailwindCSS
-For example, to generate TailwindCSS design tokens JSON, from your existing theme, run the following command:
+Check [TailwindCSS](/guide/design-tokens-tailwind), or [Ant Design v5](/guide/design-tokens-ant-design) examples for more details.
 
-```sh
-    anima generate-tokens --framework tailwindcss --config tailwind.config.js
-```
-:::
+### Commads
 
-# To transform Design Tokens JSON into a framework's theme
+| Options       | Short | Description                                                                    |   Type   |
+| :------------ | :---: | :----------------------------------------------------------------------------- | :------: |
+| `--framework` &nbsp;&nbsp;&nbsp;| `-f`  | Provide your framework name i.e. `tailwind`                                    | `string` |
+| `--config`    | `-c`  | Provide your framework config file i.e. `./tailwind.config.cjs`                | `string` |
+| `--output`    | `-o`  | Provide an output path of your Design Tokens file, i.e. `./design-tokens.json` | `string` |
+
+## To transform Design Tokens JSON into a framework's theme
 
 We provide a package named `@animaapp/framework-helpers` that you can use to transform the design tokens JSON into a theme object.
+
+Install the package in your project, using your package manager of choice:
 
 ::: code-group
 
@@ -60,50 +63,8 @@ We provide a package named `@animaapp/framework-helpers` that you can use to tra
 
 ## How to use
 
-### TailwindCSS
+Check our detailed guides for each framework:
 
-```js
-// tailwind.config.cjs
-import { getTailwindTheme } from '@animaapp/framework-helpers'
-import dsToken from './src/assets/design-tokens.json'
+### [TailwindCSS](/guide/design-tokens-tailwind)
 
-const themeColors = getTailwindTheme(dsToken)
-
-module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    colors: themeColors.colors,
-    extend: {}
-  },
-  plugins: []
-}
-
-```
-### Ant Design (v5)
-
-```jsx
-// App.jsx
-import { ConfigProvider } from "antd";
-import { getAntdTheme } from "@animaapp/framework-helpers";
-import dsToken from "./assets/design-tokens.json";
-
-import "./App.css";
-
-const tokensTheme = getAntdTheme(dsToken);
-
-function App() {
-  return (
-    <ConfigProvider
-      theme={{
-        token: { ...tokensTheme.token },
-      }}
-    >
-      {/*  Your app */}
-    </ConfigProvider>
-  );
-}
-
-export default App;
-
-
-```
+### [Ant Design v5](/guide/design-tokens-ant-design)

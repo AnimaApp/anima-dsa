@@ -5,9 +5,11 @@ Using our Anima CLI, you can keep your design system components, as well as desi
 [[toc]]
 
 ## How it works
+
 ![Continuous Integration](/ci-flow.png)
 
 #### Steps
+>
 >1. You make changes to your components in your codebase
 >2. You push your changes to your repository
 >3. Your CI/CD environment builds your Storybook and runs the Anima CLI
@@ -18,16 +20,18 @@ Using our Anima CLI, you can keep your design system components, as well as desi
 
 ## How to setup CI/CD
 
-#### First get your Anima Team Token from the Plugin
+### First get your Anima Team Token from the Plugin
 
 >1. Open the Anima plugin in Figma -> Go to `Components` section
 >2. Click on `Start with Anima CLI` button
 >3. Copy your Anima Team Token
 
-#### Then add the Anima CLI to your CI/CD environment
->Here is an example of configuration you can add to the components repository:
+### Then add the Anima CLI to your CI/CD environment
+
+Here is an example of configuration you can add to the components repository:
 
 ::: code-group
+
 ```yml [Github Actions]
 #.github/workflows/sync-with-anima.yml
 
@@ -61,6 +65,7 @@ jobs:
 
 
 ```
+
 ```yml [CircleCI Pipelines]
 #.circleci/config.yml
 

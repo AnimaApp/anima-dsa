@@ -8,7 +8,11 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/overview', activeMatch: '/guide/' },
+      {
+        text: 'Guide',
+        link: '/guide/introduction/overview',
+        activeMatch: '/guide/',
+      },
     ],
 
     sidebar: [
@@ -21,31 +25,40 @@ export default defineConfig({
             items: [
               {
                 text: 'What is Anima DSA?',
-                link: '/guide/overview',
+                link: '/guide/introduction/overview',
               },
-              { text: 'Who is it for?', link: '/guide/who-is-it-for' },
-              { text: 'Features', link: '/guide/features' },
+              {
+                text: 'Who is it for?',
+                link: '/guide/introduction/who-is-it-for',
+              },
+              { text: 'Features', link: '/guide/introduction/features' },
             ],
           },
-          { text: 'Getting started', link: '/guide/getting-started' },
+          {
+            text: 'Getting started',
+            link: '/guide/introduction/getting-started',
+          },
           {
             text: 'Basic oncepts',
             collapsed: false,
             items: [
-              { text: 'What is storybook?', link: '/guide/what-is-storybook' },
+              {
+                text: 'What is storybook?',
+                link: '/guide/introduction/what-is-storybook',
+              },
               {
                 text: 'What are Design Tokens?',
-                link: '/guide/what-are-design-tokens',
+                link: '/guide/introduction/what-are-design-tokens',
               },
             ],
           },
-          { text: 'Compatibility', link: '/guide/compatibility' },
+          { text: 'Compatibility', link: '/guide/introduction/compatibility' },
         ],
       },
       {
         text: 'Anima CLI',
         items: [
-          { text: 'Guide', link: '/guide/anima-cli' },
+          { text: 'Guide', link: '/guide/anima-cli/anima-cli' },
           // { text: 'Setup', link: '/guide/anima-cli#setup' },
           // { text: 'Usage', link: '/guide/anima-cli#usage' },
           // { text: 'Command API', link: '/guide/anima-cli#commands' },
@@ -54,40 +67,54 @@ export default defineConfig({
       {
         text: 'Manage components',
         items: [
-          { text: 'Overview', link: '/guide/components-overview' },
-          { text: 'How to sync components', link: '/guide/sync-components' },
+          {
+            text: 'Overview',
+            link: '/guide/manage-components/components-overview',
+          },
+          {
+            text: 'How to sync components',
+            link: '/guide/manage-components/sync-components',
+          },
           {
             text: 'Continuous integration',
-            link: '/guide/continuous-integration',
+            link: '/guide/manage-components/continuous-integration',
           },
           {
             text: 'Set up Storybook',
-            link: '/guide/set-up-storybook',
+            link: '/guide/manage-components/set-up-storybook',
           },
         ],
       },
       {
         text: 'Manage Design Tokens',
         items: [
-          { text: 'Overview', link: '/guide/design-tokens-overview' },
+          {
+            text: 'Overview',
+            link: '/guide/manage-components/design-tokens-overview',
+          },
           {
             text: 'How to sync Design Tokens',
-            link: '/guide/sync-design-tokens',
+            link: '/guide/manage-components/sync-design-tokens',
           },
           {
             text: 'Anima Token transformers',
-            link: '/guide/token-transformers',
+            link: '/guide/manage-components/token-transformers',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/guide/token-transformers' },
-              { text: 'Tailwind', link: '/guide/token-transformers#tailwind' },
               {
-                text: 'AntDesign',
-                link: '/guide/token-transformers#antdesign',
+                text: 'Overview',
+                link: '/guide/manage-components/token-transformers',
               },
               {
-                text: 'CSS-variables',
-                link: '/guide/token-transformers#css-variables',
+                text: 'Tailwind',
+                link: '/guide/manage-components/design-tokens-tailwind',
+              },
+              {
+                text: 'AntDesign',
+                link: '/guide/manage-components/design-tokens-ant-design',
+              },
+              {
+                text: 'CSS-variables (soon)',
               },
               { text: 'MaterialUI (Soon)' },
               { text: 'Bootstrap (Soon)' },
