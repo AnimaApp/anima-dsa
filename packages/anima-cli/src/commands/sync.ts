@@ -103,7 +103,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         currentDSToken: designTokens,
       }).catch((e) => {
         Sentry.captureException(e);
-        log.yellow(`Fail to update designTokens, ${e.message}`);
+        log.yellow(`Failed to update designTokens, ${e.message}`);
       });
     }
 

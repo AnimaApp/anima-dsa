@@ -56,7 +56,7 @@ export const handleError = async (e: Error) => {
       ),
     );
   } else if (e instanceof DesignTokenError) {
-    const errorMessage = `Fail to read design tokens at path "${e.designTokenFilePath}"`;
+    const errorMessage = `Failed to read design tokens at path "${e.designTokenFilePath}"`;
     loader.stop();
     log.yellow(errorMessage);
     captureException(

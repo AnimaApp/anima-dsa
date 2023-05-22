@@ -62,11 +62,11 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     designTokens =
       (await getFileOrThrow<Record<string, unknown>>(designTokensPath)) ?? {};
   } catch (error) {
-    const errorMessage = `Fail to read design tokens at path "${designTokensPath}"`;
+    const errorMessage = `Failed to read design tokens at path "${designTokensPath}"`;
     loader.stop();
     log.yellow(errorMessage);
     Sentry.captureException(
-      new Error("Fail to read design tokens at path 'HIDDEN'"),
+      new Error("Failed to read design tokens at path 'HIDDEN'"),
     );
     spanGetDSToken.status = 'error';
     spanGetDSToken.finish();
@@ -149,7 +149,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       currentDSToken: designTokens,
     }).catch((e) => {
       Sentry.captureException(e);
-      log.yellow(`Fail to update designTokens, ${e.message}`);
+      log.yellow(`Failed to update designTokens, ${e.message}`);
     });
   }
 
