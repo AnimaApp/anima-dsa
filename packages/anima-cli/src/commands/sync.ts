@@ -28,15 +28,14 @@ export const builder: CommandBuilder = (yargs) =>
     .options({
       token: { type: 'string', alias: 't' },
       storybook: {
-              alias: 's',
-              default: 'storybook-static',
-              coerce: (arg) => {
-                    if (arg === true) {
-                      return 'storybook-static'; // Set a default value if it's a boolean
-                    } else {
-                      return arg; // Return the string argument value
-                    }
-               }
+        alias: 's',
+        coerce: (arg) => {
+          if (arg === true) {
+            return 'storybook-static'; // Set a default value if it's a boolean
+          } else {
+            return arg; // Return the string argument value
+          }
+        },
       },
       basePath: { type: 'string', alias: 'b' },
       designTokens: { type: 'string', alias: 'd' },
