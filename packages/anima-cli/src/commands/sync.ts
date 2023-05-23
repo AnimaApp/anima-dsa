@@ -6,6 +6,7 @@ import { exitProcess } from '../helpers/exit';
 import {
   authenticate,
   getOrCreateStorybook,
+  getOrCreateStorybookForDesignTokens,
   updateDSTokenIfNeeded,
 } from '../api';
 import { log, generateZipHash, uploadStorybook } from '../helpers';
@@ -31,6 +32,12 @@ export const builder: CommandBuilder = (yargs) =>
       designTokens: { type: 'string' },
       debug: { type: 'boolean' },
     })
+    .check((argv) => {
+      if (!argv.storybook && !argv['design-tokens']) {
+        throw new Error('At least one design-tokens or storybook must be set.');
+      }
+      return true;
+    })
     .example([['$0 sync -t <storybook-token> -s <storybook-build-dir>']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
@@ -46,14 +53,9 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     const animaConfig = await loadAnimaConfig();
 
     loader.newStage('Checking local environment');
-    const token = getToken(_argv);
-
-    const buildDir = await parseBuildDirArg(
-      _argv.storybook as string | undefined,
-    );
-    validateBuildDir(buildDir);
 
     // validate token with the api
+    const token = getToken(_argv);
     const response = await authenticate(token);
     Sentry.configureScope((scope) => {
       scope.setUser({
@@ -63,48 +65,87 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       scope.setTag('teamId', response.data.team_id);
     });
 
-    // zip the build directory and create a hash
-    loader.newStage('Preparing files');
-    const { zipHash, zipBuffer } = await generateZipHash(buildDir);
+    if (_argv.storybook) {
+      console.log('Storybook', _argv.storybook, '\n');
+      const buildDir = await parseBuildDirArg(
+        _argv.storybook as string | undefined,
+      );
+      validateBuildDir(buildDir);
+      // zip the build directory and create a hash
+      loader.newStage('Preparing files');
+      const { zipHash, zipBuffer } = await generateZipHash(buildDir);
+      loader.newStage('Syncing files');
 
-    // create storybook object if no record with the same hash is found and upload it
-    loader.newStage('Syncing files');
+      const designTokens: Record<string, unknown> = await getDesignTokens(
+        _argv.designTokens as string | undefined,
+        animaConfig,
+      );
 
-    const designTokens: Record<string, unknown> = await getDesignTokens(
-      _argv.designTokens as string | undefined,
-      animaConfig,
-    );
-
-    const basePath = _argv.basePath as string | undefined;
-    const { storybookId, uploadUrl, ...data } = await getOrCreateStorybook(
-      token,
-      zipHash,
-      designTokens,
-      basePath,
-    );
-
-    const { skipUpload, uploadStatus } = await uploadStorybook({
-      zipBuffer: zipBuffer,
-      storybookId,
-      token,
-      uploadUrl,
-      uploadStatus: data.uploadStatus,
-    });
-
-    const currentDesignTokenStr = data.designTokens;
-    if (storybookId && uploadStatus === 'complete') {
-      await updateDSTokenIfNeeded({
-        storybook: {
-          id: storybookId,
-          ds_tokens: currentDesignTokenStr,
-          upload_status: uploadStatus,
-        },
+      const basePath = _argv.basePath as string | undefined;
+      const { storybookId, uploadUrl, ...data } = await getOrCreateStorybook(
         token,
-        currentDSToken: designTokens,
-      }).catch((e) => {
-        Sentry.captureException(e);
-        log.yellow(`Failed to update designTokens, ${e.message}`);
+        zipHash,
+        designTokens,
+        basePath,
+      );
+
+      const { skipUpload, uploadStatus } = await uploadStorybook({
+        zipBuffer: zipBuffer,
+        storybookId,
+        token,
+        uploadUrl,
+        uploadStatus: data.uploadStatus,
       });
+      // create storybook object if no record with the same hash is found and upload it
+      const currentDesignTokenStr = data.designTokens;
+      if (storybookId && uploadStatus === 'complete') {
+        await updateDSTokenIfNeeded({
+          storybook: {
+            id: storybookId,
+            ds_tokens: currentDesignTokenStr,
+            upload_status: uploadStatus,
+          },
+          token,
+          currentDSToken: designTokens,
+        }).catch((e) => {
+          Sentry.captureException(e);
+          log.yellow(`Failed to update designTokens, ${e.message}`);
+        });
+      }
+      if (isDebug()) {
+        console.log('_id =>', storybookId);
+        console.log('hash =>', zipHash);
+        console.log('SkipUpload => ', skipUpload);
+      }
+    } else {
+      const designTokens: Record<string, unknown> = await getDesignTokens(
+        _argv.designTokens as string | undefined,
+        animaConfig,
+      );
+      const storybook = await getOrCreateStorybookForDesignTokens(
+        token,
+        designTokens,
+      );
+      if (isDebug()) {
+        console.log('_id =>', storybook.storybookId);
+        console.log('hash =>', storybook.hash);
+      }
+      const storybookId = storybook.storybookId;
+      const uploadStatus = storybook.uploadStatus;
+      if (storybookId) {
+        await updateDSTokenIfNeeded({
+          storybook: {
+            id: storybookId,
+            ds_tokens: storybook.designTokens,
+            upload_status: uploadStatus,
+          },
+          token,
+          currentDSToken: designTokens,
+        }).catch((e) => {
+          Sentry.captureException(e);
+          log.yellow(`Failed to update designTokens, ${e.message}`);
+        });
+      }
     }
 
     loader.newStage('Processing stories');
@@ -130,20 +171,12 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     // --- Cleaning and goodbye ---
     transaction.status = 'ok';
     transaction.finish();
-    log.green(
-      `  - Processing stories ...  ${
-        skipUpload ? (isDebug() ? 'SKIP' : 'OK') : 'OK'
-      } `,
-    );
+    log.green(`  - Processing stories ... OK`);
     log.green('  - Done');
 
     if (isUsingS3Url()) {
       console.log('Cleaning tmp dir');
       fs.rmSync(TMP_DIR, { recursive: true, force: true });
-    }
-    if (isDebug()) {
-      console.log('_id =>', storybookId);
-      console.log('hash =>', zipHash);
     }
   } catch (e) {
     if (e instanceof Error) {

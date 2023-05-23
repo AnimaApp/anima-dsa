@@ -40,7 +40,7 @@ const syncOnlyTokens = ({
   designTokenVersion: TokenVersion;
 }) => {
   const output = execSync(
-    `node ./dist/cli.js sync-design-tokens -t ${token} --debug --design-tokens ${DESIGN_TOKENS_TEST_FILES[designTokenVersion]}`,
+    `node ./dist/cli.js sync -t ${token} --debug --design-tokens ${DESIGN_TOKENS_TEST_FILES[designTokenVersion]}`,
   );
   const result = storyHashReg.exec(output.toString());
   if (!result) throw new Error('storybook hash not found');
