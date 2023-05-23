@@ -12,7 +12,15 @@ export type Event = {
 
 const CLIENT_ID = 'anima-cli';
 
+let enableTracking = true;
+export const setEnableTracking = (value: boolean) => {
+  enableTracking = value;
+};
+
 export const trackEvent = async (events: Event[]) => {
+  if (!enableTracking) {
+    return;
+  };
   try {
     const eventsMapped = events.map((event) => ({
       eventCategory: 'General',

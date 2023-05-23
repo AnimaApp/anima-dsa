@@ -20,7 +20,7 @@ import {
   setUsingS3Url,
   isUsingS3Url,
 } from '../helpers/s3';
-import { trackEvent } from '../helpers/analytics';
+import { setEnableTracking, trackEvent } from '../helpers/analytics';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -57,6 +57,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   if (__DEBUG__) {
     console.log('token =>', token);
+    setEnableTracking(false);
   }
 
   if (!token) {
