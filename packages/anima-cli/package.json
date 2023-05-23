@@ -2,9 +2,9 @@
   "name": "anima-storybook-cli",
   "version": "0.13.1",
   "description": "Anima CLI for storybook",
-  "main": "./dist/cli.js",
+  "main": "./dist/src/cli.js",
   "bin": {
-    "anima-storybook": "./dist/cli.js"
+    "anima-storybook": "./dist/src/cli.js"
   },
   "engines": {
     "node": ">=14.0.0"

@@ -171,6 +171,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   trackEvent([
     {
+      userId: teamId,
       action: 'anima-cli.sync.started',
       time: Date.now(),
       eventParams: {
