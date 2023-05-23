@@ -20,6 +20,7 @@ import {
   setUsingS3Url,
   isUsingS3Url,
 } from '../helpers/s3';
+import { trackEvent } from '../helpers/analytics';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -108,6 +109,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     transaction.finish();
     await exitProcess();
   }
+  const teamId = response.data.team_id;
   Sentry.configureScope((scope) => {
     scope.setUser({
       id: response.data.team_slug,
@@ -166,6 +168,17 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   spanGetDSToken.finish();
 
+  trackEvent([
+    {
+      action: 'anima-cli.sync.started',
+      time: Date.now(),
+      eventParams: {
+        platform: 'anima-cli',
+        utm_source: 'anima-cli',
+        team_id: teamId,
+      },
+    },
+  ]);
   const basePath = _argv.basePath as string | undefined;
   const data = await getOrCreateStorybook(
     token,
