@@ -29,7 +29,7 @@ export const builder: CommandBuilder = (yargs) =>
       token: { type: 'string', alias: 't' },
       storybook: { type: 'string', alias: 's' },
       basePath: { type: 'string', alias: 'b' },
-      designTokens: { type: 'string' },
+      designTokens: { type: 'string', alias: 'd' },
       debug: { type: 'boolean' },
     })
     .check((argv) => {
