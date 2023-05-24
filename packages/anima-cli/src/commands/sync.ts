@@ -77,7 +77,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     });
 
     if (_argv.storybook) {
-      console.log('Storybook', _argv.storybook, '\n');
       const buildDir = await parseBuildDirArg(
         _argv.storybook as string | undefined,
       );
