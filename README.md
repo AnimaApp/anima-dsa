@@ -12,7 +12,7 @@ Learn more about the motivations and benefits on [our blog](https://blog.animaap
 
 ## Table of Contents
 
-- [Anima Storybook CLI](#anima-storybook-cli)
+- [Anima Storybook CLI](#anima-cli)
   - [Table of Contents](#table-of-contents)
   - [Quick Start](#quick-start)
   - [Setup](#setup)
@@ -46,7 +46,7 @@ You will be switching between Figma and your local Terminal!
 2. **Figma:** Create a new Figma project. This is where all your sync'ed Storybook components will live.
 3. **Figma:** Run the Anima Plugin, go to the _Storybook_ section and copy your unique **Anima token**.
 4. **Terminal:** Build your storybook instance, it's usually `npm run build-storybook`.
-5. **Terminal:** Run `npx anima-storybook-cli sync -t <ANIMA_TOKEN_HERE>`.
+5. **Terminal:** Run `npx @animaapp/anima-cli sync -t <anima_team_token>`.
 6. **Figma:** Follow the remaining instructions in Figma and you can importing your Storybook components to Figma. 🎉
 
 ## Setup
@@ -56,15 +56,15 @@ You will be switching between Figma and your local Terminal!
 Run one of the following commands (of your preferred package manager) in the Storybook root folder:
 
 ```sh
-npm install --save-dev anima-storybook-cli
+npm install --save-dev @animaapp/anima-cli
 ```
 
 ```sh
-yarn add -D anima-storybook-cli
+yarn add -D @animaapp/anima-cli
 ```
 
 ```sh
-pnpm add -D anima-storybook-cli
+pnpm add -D @animaapp/anima-cli
 ```
 
 ### 2. Add your unique Anima Token
@@ -152,7 +152,7 @@ anima-storybook sync [option]
 | Options           | Short | Description                                                                                     |   Type   |
 | :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
 | `--token`         | `-t`  | Provide Anima's token if it was not set as environment variable                                 | `string` |
-| `--directory`     | `-d`  | To specify the Storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
+| `--storybook`     | `-s`  | To specify the Storybook build folder, otherwise it uses Storybook's default `storybook-static` | `string` |
 | `--design-tokens` |       | Provide a path to your design tokens file, e.g., `./design-tokens.json`                         | `string` |
 
 ### `sync-design-tokens`
@@ -170,8 +170,8 @@ anim-storybook sync-design-tokens [option]
 ### Usage examples:
 
 ```sh
-npx anima-storybook sync --token <anima_token>
-npx anima-storybook sync --directory <storybook_static_dir> #default is storybook-static
+npx anima-storybook sync --token <anima_team_token>
+npx anima-storybook sync --storybook <storybook_static_dir> #default is storybook-static
 npx anima-storybook sync --design-tokens <path_to_design_tokens_file>
 
 npx anima-storybook sync-design-tokens --design-tokens <path_to_design_tokens_file>

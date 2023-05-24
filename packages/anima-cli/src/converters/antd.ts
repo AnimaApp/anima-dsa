@@ -33,7 +33,7 @@ export class AntdConverter implements IConverter {
     return `
 import {
   getAntdTheme,
-} from "anima-storybook-cli/dist/lib/antdTheme";
+} from "@animaapp/framework-helpers";
 import dsToken from "./design-tokens.json";
 
 import { Button, ConfigProvider } from 'antd';

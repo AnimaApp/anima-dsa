@@ -1,5 +1,8 @@
 import archiver from 'archiver';
 import { Writable } from 'stream';
+import { hashBuffer } from './hash';
+import { isDebug } from './debug';
+import { getCurrentHub } from '@sentry/node';
 
 export function zipDir(dir: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -31,3 +34,17 @@ export function zipDir(dir: string): Promise<Buffer> {
     archive.finalize();
   });
 }
+
+export const generateZipHash = async (buildDir: string) => {
+  const transaction = getCurrentHub().getScope()?.getTransaction();
+  const spanZipBuild = transaction?.startChild({ op: 'zip-build-and-hash' });
+  // zip the build directory and create a hash
+
+  const zipBuffer = await zipDir(buildDir);
+  const zipHash = hashBuffer(zipBuffer);
+
+  isDebug() && console.log('generated hash =>', zipHash);
+
+  spanZipBuild?.finish();
+  return { zipHash, zipBuffer };
+};

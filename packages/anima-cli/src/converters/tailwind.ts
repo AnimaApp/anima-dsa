@@ -47,7 +47,7 @@ export class TailwindConverter implements IConverter {
     return `
 const {
   getTailwindTheme,
-} = require("anima-storybook-cli/dist/lib/tailwindTheme");
+} = require("@animaapp/framework-helpers");
 const dsToken = require("./design-tokens.json");
 
 const theme = getTailwindTheme(dsToken);

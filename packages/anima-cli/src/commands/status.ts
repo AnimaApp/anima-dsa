@@ -26,7 +26,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   // check if token is provided as an arg or in .env
   const token = (_argv.token ??
-    process.env.STORYBOOK_ANIMA_TOKEN ??
+    process.env.ANIMA_TEAM_TOKEN ??
     '') as string;
 
   if (__DEBUG__) {

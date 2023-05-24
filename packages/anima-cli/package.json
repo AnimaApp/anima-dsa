@@ -1,9 +1,10 @@
 {
-  "name": "anima-storybook-cli",
-  "version": "0.13.1",
+  "name": "@animaapp/anima-cli",
+  "version": "0.14.0",
   "description": "Anima CLI for storybook",
   "main": "./dist/cli.js",
   "bin": {
+    "anima": "./dist/cli.js",
     "anima-storybook": "./dist/cli.js"
   },
   "engines": {
@@ -16,6 +17,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AnimaApp/anima-storybook-cli"
+  },
+ "publishConfig": {
+    "@animaapp:registry": "https://registry.npmjs.org/"
   },
   "author": "Anima",
   "keywords": [
