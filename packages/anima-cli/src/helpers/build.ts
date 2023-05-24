@@ -1,6 +1,9 @@
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs-extra';
+import { downloadFromUrl, isS3Url, setUsingS3Url } from './s3';
+import { TMP_DIR } from '../constants';
+
 
 export const DEFAULT_BUILD_COMMAND = 'build-storybook';
 export const DEFAULT_BUILD_DIR = 'storybook-static';
@@ -45,3 +48,36 @@ export const setupTempDirectory = (
 
   return TEMP_DIR;
 };
+
+export const parseBuildDirArg = async (
+  storybookArg?: string,
+): Promise<string> => {
+  let buildDir: string;
+  if (storybookArg && isS3Url(storybookArg)) {
+    console.log('Using s3 url, creating tmp dir');
+    setUsingS3Url(true);
+    await downloadFromUrl(storybookArg, TMP_DIR);
+    buildDir = TMP_DIR;
+  } else {
+    buildDir = getBuildDir(storybookArg || undefined);
+  }
+  return buildDir;
+};
+
+export const validateBuildDir = (buildDir: string): void => {
+  if (!fs.existsSync(buildDir)) {
+    throw new BuildDirError(
+      `Cannot find storybook's build directory: "${buildDir}". Please build storybook before running this command `,
+      buildDir,
+    );
+  }
+};
+
+export class BuildDirError extends Error {
+  buildDir: string;
+  constructor(message: string, buildDir: string) {
+    super('[BuildDirError]: ' + message);
+    this.buildDir = buildDir;
+  }
+}
+
