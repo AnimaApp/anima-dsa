@@ -20,6 +20,10 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           {
+            text: 'Getting started',
+            link: '/guide/introduction/getting-started',
+          },
+          {
             text: 'Overview',
             collapsed: false,
             items: [
@@ -33,10 +37,6 @@ export default defineConfig({
               },
               { text: 'Features', link: '/guide/introduction/features' },
             ],
-          },
-          {
-            text: 'Getting started',
-            link: '/guide/introduction/getting-started',
           },
           {
             text: 'Basic oncepts',
