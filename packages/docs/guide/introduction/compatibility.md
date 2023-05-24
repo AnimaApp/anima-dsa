@@ -11,7 +11,7 @@ Since we leverage Storybook's rendering engine, Anima works with any framework s
 | Angular   |    ✅     |
 | Web-Components      |    ✅     |
 | Svelte    |    ✅     |
-| React Native (Web)    |    ✅ [With Addon](https://www.dannyhwilliams.co.uk/introducing-react-native-web-storybook)     | 
+| React Native (Web)    |    ✅ [With Addon](https://www.dannyhwilliams.co.uk/introducing-react-native-web-storybook)     |
 
 ## Design Tokens
 
@@ -21,8 +21,8 @@ In regards to double way sync between Figma and your codebase, we currently supp
 
 | Framework/Library | Supported | How |
 | :-------- | :-------: | :------- |
-| TailwindCSS     |    ✅     | [Guide](/guide/token-transformers#tailwindcss) |
-|Ant Design v5|✅| [Guide](/guide/token-transformers#ant-design)|
+| TailwindCSS     |    ✅     | [Guide](/guide/manage-design-tokens/design-tokens-tailwind) |
+|Ant Design v5|✅| [Guide](/guide/manage-design-tokens/design-tokens-ant-design)|
 | Material UI | coming soon | - |
 | Mantine | coming soon | - |
 | CSS-variables | coming soon | - |

@@ -5,14 +5,15 @@ layout: home
 hero:
   name: "Anima DSA"
   text: "Automate your Design System"
-  tagline: My great project tagline
+  tagline: "Anima DSA is a tool that helps you automate your Design System workflow"
+  # image: "/hero.png"
   actions:
     - theme: brand
       text: Get Started
       link: /guide/introduction/getting-started
     - theme: alt
       text: Learn More
-      link: /guide/introduction/overview
+      link: /guide/introduction
 
 features:
   - title: Feature A

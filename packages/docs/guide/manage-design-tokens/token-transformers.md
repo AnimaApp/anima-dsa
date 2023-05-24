@@ -29,7 +29,7 @@ Then run the following command:
 
 Where `<framework-name>` is the name of the framework you are using and `<path-to-config-file>` is the path to your framework config file.
 
-Check [TailwindCSS](/guide/design-tokens-tailwind), or [Ant Design v5](/guide/design-tokens-ant-design) examples for more details.
+Check [TailwindCSS](/guide/manage-design-tokens/design-tokens-tailwind), or [Ant Design v5](/guide/manage-design-tokens/design-tokens-ant-design) examples for more details.
 
 ### Commads
 
@@ -65,6 +65,6 @@ Install the package in your project, using your package manager of choice:
 
 Check our detailed guides for each framework:
 
-### [TailwindCSS](/guide/design-tokens-tailwind)
+### [TailwindCSS](/guide/manage-design-tokens/design-tokens-tailwind)
 
-### [Ant Design v5](/guide/design-tokens-ant-design)
+### [Ant Design v5](/guide/manage-design-tokens/design-tokens-ant-design)

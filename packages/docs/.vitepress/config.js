@@ -10,7 +10,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       {
         text: 'Guide',
-        link: '/guide/introduction/overview',
+        link: '/guide/introduction/',
         activeMatch: '/guide/',
       },
     ],
@@ -25,7 +25,7 @@ export default defineConfig({
             items: [
               {
                 text: 'What is Anima DSA?',
-                link: '/guide/introduction/overview',
+                link: '/guide/introduction/',
               },
               {
                 text: 'Who is it for?',
@@ -58,7 +58,7 @@ export default defineConfig({
       {
         text: 'Anima CLI',
         items: [
-          { text: 'Guide', link: '/guide/anima-cli/anima-cli' },
+          { text: 'Guide', link: '/guide/anima-cli/' },
           // { text: 'Setup', link: '/guide/anima-cli#setup' },
           // { text: 'Usage', link: '/guide/anima-cli#usage' },
           // { text: 'Command API', link: '/guide/anima-cli#commands' },
@@ -90,28 +90,28 @@ export default defineConfig({
         items: [
           {
             text: 'Overview',
-            link: '/guide/manage-components/design-tokens-overview',
+            link: '/guide/manage-design-tokens/design-tokens-overview',
           },
           {
             text: 'How to sync Design Tokens',
-            link: '/guide/manage-components/sync-design-tokens',
+            link: '/guide/manage-design-tokens/sync-design-tokens',
           },
           {
             text: 'Anima Token transformers',
-            link: '/guide/manage-components/token-transformers',
+            link: '/guide/manage-design-tokens/token-transformers',
             collapsed: true,
             items: [
               {
                 text: 'Overview',
-                link: '/guide/manage-components/token-transformers',
+                link: '/guide/manage-design-tokens/token-transformers',
               },
               {
                 text: 'Tailwind',
-                link: '/guide/manage-components/design-tokens-tailwind',
+                link: '/guide/manage-design-tokens/design-tokens-tailwind',
               },
               {
                 text: 'AntDesign',
-                link: '/guide/manage-components/design-tokens-ant-design',
+                link: '/guide/manage-design-tokens/design-tokens-ant-design',
               },
               {
                 text: 'CSS-variables (soon)',

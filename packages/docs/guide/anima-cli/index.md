@@ -2,7 +2,6 @@
 
 Anima CLI is a command line tool that works in conjunction with the [Anima Figma Plugin](https://www.figma.com/community/plugin/857346721138427857) to transform [Storybook](https://storybook.js.org) stories into Figma components and Design Tokens as Figma Styles.
 
-
 ## Quick start
 
 Run the following command in the the folder you have Storybook installed:
@@ -42,6 +41,7 @@ Run the following command (of your preferred package manager) in the the folder 
 After installing the `anima-cli`, we recommend adding the _Anima Team Token_ as an environment variable. This way, you won't have to pass it as an argument every time you run the CLI.
 
 Create a `.env` file in the root of your Storybook project with the following contents:
+
 ```sh
 #.env
 ANIMA_TEAM_TOKEN="paste-your-token-here"
@@ -58,7 +58,6 @@ module.exports = {
 };
 ```
 
-
 ## Usage
 
 ### Sync Storybook to Anima
@@ -68,6 +67,7 @@ To sync your Storybook with Anima, run the following command:
 ```sh
     anima sync --storybook
 ```
+
 ::: info
 
 If you are not using the default Storybook build folder `storybook-static`, you'll need to specify the path to your custom Storybook build folder. For example:
@@ -94,28 +94,31 @@ To attach your design tokens to your components, run the following command:
 
 ## Command API
 
-## `anima sync `
+## `anima sync`
 
 Command to sync the Storybook and/or Design Tokens to Anima team so that it can be then generated in Figma.
 
 ### Usage
+
 ```sh
     anima sync [options]
 ```
 
 ### Options
+
 | Option                       | Description                                                                                     |   Type   |
 | :----------------------- | :---------------------------------------------------------------------------------------------- | :------: |
 | `--token`, `-t`          | Provide an Anima team token if it was not set as environment variable                                 | `string` |
-| `--storybook`, `-sb`      | To specify the Storybook build folder, otherwise it uses Storybook's default `storybook-static` | &nbsp;`boolean \| string` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
-| `--design-tokens`, `-dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Provide a path to your design tokens file, e.g., `./design-tokens.json`                          | `string` |
-
+| `--storybook`, `-s`      | To specify the Storybook build folder, otherwise it uses Storybook's default `storybook-static` | &nbsp;`boolean \| string` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+| `--design-tokens`, `-d` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Provide a path to your design tokens file, e.g., `./design-tokens.json`                          | `string` |
+| `--basePath`, `-b`          | If your project uses Vite, you can provide a base path                                 | `string` |
 
 ## `anima generate-tokens`
 
-Command to generate Design Tokens from your framework config file.
-    
+Command to generate Design Tokens from your framework config file. Learn more about how to use in [Manage design tokens guide](/guide/manage-design-tokens/token-transformers).
+
 ### Usage
+
 ```sh
     anima generate-tokens [options]
 ```

@@ -1,5 +1,7 @@
 # Anima Design System Automation
 
-introdutory text
+WIP
 
 ## What is Anima DSA?
+
+WIP

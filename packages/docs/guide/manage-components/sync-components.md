@@ -20,13 +20,11 @@ Using this method, you won't be able to autmoaticaly sync your Design Tokens to 
 
 <video src="/sync-url.mp4" controls loop autoplay title="Link Title"></video>
 
-
 ## Sync Storybook using the Anima CLI (preferred)
 
-
 If you are using a CI/CD environment, you can use the Anima CLI to sync your components to Anima.
-::: tip 
-This is the preferred method to sync your components to Anima. 
+::: tip
+This is the preferred method to sync your components to Anima.
 
 It allows your team to integrate with **CI/CD environments**, but is also the only way if you are using Storybook behind a firewall or if you don't have a public URL setup yet.
 :::
@@ -42,9 +40,11 @@ It allows your team to integrate with **CI/CD environments**, but is also the on
 >3. Copy your Anima Team Token
 
 #### Then add the Anima CLI to your CI/CD environment
+>
 >Here is an example of configuration you can add to the components repository:
 
 ::: code-group
+
 ```yml [Github Actions]
 #.github/workflows/sync-with-anima.yml
 
@@ -78,6 +78,7 @@ jobs:
 
 
 ```
+
 ```yml [CircleCI Pipelines]
 #.circleci/config.yml
 
@@ -103,11 +104,9 @@ jobs:
 
 > **Note**: you can review the documentation of [Github Actions](https://docs.github.com/en/actions/learn-github-actions) and [CircleCI](https://circleci.com/developer) to learn more about how to setup your CI/CD environment.
 
-
-
 ### Sync from a local Storybook
-If you are using Storybook behind a firewall or if you don't have a public URL setup yet, you can use the Anima CLI to sync your components to Anima.
 
+If you are using Storybook behind a firewall or if you don't have a public URL setup yet, you can use the Anima CLI to sync your components to Anima.
 
 #### Get your Anima Team Token from the Plugin
 
@@ -115,22 +114,23 @@ If you are using Storybook behind a firewall or if you don't have a public URL s
 >2. Click on `Start with Anima CLI` button
 >3. Copy your Anima Team Token
 
-####  1. Install the Anima CLI 
+#### 1. Install the Anima CLI
 
-Follow the instructions in the [Anima CLI guide](/guide/anima-cli#setup) to install the Anima CLI.
-
+Follow the instructions in the [Anima CLI guide](/guide/anima-cli/#setup) to install the Anima CLI.
 
 #### 2. Build your Storybook
+
 It is important to build your Storybook before running the CLI. This way, the CLI will be able to find the components in your Storybook build folder.
 
 ::: details How to build Storybook
 The default command is usually `build-storybook`:
 
 ::: code-group
+
 ```sh [npm]
 npm run build-storybook
 ```
-    
+
 ```sh [yarn]
 yarn build-storybook
 ```
