@@ -16,6 +16,8 @@ This guide will help you get started with Anima DSA. We'll cover how to get star
 
 ### 4. Import your Storybook with the option that suits you
 
+Learn more about the difference of syncing with [URL vs CLI](cli-vs-url.md)
+
 ![Sync Storybook options](/sync-sb-options.png =500x)
 
 - From a public URL if you have one
