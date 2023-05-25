@@ -22,31 +22,9 @@ jobs:
           npm i
           npm run docs:build
       - name: Deploy to Netlify
-        id: netlify-deploy
         uses: netlify/actions/cli@master
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
           args: deploy -d packages/docs/.vitepress/dist/ -p
-      - name: Extract Netlify URL
-        id: extract-url
-        run: |
-          echo "::set-output name=url::$(grep -o 'Website URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)"
-      - name: Post comment with Netlify URL
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const url = '${{ steps.extract-url.outputs.url }}';
-            const prNumber = '${{ github.event.number }}';
-
-            const { Octokit } = require("@octokit/core");
-            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-
-            octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-              owner: '${{ github.repository_owner }}',
-              repo: '${{ github.repository }}',
-              issue_number: prNumber,
-              body: `The website has been deployed to: ${url}`
-            });
