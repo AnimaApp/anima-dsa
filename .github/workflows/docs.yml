@@ -1,5 +1,7 @@
 name: publish docs
 
+# make the action run on the folder packages/docs only
+
 on:
   push:
     branches:
@@ -10,15 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          path: packages/docs
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
+
       - name: Install dependencies
         run: |
-          npm i -g pnpm
-          pnpm i --filter docs
-          pnpm docs:build --filter docs
+          npm i
+          npm run docs:build
+        working-directory: packages/docs
+
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         env:
