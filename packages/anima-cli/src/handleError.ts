@@ -36,7 +36,7 @@ export const handleError = async (e: Error) => {
   if (e instanceof TokenError) {
     loader.stop();
     log.yellow(
-      `Storybook token not found. Please provide a token using the --token flag or the STORYBOOK_ANIMA_TOKEN environment variable.`,
+      `Storybook token not found. Please provide a token using the --token flag or the ANIMA_TEAM_TOKEN environment variable.`,
     );
   } else if (e instanceof BuildDirError) {
     loader.stop();

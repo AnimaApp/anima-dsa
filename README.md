@@ -85,7 +85,7 @@ Create a `.env` file in the root of your Storybook project with the following co
 
 ```sh
 #.env
-STORYBOOK_ANIMA_TOKEN="PASTE_ANIMA_TOKEN_HERE"
+ANIMA_TEAM_TOKEN="PASTE_ANIMA_TOKEN_HERE"
 ```
 
 <details>
@@ -98,7 +98,7 @@ STORYBOOK_ANIMA_TOKEN="PASTE_ANIMA_TOKEN_HERE"
 ```yml
 # .github/workflows/main.yml
 env:
-  STORYBOOK_ANIMA_TOKEN: ${{ secrets.STORYBOOK_ANIMA_TOKEN }}
+  ANIMA_TEAM_TOKEN: ${{ secrets.ANIMA_TEAM_TOKEN }}
 ```
 
 </details>
