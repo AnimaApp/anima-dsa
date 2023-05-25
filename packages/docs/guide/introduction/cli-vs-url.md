@@ -15,5 +15,5 @@ The URL method is the quickest and easiest way to get started. It allows you to 
 
 If you want more advanced capabilities, you can use the CLI method. This method offers two main benefits:
 
-1. Continuous updates: Anima's continuous update feature monitors code changes and display them on Figma. Designers are notified of the updates and can easily communicate with developers to approve and pull changes, or disapprove and talk to their developers.
+1. Continuous updates: Anima's continuous update feature monitors code changes and display them on Figma. Designers are notified of the updates and can easily communicate with developers to approve and pull changes, or disapprove and talk to their developers. [How to configure continuous updates](/guide/manage-components/continuous-integration.md)
 2. Design tokens usage: With the CLI integration, the generated components will have the design tokens that exist in the code, and designers will be able to edit and push changes to GitHub.

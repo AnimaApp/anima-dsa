@@ -38,13 +38,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { context, github } = require('@actions/github');
             const url = '${{ steps.extract-url.outputs.url }}';
-            const prNumber = context.payload.pull_request.number;
+            const prNumber = '${{ github.event.number }}';
 
-            github.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+            const { Octokit } = require("@octokit/core");
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+            octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+              owner: '${{ github.repository_owner }}',
+              repo: '${{ github.repository }}',
               issue_number: prNumber,
               body: `The website has been deployed to: ${url}`
             });
