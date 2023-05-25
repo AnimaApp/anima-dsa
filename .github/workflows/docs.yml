@@ -20,7 +20,7 @@ jobs:
         run: |
           cd packages/docs
           npm i
-          npm docs:build
+          npm run docs:build
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         env:
