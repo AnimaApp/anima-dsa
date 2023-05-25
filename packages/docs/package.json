@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "vitepress": "1.0.0-alpha.75"
+  },
+  "dependencies": {
+    "markdown-it-imsize": "^2.0.1"
   }
 }

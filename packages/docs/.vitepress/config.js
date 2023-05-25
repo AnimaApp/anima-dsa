@@ -146,4 +146,11 @@ export default defineConfig({
       },
     ],
   },
+  markdown: {
+    // https://vitepress.dev/guide/markdown.html#custom-components
+    config: (md) => {
+      // use more markdown-it plugins!
+      md.use(require('markdown-it-imsize'));
+    },
+  },
 });
