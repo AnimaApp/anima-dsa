@@ -19,6 +19,7 @@ import { isDebug, setDebug } from '../helpers/debug';
 import { loader } from '../helpers/loader';
 import { getDesignTokens } from '../helpers/file-system';
 import { handleError } from '../handleError';
+import { setEnableTracking, trackEvent } from '../helpers/analytics';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -59,6 +60,9 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       scope.setSpan(transaction),
     );
     setDebug(!!_argv.debug);
+    if (isDebug()) {
+      setEnableTracking(false);
+    }
     const animaConfig = await loadAnimaConfig();
 
     loader.newStage('Checking local environment');
@@ -66,16 +70,16 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     // validate token with the api
     const token = getToken(_argv);
     const response = await authenticate(token);
+    const teamId = response.data.team_id;
     Sentry.configureScope((scope) => {
       scope.setUser({
         id: response.data.team_slug,
-        team_id: response.data.team_id,
+        team_id: teamId,
       });
       scope.setTag('teamId', response.data.team_id);
     });
 
     if (_argv.storybook) {
-      console.log('Storybook', _argv.storybook, '\n');
       const buildDir = await parseBuildDirArg(
         _argv.storybook as string | undefined,
       );
@@ -97,7 +101,17 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         designTokens,
         basePath,
       );
-
+      trackEvent([
+        {
+          action: 'anima-cli.sync.started',
+          time: Date.now(),
+          eventParams: {
+            platform: 'anima-cli',
+            utm_source: 'anima-cli',
+            team_id: teamId,
+          },
+        },
+      ]);
       const { skipUpload, uploadStatus } = await uploadStorybook({
         zipBuffer: zipBuffer,
         storybookId,
@@ -135,6 +149,17 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         token,
         designTokens,
       );
+      trackEvent([
+        {
+          action: 'anima-cli.sync.only-tokens.started',
+          time: Date.now(),
+          eventParams: {
+            platform: 'anima-cli',
+            utm_source: 'anima-cli',
+            team_id: teamId,
+          },
+        },
+      ]);
       if (isDebug()) {
         console.log('_id =>', storybook.storybookId);
         console.log('hash =>', storybook.hash);
