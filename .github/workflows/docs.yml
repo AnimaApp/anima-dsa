@@ -16,8 +16,9 @@ jobs:
           node-version: 16.x
       - name: Install dependencies
         run: |
-          npm i
-          npm run docs:build
+          npm i -g pnpm
+          pnpm i --filter docs
+          pnpm docs:build --filter docs
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         env:
