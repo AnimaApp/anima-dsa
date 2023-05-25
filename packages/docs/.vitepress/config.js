@@ -36,6 +36,10 @@ export default defineConfig({
                 link: '/guide/introduction/who-is-it-for',
               },
               { text: 'Features', link: '/guide/introduction/features' },
+              {
+                text: 'Sync: URL VS Anima CLI',
+                link: '/guide/introduction/cli-vs-url',
+              },
             ],
           },
           {
