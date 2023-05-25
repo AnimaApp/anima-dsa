@@ -60,6 +60,9 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       scope.setSpan(transaction),
     );
     setDebug(!!_argv.debug);
+    if (isDebug()) {
+      setEnableTracking(false);
+    }
     const animaConfig = await loadAnimaConfig();
 
     loader.newStage('Checking local environment');
@@ -100,7 +103,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       );
       trackEvent([
         {
-          userId: teamId,
           action: 'anima-cli.sync.started',
           time: Date.now(),
           eventParams: {
@@ -149,7 +151,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       );
       trackEvent([
         {
-          userId: teamId,
           action: 'anima-cli.sync.only-tokens.started',
           time: Date.now(),
           eventParams: {

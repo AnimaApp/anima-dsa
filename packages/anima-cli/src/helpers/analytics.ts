@@ -7,7 +7,6 @@ export type EventParams = {
 };
 
 export type Event = {
-  userId: string;
   action: string;
   time: number;
   eventParams: EventParams;
@@ -27,15 +26,13 @@ export const trackEvent = async (events: Event[]) => {
   try {
     const eventsMapped = events.map((event) => ({
       eventCategory: 'General',
-      userID: event.userId,
-      userEmail: 'unknown',
       clientVersion: version,
       eventAction: event.action,
       time: event.time,
       params: event.eventParams,
     }));
 
-    const res = await nf('https://logs.animaapp.com/analytics/collect', {
+    await nf('https://logs.animaapp.com/analytics/collect', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -43,7 +40,6 @@ export const trackEvent = async (events: Event[]) => {
       },
       body: JSON.stringify(eventsMapped),
     });
-    const data = await res.text();
   } catch (e) {
     Sentry.captureException(e);
   }
