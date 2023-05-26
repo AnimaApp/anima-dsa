@@ -140,7 +140,34 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         console.log('hash =>', zipHash);
         console.log('SkipUpload => ', skipUpload);
       }
+
+      loader.newStage('Processing stories');
+
+      const waitProcessSpan = transaction.startChild({
+        op: 'waitProcessingStories',
+      });
+
+      // --- Start wait sync
+      await waitProcessingStories(token, {
+        onCheckStories: (stories) => {
+          const stage =
+            stories.length > 0
+              ? `Processing stories: ${stories.length} remaining`
+              : 'Processing stories';
+          loader.newStage(stage, false);
+        },
+      });
+
+      loader.stop();
+      waitProcessSpan.finish();
+
+      // --- Cleaning and goodbye ---
+      transaction.status = 'ok';
+      transaction.finish();
+      log.green(`  - Processing stories ... OK`);
     } else {
+      loader.newStage('Syncing design tokens');
+
       const designTokens: Record<string, unknown> = await getDesignTokens(
         _argv.designTokens as string | undefined,
         animaConfig,
@@ -180,32 +207,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
           log.yellow(`Failed to update designTokens, ${e.message}`);
         });
       }
+
+      loader.stop();
     }
 
-    loader.newStage('Processing stories');
-
-    const waitProcessSpan = transaction.startChild({
-      op: 'waitProcessingStories',
-    });
-
-    // --- Start wait sync
-    await waitProcessingStories(token, {
-      onCheckStories: (stories) => {
-        const stage =
-          stories.length > 0
-            ? `Processing stories: ${stories.length} remaining`
-            : 'Processing stories';
-        loader.newStage(stage, false);
-      },
-    });
-
-    loader.stop();
-    waitProcessSpan.finish();
-
-    // --- Cleaning and goodbye ---
-    transaction.status = 'ok';
-    transaction.finish();
-    log.green(`  - Processing stories ... OK`);
     log.green('  - Done');
 
     if (isUsingS3Url()) {
