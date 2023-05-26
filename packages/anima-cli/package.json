@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@animaapp/framework-helpers": "workspace:*",
+    "@animaapp/storybook-api": "workspace:*",
     "@sentry/node": "^7.29.0",
     "@sentry/tracing": "^7.29.0",
     "@types/node-fetch": "^2.6.2",

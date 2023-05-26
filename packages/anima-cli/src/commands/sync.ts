@@ -3,12 +3,7 @@ import fs from 'fs-extra';
 import { Arguments, CommandBuilder } from 'yargs';
 import { parseBuildDirArg, validateBuildDir } from '../helpers/build';
 import { exitProcess } from '../helpers/exit';
-import {
-  authenticate,
-  getOrCreateStorybook,
-  getOrCreateStorybookForDesignTokens,
-  updateDSTokenIfNeeded,
-} from '../api';
+import { authenticate } from '../api';
 import { log, generateZipHash, uploadStorybook } from '../helpers';
 import * as Sentry from '@sentry/node';
 import { waitProcessingStories } from '../helpers/waitAllProcessingStories';
@@ -20,6 +15,7 @@ import { loader } from '../helpers/loader';
 import { getDesignTokens } from '../helpers/file-system';
 import { handleError } from '../handleError';
 import { setEnableTracking, trackEvent } from '../helpers/analytics';
+import { storybookApi } from '../api/storybook';
 
 export const command = 'sync';
 export const desc = 'Sync Storybook to Figma using Anima';
@@ -95,12 +91,13 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       );
 
       const basePath = _argv.basePath as string | undefined;
-      const { storybookId, uploadUrl, ...data } = await getOrCreateStorybook(
-        token,
-        zipHash,
-        designTokens,
-        basePath,
-      );
+      const { storybookId, uploadUrl, ...data } =
+        await storybookApi.getOrCreateStorybook(
+          token,
+          zipHash,
+          designTokens,
+          basePath,
+        );
       trackEvent([
         {
           action: 'anima-cli.sync.started',
@@ -122,18 +119,20 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       // create storybook object if no record with the same hash is found and upload it
       const currentDesignTokenStr = data.designTokens;
       if (storybookId && uploadStatus === 'complete') {
-        await updateDSTokenIfNeeded({
-          storybook: {
-            id: storybookId,
-            ds_tokens: currentDesignTokenStr,
-            upload_status: uploadStatus,
-          },
-          token,
-          currentDSToken: designTokens,
-        }).catch((e) => {
-          Sentry.captureException(e);
-          log.yellow(`Failed to update designTokens, ${e.message}`);
-        });
+        await storybookApi
+          .updateDSTokenIfNeeded({
+            storybook: {
+              id: storybookId,
+              ds_tokens: currentDesignTokenStr,
+              upload_status: uploadStatus,
+            },
+            token,
+            currentDSToken: designTokens,
+          })
+          .catch((e) => {
+            Sentry.captureException(e);
+            log.yellow(`Failed to update designTokens, ${e.message}`);
+          });
       }
       if (isDebug()) {
         console.log('_id =>', storybookId);
@@ -145,10 +144,12 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         _argv.designTokens as string | undefined,
         animaConfig,
       );
-      const storybook = await getOrCreateStorybookForDesignTokens(
-        token,
-        designTokens,
-      );
+      const storybook = await storybookApi
+        .syncOnlyDesignTokens(token, designTokens)
+        .catch((e) => {
+          Sentry.captureException(e);
+          log.yellow(`Failed to update designTokens, ${e.message}`);
+        });
       trackEvent([
         {
           action: 'anima-cli.sync.only-tokens.started',
@@ -161,24 +162,8 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         },
       ]);
       if (isDebug()) {
-        console.log('_id =>', storybook.storybookId);
-        console.log('hash =>', storybook.hash);
-      }
-      const storybookId = storybook.storybookId;
-      const uploadStatus = storybook.uploadStatus;
-      if (storybookId) {
-        await updateDSTokenIfNeeded({
-          storybook: {
-            id: storybookId,
-            ds_tokens: storybook.designTokens,
-            upload_status: uploadStatus,
-          },
-          token,
-          currentDSToken: designTokens,
-        }).catch((e) => {
-          Sentry.captureException(e);
-          log.yellow(`Failed to update designTokens, ${e.message}`);
-        });
+        console.log('_id =>', storybook?.storybookId);
+        console.log('hash =>', storybook?.hash);
       }
     }
 

@@ -1,8 +1,8 @@
 import formData from 'form-data';
 import nf, { Response } from 'node-fetch';
 import { isDebug } from './debug';
-import { updateStorybook } from '../api';
 import { getCurrentHub } from '@sentry/node';
+import { storybookApi } from '../api/storybook';
 
 export const uploadBuffer = async (
   url: string,
@@ -58,7 +58,7 @@ export const uploadStorybook = async ({
     skipUpload = false;
     const uploadResponse = await uploadBuffer(uploadUrl, zipBuffer);
     const upload_status = uploadResponse.status === 200 ? 'complete' : 'failed';
-    await updateStorybook(token, storybookId, {
+    await storybookApi.updateStorybook(token, storybookId, {
       upload_status,
       preload_stories: true,
     });
