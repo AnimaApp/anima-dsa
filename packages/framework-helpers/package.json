@@ -27,6 +27,7 @@
     "format:check": "prettier --loglevel warn --check \"**/*.{ts,js,json,yaml}\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest '__tests__/.*.spec.ts'",
+    "clean": "rm -rf dist .turbo",
     "lint:check": "eslint \"src/**/*.ts\""
   },
   "files": [

@@ -52,7 +52,8 @@
     "lint": "eslint \"src/**/*.ts\" --fix",
     "unit:test": "vitest run ./src/__tests__/",
     "e2e:test": "vitest run ./e2e-test/",
-    "test": "yarn run unit:test && yarn run e2e:test",
+    "test": "pnpm run unit:test && pnpm run e2e:test",
+    "clean": "rm -rf ./dist .turbo",
     "lint:check": "eslint \"src/**/*.ts\""
   },
   "dependencies": {
