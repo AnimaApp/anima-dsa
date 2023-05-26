@@ -12,10 +12,3 @@ export const hashBuffer = (buffer: Buffer): string => {
   const hex = hashSum.digest('hex');
   return hex;
 };
-
-export const hashString = (string: string): string => {
-  const hashSum = crypto.createHash('md5');
-  hashSum.update(string);
-  const hex = hashSum.digest('hex');
-  return hex;
-};
