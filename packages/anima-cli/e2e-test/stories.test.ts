@@ -1,8 +1,11 @@
-import { getStorybookByHash, getTeamStories, type Story, type StorybookEntity } from '../src/api';
+import { getTeamStories } from '../src/api';
+import { storybookApi } from '../src/api/storybook';
 import { expect, beforeAll, test, describe } from "vitest";
 import ds_tokens from './test-ds-tokens.json';
 import ds_tokens_update from './test-ds-tokens-update.json';
 import testUtils from './utils';
+import { type Story } from '../src/api/types';
+import { type StorybookEntity } from '@animaapp/storybook-api';
 
 const TOKEN = process.env.TEST_TOKEN;
 const TIMEOUT = 1000 * 60 * 3; // 5 minutes
@@ -21,7 +24,7 @@ describe('Test storybook with base path', () => {
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
-    const res = await getStorybookByHash(TOKEN, hash);
+    const res = await storybookApi.getStorybookByHash(TOKEN, hash);
     if (!res.ok) throw new Error('Failed to get Storybook');
     storybook = await res.json();
     stories = await getTeamStories(TOKEN);
@@ -56,7 +59,7 @@ describe('Test storybook without base path', () => {
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
-    const res = await getStorybookByHash(TOKEN, hash);
+    const res = await storybookApi.getStorybookByHash(TOKEN, hash);
     if (!res.ok) throw new Error('Failed to get Storybook');
     storybook = await res.json();
     stories = await getTeamStories(TOKEN);
@@ -83,7 +86,7 @@ describe('Test storybook without base path', () => {
       isUsingBasePath: false,
       designTokenVersion: 'UPDATE',
     })
-    const res = await getStorybookByHash(TOKEN, storybookHash);
+    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
     storybook = await res.json();
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens_update);
@@ -95,7 +98,7 @@ describe('Sync only tokens', () => {
     const { storybookHash } = testUtils.syncOnlyTokens({
       designTokenVersion: 'INIT',
     });
-    const res = await getStorybookByHash(TOKEN, storybookHash);
+    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
     const storybook = await res.json();
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens);
@@ -105,7 +108,7 @@ describe('Sync only tokens', () => {
     const { storybookHash } = testUtils.syncOnlyTokens({
       designTokenVersion: 'UPDATE',
     });
-    const res = await getStorybookByHash(TOKEN, storybookHash);
+    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
     if (!res.ok) throw new Error('Failed to get Storybook');
     const storybook = await res.json();
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens_update);
