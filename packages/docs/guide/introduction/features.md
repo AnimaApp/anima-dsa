@@ -2,7 +2,7 @@
 
 
 ## Generate Figma components automatically
-Use Anima CLI/URL import to generate your entire code components library as a Figma library, in a single click. 
+Use Anima CLI or URL import to generate your entire code components library as a Figma library, in a single click. 
 Anima will translate all of your components (as they are represented in Storybook), as native Figma components. 
 
 ### With variants matching code props
