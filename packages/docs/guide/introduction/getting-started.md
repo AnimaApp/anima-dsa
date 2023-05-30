@@ -15,16 +15,15 @@
 ## 5 Steps to start automating your design system workflow
 1. [Set up Anima](#1-set-up-anima)
 2. [Import your Storybook](#2-import-your-storybook-into-anima)
-3. Import your Design Tokens
-4. Push changes from Figma to GitHub
-5. Pull changes from GitHub to Figma
+3. [Import your Design Tokens](#3-Import-your-design-tokens-into-Anima)
+4. [Push changes from Figma to GitHub](#4-Push-changes-from-Figma-to-GitHub)
+5. [Pull changes from GitHub to Figma](#5-Push-changes-from-GitHub-to-Figma)
 
 ### 1. Set up Anima
 - Run the [Anima plugin](https://www.figma.com/community/plugin/857346721138427857) in Figma
 - Sign up/Log into the Anima platform
 - Choose the Manage Design Systems workflow
 <img width="586" alt="Manage design systems" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/38b3e73b-13a4-4313-998d-642cfc420b96">
-
 
 ### 2. Import your Storybook into Anima
 - Choose your [preferred import method](cli-vs-url.md)
@@ -40,21 +39,18 @@
 
 ### 3. Import your design tokens into Anima
 - Sync with the CLI
-    - Installing the CLI in the codebase
-    - Get the team toking
+    - Install the CLI in the codebase
+    - Get the team token
     - Sync design tokens
 
-
-### 4. Pushing changes to GitHub
-
-- Creating/editing a design token in the plugin
-- Pushing the repo to GitHub
-- Creating an access token for the repo
-- Adding the credentials to the Figma plugin
+### 4. Push changes to GitHub
+- Create/edit a design token in the plugin
+- Push the repo to GitHub
+- Create an access token for the repo
+- Add the credentials to the Figma plugin
 - Push the changes to GitHub
-- Reviewing and merging the pull request
+- Review and merge the pull request
 
 ### 5. Pulling changes in Figma
-
-- Developer makes a change to the design system and pushes to main
+- Make a change to the design system and push to main
 - Pull these changes the next time we open the Anima plugin
