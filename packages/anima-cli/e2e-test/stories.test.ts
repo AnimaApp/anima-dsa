@@ -24,8 +24,9 @@ describe('Test storybook with base path', () => {
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
-    const storybook = await storybookApi.getStorybookByHash(TOKEN, hash);
-    expect(storybook).toBeTruthy();
+    const tmpStorybook = await storybookApi.getStorybookByHash(TOKEN, hash);
+    if (!tmpStorybook) throw new Error('no storybook');
+    storybook = tmpStorybook;
     stories = await getTeamStories(TOKEN);
   }, TIMEOUT);
 
