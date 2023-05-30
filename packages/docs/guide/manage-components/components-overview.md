@@ -16,7 +16,7 @@ Code Component == Figma components
 2. Same responsive behavior
 3. Save styles (tokens)
 4. Same variants
-See [Full featurs list](features.md)
+See [Full featurs list](/guide/introduction/features.md)
 
 ## Nexxt steps
 Your Figma and code are in sync? great!
