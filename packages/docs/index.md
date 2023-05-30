@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Anima DSA"
   text: "Automate your Design System"
-  tagline: "Anima DSA align your code and design libraries, while providing seamless change management capabilities"
+  tagline: "Anima Design System Automation aligns your code and design libraries while providing seamless change management capabilities"
   # image: "/hero.png"
   actions:
     - theme: brand
