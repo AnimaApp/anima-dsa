@@ -28,12 +28,14 @@ Anima will create your design tokens as Figma styles and variables, ready to use
 ### 4. Media-queries as Figma variants
 Got components that looks differently on different screens? We got you covered. When importing your component to Figma, you'd be able to define which viewports you'd like to see in Figma. Anima will add a "Viewport" size property to your component, with all selected sizes
 
-<img width="821" alt="Screen Shot 2023-05-28 at 17 24 58" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/94e88059-c175-4eb5-8259-d4713db9f8d0">
+<img width="821" alt="Media-queries as Variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/94e88059-c175-4eb5-8259-d4713db9f8d0">
 
 <br>
 
 ### 5. Code snippets embedded in instances
 Know for each component if it already exists in your source code, and which properties to used for the selected instance
+<img width="1164" alt="snippet_in_variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7c5db3fa-2693-4a83-8b87-1e9a9419fa97">
+
 <br>
 
 ## Manage Design Tokens
@@ -45,14 +47,16 @@ Use Anima DSA to connect your Figma with GitHub, to import, edit and update your
 ### 1. Create, Update and Delete Design Tokens
 Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typogtraphy. 
 <br>
+<img width="436" alt="typography token creation" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/e6762ab8-f41d-4755-a99c-a32c065ff1f7">
 
 ### 2. Create PRs for Design Tokens updates directly from Figma
 Use Anima DSA to push your design changes as PRs to your dev team
 <br>
+<img width="469" alt="Manage Design Tokens - create a PR" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/ccc8cba9-7ec2-47d7-ad0f-5dce72e40f81">
 
 ### 3. Pull Design Tokens updates from GitHub to Figma
 Use Anima DSA to pull updates from code, to
 - Keep your tokens in sync with production
 - Be aware of any changes in production that may affect what your users are seeing
-![Choose Design System Management](/manage-tokens-create-a-PR.png =500x)
+<img width="441" alt="Pull-updates-from-github" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/06803d5a-f11c-4670-909e-aa58cd8e6818">
 
