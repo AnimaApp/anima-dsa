@@ -34,10 +34,9 @@ These conrols will define all the possible combinations of the Button component,
 
 ## What is a Storybook?
 The collection of all of your components' stories - is your Storybook.
-
-https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/55aeacf8-a922-4a77-8709-fe4a3ac5b753
+![button-story-controls-demo (2)](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/c5c5578e-f47e-459f-bd5b-3f9fb05551fa)
 
 <br>
-*This video was taken from Storybook docs. Visit the Storybook website for more information
+*This asset was taken from Storybook docs. Visit the Storybook website for more information
 
 
