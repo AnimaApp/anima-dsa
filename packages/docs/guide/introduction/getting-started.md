@@ -1,5 +1,4 @@
 # Quickstart
-
 > Learn how Anima can automate your design system workflow by keeping your components and design tokens in sync with Figma and your codebase.
 
 > Learn how to automate your design system workflow using Anima. Your designers will be able to push Figma changes to code, and your developers will be able to push code changes to Figma.
