@@ -24,9 +24,8 @@ describe('Test storybook with base path', () => {
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
-    const res = await storybookApi.getStorybookByHash(TOKEN, hash);
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    storybook = await res.json();
+    const storybook = await storybookApi.getStorybookByHash(TOKEN, hash);
+    expect(storybook).toBeTruthy();
     stories = await getTeamStories(TOKEN);
   }, TIMEOUT);
 
@@ -59,9 +58,8 @@ describe('Test storybook without base path', () => {
     });
     hash = syncResult.storybookHash;
     console.log(`Args:\n- token: ${TOKEN}\n- hash: ${hash}`);
-    const res = await storybookApi.getStorybookByHash(TOKEN, hash);
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    storybook = await res.json();
+    const storybook = await storybookApi.getStorybookByHash(TOKEN, hash);
+    expect(storybook).toBeTruthy();
     stories = await getTeamStories(TOKEN);
   }, TIMEOUT);
 
@@ -86,9 +84,8 @@ describe('Test storybook without base path', () => {
       isUsingBasePath: false,
       designTokenVersion: 'UPDATE',
     })
-    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    storybook = await res.json();
+    const storybook = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
+    if (!storybook) throw new Error('no storybook');
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens_update);
   });
 });
@@ -98,9 +95,8 @@ describe('Sync only tokens', () => {
     const { storybookHash } = testUtils.syncOnlyTokens({
       designTokenVersion: 'INIT',
     });
-    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    const storybook = await res.json();
+    const storybook = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
+    if (!storybook) throw new Error('no storybook');
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens);
   }, 10000);
 
@@ -108,9 +104,8 @@ describe('Sync only tokens', () => {
     const { storybookHash } = testUtils.syncOnlyTokens({
       designTokenVersion: 'UPDATE',
     });
-    const res = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    const storybook = await res.json();
+    const storybook = await storybookApi.getStorybookByHash(TOKEN, storybookHash);
+    if (!storybook) throw new Error('no storybook');
     expect(JSON.parse(storybook.ds_tokens)).toMatchObject(ds_tokens_update);
   });
 })

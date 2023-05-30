@@ -19,11 +19,15 @@ export class StorybookApi {
   getStorybookByHash = async (
     token: string,
     hash: string,
-  ): Promise<Response> => {
-    return fetch(`${this.#endpoint}/storybook?hash=${hash}`, {
+  ): Promise<StorybookEntity | null> => {
+    const res = await fetch(`${this.#endpoint}/storybook?hash=${hash}`, {
       method: 'GET',
       headers: this.#getHeaders(token),
     });
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error('Failed to get Storybook');
+    const storybook = await res.json();
+    return storybook;
   };
 
   updateDSTokenIfNeeded = async ({
@@ -101,13 +105,9 @@ export class StorybookApi {
     raw_ds_tokens: Record<string, unknown> = {},
     basePath: string | undefined,
   ): Promise<getOrCreateStorybookResponse> => {
-    const res = await this.getStorybookByHash(token, hash);
-    let data: StorybookEntity | null = null;
-
-    if (res.status === 200) {
-      data = await res.json();
-    } else if (res.status === 404) {
-      data = await this.createStorybook(token, {
+    let storybook = await this.getStorybookByHash(token, hash);
+    if (storybook == null) {
+      storybook = await this.createStorybook(token, {
         storybook_hash: hash,
         ds_tokens: JSON.stringify(raw_ds_tokens),
         base_path: basePath,
@@ -119,7 +119,7 @@ export class StorybookApi {
       upload_signed_url,
       upload_status = 'init',
       ds_tokens: dsTokens,
-    } = data ?? {};
+    } = storybook ?? {};
 
     return {
       storybookId: id,
