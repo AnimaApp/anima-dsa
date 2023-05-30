@@ -4,9 +4,9 @@
 
 ## Sync from an Storybook URL {#sync-from-url}
 
-If you have your Storybook deployed and have a public URL, you can sync it to Anima from that URL.
+You can sync any Storybook with a public URL to Anima.
 
-::: warning Use the URL method just for testing purposes.
+::: warning This method should be used for testing purposes
 
 Using this method, you won't be able to autmoaticaly sync your Design Tokens to Anima as well as you'll not receive updates when the components change.
 
