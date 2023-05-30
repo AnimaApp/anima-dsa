@@ -8,7 +8,7 @@ Anima will translate all of your components (as they are represented in Storyboo
 <br>
 
 ### 1. Variants matching code props
-Each component property will be translated to a Figma property ![image](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/aa7d5e90-8519-4ffe-be00-4e944ffb6435)
+Each component property will be translated to a Figma property ![Matching-props](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/aa7d5e90-8519-4ffe-be00-4e944ffb6435)
 
 <br>
 
@@ -34,19 +34,16 @@ Got components that looks differently on different screens? We got you covered. 
 
 ### 5. Code snippets embedded in instances
 Know for each component if it already exists in your source code, and which properties to used for the selected instance
-
-<br><br>
+<br>
 
 ## Manage Design Tokens
 Whether it's rebranding, accessibility tests, or touch-ups, our design is constantly evolving. But translating those changes into words and tasks often leads to pixels and colors that get lost in translation.
 
 Use Anima DSA to connect your Figma with GitHub, to import, edit and update your Design Tokens in all platforms.
-
 <br>
 
 ### 1. Create, Update and Delete Design Tokens
 Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typogtraphy. 
-
 <br>
 
 ### 2. Create PRs for Design Tokens updates directly from Figma
@@ -57,3 +54,5 @@ Use Anima DSA to push your design changes as PRs to your dev team
 Use Anima DSA to pull updates from code, to
 - Keep your tokens in sync with production
 - Be aware of any changes in production that may affect what your users are seeing
+![Choose Design System Management](/manage-tokens-create-a-PR.png =500x)
+
