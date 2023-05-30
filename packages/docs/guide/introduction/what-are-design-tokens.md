@@ -5,19 +5,16 @@ Design tokens are standardized values that capture design decisions, ensuring co
 <br>
 
 They serve as a shared language, enabling a seamless translation of design styles from tools like Figma into code, ultimately streamlining the design-to-code process.
-
 <br>
 
 ## What are design tokens for?
 
 ### Capturing Design Decisions
 Design tokens document and organize design decisions, including colors, typography, spacing, and more, to create a cohesive user experience.
-
 <br>
 
 ### Standardizing Design Attributes
 Design tokens establish a set of standardized values for design attributes. For example, instead of manually specifying a color value each time, we can define a design token called "primary-color" and assign a specific color value to it. This token can then be used consistently throughout the design and development process.
-
 <br>
 
 ### Streamlining Design-to-Code Translation
@@ -28,10 +25,14 @@ Design tokens streamline the translation of design styles to code, allowing deve
 ## Example
 Designers define a style called "primary-color" with a value of "#00FFA3" (green). They use this token consistently in their designs.
 
-In Figma:
+**In Figma:**
 
-In code:
+<img width="673" alt="color-token-usage" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/5bb15bca-3198-4e12-ad6b-8d4be7108219">
 
+<br>
+<br>
+
+**In code:**
 ```
 /* Design Token */
 --primary-color: #00FFA3;
