@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Anima DSA"
-  text: "Automate your Design System"
-  tagline: "Anima DSA is a tool that helps you automate your Design System workflow"
+  text: "Automate your Design System workflow"
+  tagline: "Anima DSA empowers design system management with automated sync, component generation, and effortless change management"
   # image: "/hero.png"
   actions:
     - theme: brand
@@ -16,11 +16,11 @@ hero:
       link: /guide/introduction
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Sync your code components with Figma 
+    details: Translate your code component into a native Figma library
+  - title: Manage design tokens
+    details: Push changes as a PR, directly from Figma
+  - title: Generate new components 
+    details: Generate React boilerplate code out of your Figma components and screens
 ---
 
