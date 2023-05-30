@@ -6,8 +6,6 @@ Storybook is a great tool used to build UI components in isolation. To learn mor
 ## TL;DR
 We love to refer to Storybook as the closest representation of our production components. It is an **interactive directory of your UI components and their variants.**
 
-<br>
-
 ## What is a story
 A story is an additional file we add to a component, that defines the different render states it can have. (it’s a function that returns a component’s state given a set of arguments).
 <br>
