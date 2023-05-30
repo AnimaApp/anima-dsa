@@ -4,14 +4,14 @@ Anima DSA is for everyone that are involved in building or consuming a design sy
 ## Design system creators
 
 ### Designers
-- Get a 100% pairty between your code components and your design components
+- Get a 100% parity between your code components and your design components
     - Same prop names
     - Same design tokens
     - Same responsive behavior  
 - Push design changes directly to code, to make sure your designs won’t get lost in translation
 
 ### Developers
-- Recive PRs to approve design updates, instead of creating the wanted changes manually 
+- Receive PRs to approve design updates, instead of creating the desired changes manually 
 - Connect your code snippets with Figma components, automatically 
 
 ## Design system consumers
