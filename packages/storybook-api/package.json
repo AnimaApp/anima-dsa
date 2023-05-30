@@ -1,0 +1,28 @@
+{
+  "name": "@animaapp/storybook-api",
+  "version": "1.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf ./dist .turbo",
+    "lint": "eslint \"src/**/*.ts\" --fix"
+  },
+  "publishConfig": {
+    "@animaapp:registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "/dist"
+  ],
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "typescript": "^5.0.2"
+  }
+}

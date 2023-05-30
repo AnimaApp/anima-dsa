@@ -1,6 +1,6 @@
 {
   "name": "@animaapp/anima-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Anima CLI for storybook",
   "main": "./dist/src/cli.js",
   "bin": {
@@ -8,7 +8,7 @@
     "anima-storybook": "./dist/src/cli.js"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "files": [
     "/assets",
@@ -52,11 +52,13 @@
     "lint": "eslint \"src/**/*.ts\" --fix",
     "unit:test": "vitest run ./src/__tests__/",
     "e2e:test": "vitest run ./e2e-test/",
-    "test": "yarn run unit:test && yarn run e2e:test",
+    "test": "pnpm run unit:test && pnpm run e2e:test",
+    "clean": "rm -rf ./dist .turbo",
     "lint:check": "eslint \"src/**/*.ts\""
   },
   "dependencies": {
     "@animaapp/framework-helpers": "workspace:*",
+    "@animaapp/storybook-api": "workspace:*",
     "@sentry/node": "^7.29.0",
     "@sentry/tracing": "^7.29.0",
     "@types/node-fetch": "^2.6.2",
