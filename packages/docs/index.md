@@ -17,7 +17,7 @@ hero:
 
 features:
   - title: Sync your code components with Figma 
-    details: Translate your code component into a Figma library, and keep it in sync with code
+    details: Translate your code component into a Figma library, and keep it synced with code
 
   - title: Manage design tokens
     details: Push changes as a PR, directly from Figma
