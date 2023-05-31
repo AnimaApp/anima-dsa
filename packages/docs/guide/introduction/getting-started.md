@@ -12,11 +12,11 @@
 > You’ll learn how Anima can automate your design system workflow. You’ll bridge your developer/designer workflow gap by making sure that your design systems stays in sync with your codebase and Figma designs.
 
 ## 5 Steps to start automating your design system workflow
-1. [Set up Anima](#1-set-up-anima)
-2. [Import your Storybook](#2-import-your-storybook-into-anima)
-3. [Import your Design Tokens](#3-Import-your-design-tokens-into-Anima)
-4. [Push changes from Figma to GitHub](#4-Push-changes-from-Figma-to-GitHub)
-5. [Pull changes from GitHub to Figma](#5-Push-changes-from-GitHub-to-Figma)
+1. [Set up Anima](#_1-set-up-anima)
+2. [Import your Storybook](#_2-import-your-storybook-into-anima)
+3. [Import your Design Tokens](#_3-Import-your-design-tokens-into-Anima)
+4. [Push changes from Figma to GitHub](#_4-Push-changes-from-Figma-to-GitHub)
+5. [Pull changes from GitHub to Figma](#_5-Push-changes-from-GitHub-to-Figma)
 
 ### 1. Set up Anima
 - Run the [Anima plugin](https://www.figma.com/community/plugin/857346721138427857) in Figma
