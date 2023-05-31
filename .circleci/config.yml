@@ -1,6 +1,18 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1
+
+commands:
+  set-npm-registry:
+    steps:
+      - run:
+          name: Set npm registry
+          command: |
+            echo "registry=https://registry.npmjs.org/" >> ./.npmrc
+            echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
+            echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
+            echo "always-auth=true" >> ./.npmrc
+
 workflows:
   storybook-cli:
     jobs:
@@ -8,6 +20,15 @@ workflows:
           context: 
             - anima-prod
             - AWS
+      - docs-publish:
+          context: 
+            - anima-prod
+            - AWS
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: docs/init-docs         
   storybook-cli-nightly-test:
     triggers:
       - schedule:
@@ -19,9 +40,19 @@ workflows:
       - build-and-test:
           context:
             - anima-prod
-            - AWS
+            - AWS  
 
 jobs:
+  docs-publish:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: Upload to S3
+          command: |
+            aws s3 sync ./packages/docs/.vitepress/dist s3://anima-docs/dsa --delete
   build-and-test:
     docker:
       - image: node:16
@@ -29,11 +60,7 @@ jobs:
       - checkout
       - aws-cli/setup:
           profile-name: default
-      - run: |
-          echo "registry=https://registry.npmjs.org/" >> ./.npmrc
-          echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
-          echo "always-auth=true" >> ./.npmrc
+      - set-npm-registry
       - run:
           name: "Install Ubuntu dependencies"
           command: |
