@@ -84,5 +84,5 @@ jobs:
       - run:
           name: Upload to S3
           command: |
-            aws s3 sync packages/docs/.vitepress/dist s3://anima-docs/dsa --delete
+            aws s3 sync packages/docs/.vitepress/dist s3://anima-dsa-docs/ --delete
 
