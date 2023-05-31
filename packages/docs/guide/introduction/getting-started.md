@@ -22,7 +22,7 @@
 - Run the [Anima plugin](https://www.figma.com/community/plugin/857346721138427857) in Figma
 - Sign up/Log into the Anima platform
 - Choose the Manage Design Systems workflow
-<img width="586" alt="Manage design systems" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/38b3e73b-13a4-4313-998d-642cfc420b96">
+<img width="400" alt="Manage design systems" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/65589ece-b124-49f5-bc2d-492f1cd53a95">
 
 ### 2. Import your Storybook into Anima
 - Choose your [preferred import method](./cli-vs-url.md)
