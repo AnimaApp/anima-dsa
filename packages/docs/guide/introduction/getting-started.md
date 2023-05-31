@@ -25,11 +25,11 @@
 <img width="586" alt="Manage design systems" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/38b3e73b-13a4-4313-998d-642cfc420b96">
 
 ### 2. Import your Storybook into Anima
-- Choose your [preferred import method](cli-vs-url.md)
+- Choose your [preferred import method](./cli-vs-url.md)
 <br> ** Don't have a storybook yet? use our [sample Storybook](https://animaapp.github.io/anima-sample-storybook/?path=/story/getting-started--page).
-  -   [Import from a URL](sync-components.md#sync-from-an-storybook-url-sync-from-url)
-  -   [Sync with the CLI](sync-components.md#sync-storybook-using-the-anima-cli-preferred)
-      -   [Install the CLI](sync-components.md#sync-storybook-using-the-anima-cli-preferred) in the codebase
+  -   [Import from a URL](../manage-components/sync-components.md#sync-from-an-storybook-url-sync-from-url)
+  -   [Sync with the CLI](manage-component/sync-components.md#sync-storybook-using-the-anima-cli-preferred)
+      -   [Install the CLI](manage-component/sync-components.md#sync-storybook-using-the-anima-cli-preferred) in the codebase
       -   Get your team token
       -   Build a storybook
       -   Sync the storybook 
