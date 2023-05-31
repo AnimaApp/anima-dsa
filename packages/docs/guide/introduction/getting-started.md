@@ -27,9 +27,9 @@
 ### 2. Import your Storybook into Anima
 - Choose your [preferred import method](cli-vs-url.md)
 <br> ** Don't have a storybook yet? use our [sample Storybook](https://animaapp.github.io/anima-sample-storybook/?path=/story/getting-started--page).
-  -   Import from a URL
-  -   Sync with the CLI
-      -   Install the CLI in the codebase
+  -   [Import from a URL](sync-components.md#sync-from-an-storybook-url-sync-from-url)
+  -   [Sync with the CLI](sync-components.md#sync-storybook-using-the-anima-cli-preferred)
+      -   [Install the CLI](sync-components.md#sync-storybook-using-the-anima-cli-preferred) in the codebase
       -   Get your team token
       -   Build a storybook
       -   Sync the storybook 
