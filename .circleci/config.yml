@@ -104,17 +104,12 @@ jobs:
           name: "Run all tests"
           command: "pnpm test"      
 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - packages/docs/.vitepress/dist
-
   docs-publish:
     docker:
       - image: cimg/base:stable
     steps:
       - attach_workspace:
-          at: .
+          at: /mnt
       - aws-cli/setup:
           profile-name: default
       - run:
