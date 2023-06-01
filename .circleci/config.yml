@@ -32,7 +32,7 @@ workflows:
             - anima-prod
             - AWS
           requires:
-            - build-and-test
+            - build-and-lint
           filters:
             branches:
               only: docs/init-docs         
