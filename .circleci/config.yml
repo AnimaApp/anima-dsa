@@ -107,6 +107,7 @@ jobs:
   docs-publish:
     docker:
       - image: cimg/base:stable
+    working_directory: /mnt/project
     steps:
       - attach_workspace:
           at: /mnt
