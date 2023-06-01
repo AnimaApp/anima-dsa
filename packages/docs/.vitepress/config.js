@@ -106,7 +106,7 @@ export default defineConfig({
           {
             text: 'Anima Token transformers',
             link: '/guide/manage-design-tokens/token-transformers',
-            collapsed: true,
+            collapsed: false,
             items: [
               {
                 text: 'Overview',
@@ -121,13 +121,21 @@ export default defineConfig({
                 link: '/guide/manage-design-tokens/design-tokens-ant-design',
               },
               {
-                text: 'CSS-variables (soon)',
+                text: 'CSS-variables',
               },
-              { text: 'MaterialUI (Soon)' },
-              { text: 'Bootstrap (Soon)' },
-              { text: 'ChakraUI (Soon)' },
-              { text: 'Sass (Soon)' },
-              { text: 'Less (Soon)' },
+              {
+                text: 'Coming soon',
+                collapsed: true,
+                items: [ 
+                { text: 'MaterialUI' },
+                { text: 'Bootstrap' },
+                { text: 'ChakraUI' },
+                { text: 'Sass' },
+                { text: 'Less' },
+              ]
+
+              },
+  
             ],
           },
         ],
