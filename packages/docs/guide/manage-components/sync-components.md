@@ -150,6 +150,18 @@ anima sync --storybook
 
 ```
 
+::: details If you are behind a firewall
+
+### Whitelist Anima's servers
+
+```
+api.animaapp.com (52.37.43.28, 52.32.9.31, 52.25.31.123, 52.32.62.176)
+s3.animaapp.com (35.160.8.22)
+
+```
+
+:::
+
 #### Back to Figma
 
 :tada: Sync complete! Now you can go back to Figma and import the components you want to use.
