@@ -1,8 +1,19 @@
 import nf from 'node-fetch';
 import { STORYBOOK_SERVICE_BASE_URL } from '../constants';
+import { getCurrentHub } from '@sentry/node';
+
+export class AuthError extends Error {
+  token: string;
+  constructor(message: string, token: string) {
+    super('[AuthError]: ' + message);
+    this.token = token;
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const authenticate = async (storybookToken: string) => {
+  const transaction = getCurrentHub().getScope()?.getTransaction();
+  const authSpan = transaction?.startChild({ op: 'authenticate' });
   const errorRes = { success: false, data: {} };
   try {
     if (!storybookToken) return errorRes;
@@ -19,11 +30,13 @@ export const authenticate = async (storybookToken: string) => {
     if (res.status > 299) {
       const json = await res.json();
       const message = json?.message || 'Missing Storybook token';
-      return { success: false, message };
+      throw new AuthError(message, storybookToken);
     }
     return errorRes;
   } catch (error) {
     console.log(error);
-    return errorRes;
+    throw new AuthError('Impossible to authenticate', storybookToken);
+  } finally {
+    authSpan?.finish();
   }
 };

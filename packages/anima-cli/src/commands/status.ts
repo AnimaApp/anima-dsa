@@ -26,7 +26,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
 
   // check if token is provided as an arg or in .env
   const token = (_argv.token ??
-    process.env.STORYBOOK_ANIMA_TOKEN ??
+    process.env.ANIMA_TEAM_TOKEN ??
     '') as string;
 
   if (__DEBUG__) {
@@ -35,7 +35,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   if (!token) {
     loader.stop();
     log.yellow(
-      `Storybook token not found. Please provide a token using the --token flag or the STORYBOOK_ANIMA_TOKEN environment variable.`,
+      `Storybook token not found. Please provide a token using the --token flag or the ANIMA_TEAM_TOKEN environment variable.`,
     );
     await exitProcess();
   }

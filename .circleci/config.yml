@@ -16,10 +16,17 @@ commands:
 workflows:
   storybook-cli:
     jobs:
-      - build-and-test:
+      - build-and-lint:
           context: 
             - anima-prod
             - AWS
+      - tests:
+          context: 
+            - anima-prod
+            - AWS
+          requires:
+            - build-and-lint
+
       - docs-publish:
           context: 
             - anima-prod
@@ -37,15 +44,21 @@ workflows:
             branches:
               only: master 
     jobs:
-      - build-and-test:
+      - build-and-lint:
+          context: 
+            - anima-prod
+            - AWS
+      - tests:
           context:
             - anima-prod
-            - AWS  
-
+            - AWS
+          requires:
+            - build-and-lint
 jobs:
-  build-and-test:
+  build-and-lint:
     docker:
-      - image: node:16
+      - image: node:18
+    working_directory: /mnt/project
     steps:
       - checkout
       - aws-cli/setup:
@@ -59,15 +72,38 @@ jobs:
       - run:
           name: 'Install pnpm'
           command: 'npm i -g pnpm@latest'
+      - restore_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
       - run:
           name: "Install dependencies"
           command: "pnpm i"
+      - save_cache:
+          key: v1-deps-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
       - run:
           name: "Build"
           command: "pnpm build"
+      - persist_to_workspace:
+          root: /mnt
+          paths:
+            - project
+  tests:
+    docker:
+      - image: node:18
+    working_directory: /mnt/project
+    steps:
+      - attach_workspace:
+          at: /mnt
+      - aws-cli/setup:
+          profile-name: default
       - run:
-          name: "Run e2e tests"
-          command: "pnpm test"
+          name: 'Install pnpm'
+          command: 'npm i -g pnpm@latest'
+      - run:
+          name: "Run all tests"
+          command: "pnpm test"      
+
       - persist_to_workspace:
           root: .
           paths:

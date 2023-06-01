@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'fs-extra';
 import { loadConfig, LoadConfigOptions } from 'c12';
 import { readPackageJSON, resolvePackageJSON, PackageJson } from 'pkg-types';
 
-interface AnimaConfig {
+export interface AnimaConfig {
   design_tokens?: Record<string, unknown>;
   build_command?: string;
 }
