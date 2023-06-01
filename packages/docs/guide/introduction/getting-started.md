@@ -16,7 +16,7 @@
 
 ## 2. Import your Storybook into Anima
 
-- Choose your [preferred import method](./cli-vs-url)
+- Choose your [preferred import method](/guide/manage-components/cli-vs-url)
     >Don't have a Storybook yet? use our [sample Storybook](https://animaapp.github.io/anima-sample-storybook/).
 
 - [Import from a URL](/guide/manage-components/sync-components#sync-from-an-storybook-url-sync-from-url)
