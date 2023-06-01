@@ -13,7 +13,7 @@ hero:
       link: /guide/introduction/getting-started
     - theme: alt
       text: Learn More
-      link: /guide/introduction
+      link: /guide/introduction/index
 
 features:
   - title: Sync your code components with Figma 
