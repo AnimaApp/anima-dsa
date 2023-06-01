@@ -8,3 +8,6 @@ build
 tmp
 node_modules
 .turbo
+
+# Local Netlify folder
+.netlify

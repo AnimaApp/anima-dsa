@@ -1,6 +1,18 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1
+
+commands:
+  set-npm-registry:
+    steps:
+      - run:
+          name: Set npm registry
+          command: |
+            echo "registry=https://registry.npmjs.org/" >> ./.npmrc
+            echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
+            echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
+            echo "always-auth=true" >> ./.npmrc
+
 workflows:
   storybook-cli:
     jobs:
@@ -15,6 +27,15 @@ workflows:
           requires:
             - build-and-lint
 
+      - docs-publish:
+          context: 
+            - anima-prod
+            - AWS
+          requires:
+            - build-and-lint
+          filters:
+            branches:
+              only: master        
   storybook-cli-nightly-test:
     triggers:
       - schedule:
@@ -40,11 +61,9 @@ jobs:
     working_directory: /mnt/project
     steps:
       - checkout
-      - run: |
-          echo "registry=https://registry.npmjs.org/" >> ./.npmrc
-          echo "@animaapp:registry=https://npm.pkg.github.com" >> ./.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_TOKEN}" >> ./.npmrc
-          echo "always-auth=true" >> ./.npmrc
+      - aws-cli/setup:
+          profile-name: default
+      - set-npm-registry
       - run:
           name: "Install Ubuntu dependencies"
           command: |
@@ -83,5 +102,19 @@ jobs:
           command: 'npm i -g pnpm@latest'
       - run:
           name: "Run all tests"
-          command: "pnpm test"
-      
+          command: "pnpm test"      
+
+  docs-publish:
+    docker:
+      - image: node:18
+    working_directory: /mnt/project
+    steps:
+      - attach_workspace:
+          at: /mnt
+      - aws-cli/setup:
+          profile-name: default
+      - run:
+          name: Upload to S3
+          command: |
+            aws s3 sync packages/docs/.vitepress/dist s3://anima-dsa-docs/ --delete
+
