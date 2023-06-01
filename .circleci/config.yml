@@ -35,7 +35,7 @@ workflows:
             - build-and-lint
           filters:
             branches:
-              only: docs/init-docs         
+              only: master        
   storybook-cli-nightly-test:
     triggers:
       - schedule:
