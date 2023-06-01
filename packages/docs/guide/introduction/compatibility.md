@@ -1,6 +1,6 @@
 # Compatibility
 
-## Frameworks
+## Manage Components
 
 Since we leverage Storybook's rendering engine, Anima works with any framework supported by Storybook.
 

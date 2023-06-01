@@ -23,10 +23,6 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           {
-            text: 'Getting started',
-            link: '/guide/introduction/getting-started',
-          },
-          {
             text: 'Overview',
             collapsed: false,
             items: [
@@ -39,18 +35,18 @@ export default defineConfig({
                 link: '/guide/introduction/who-is-it-for',
               },
               { text: 'Features', link: '/guide/introduction/features' },
-              {
-                text: 'Sync with: URL VS CLI',
-                link: '/guide/introduction/cli-vs-url',
-              },
             ],
+          },
+          {
+            text: 'Getting started',
+            link: '/guide/introduction/getting-started',
           },
           {
             text: 'Basic oncepts',
             collapsed: false,
             items: [
               {
-                text: 'What is storybook?',
+                text: 'What is Storybook?',
                 link: '/guide/introduction/what-is-storybook',
               },
               {
@@ -77,6 +73,10 @@ export default defineConfig({
           {
             text: 'Overview',
             link: '/guide/manage-components/components-overview',
+          },
+          {
+            text: 'Sync with URL or CLI?',
+            link: '/guide/introduction/cli-vs-url',
           },
           {
             text: 'How to sync components',
