@@ -4,6 +4,9 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'Anima DSA',
   description: 'Anima Design system Automation solution',
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
