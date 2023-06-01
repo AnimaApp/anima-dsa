@@ -4,9 +4,7 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'Anima DSA',
   description: 'Anima Design system Automation solution',
-  head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
-  ],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -76,7 +74,7 @@ export default defineConfig({
           },
           {
             text: 'Sync with URL or CLI?',
-            link: '/guide/introduction/cli-vs-url',
+            link: '/guide/manage-components/cli-vs-url',
           },
           {
             text: 'How to sync components',
@@ -126,16 +124,14 @@ export default defineConfig({
               {
                 text: 'Coming soon',
                 collapsed: true,
-                items: [ 
-                { text: 'MaterialUI' },
-                { text: 'Bootstrap' },
-                { text: 'ChakraUI' },
-                { text: 'Sass' },
-                { text: 'Less' },
-              ]
-
+                items: [
+                  { text: 'MaterialUI' },
+                  { text: 'Bootstrap' },
+                  { text: 'ChakraUI' },
+                  { text: 'Sass' },
+                  { text: 'Less' },
+                ],
               },
-  
             ],
           },
         ],
