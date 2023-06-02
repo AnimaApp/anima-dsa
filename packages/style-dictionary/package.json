@@ -2,13 +2,13 @@
   "name": "@animaapp/style-dictionary",
   "version": "1.0.0",
   "description": "Anima parser for style dictionary",
-  "main": "./dist/src/index.cjs",
-  "module": "./dist/src/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/src/index.cjs",
-      "import": "./dist/src/index.js",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     }
   },
