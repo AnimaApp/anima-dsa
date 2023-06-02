@@ -5,19 +5,19 @@
 Use Anima DSA to generate your entire code components library as a Figma library, with a single click.
 Anima will translate all of your components (as they are represented in Storybook), as native Figma components.
 
-### 1. Figma variants matches component's props
+### 1. Figma variants sync to a component's props
 
 A component's property will be translated to a Figma variant
 
 ![Matching-props](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/aa7d5e90-8519-4ffe-be00-4e944ffb6435)
 
-### 2. Figma's Auto-layout matches CSS flex layout
+### 2. Figma's Auto-layout sync to a component's CSS flex layout
 
 Anima will automatically convert the CSS flex styles into Figma Auto-layout
 
 ![css-to-auto-layout](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/cafc3ad0-dd54-405f-a30b-778a6b727c68)
 
-### 3. Figma styles matches design tokens
+### 3. Figma styles sync to design tokens
 
 Anima will create your design tokens as Figma styles, ready to use and edit directly from Figma
 
@@ -40,8 +40,6 @@ Know for each component if it already exists in your source code, and which prop
 Whether it's rebranding, accessibility tests, or touch-ups, your design system is constantly evolving. Translating those changes into words and tasks often leads to pixels and colors that get lost in translation.
 
 Here's how Anima keeps your design tokens in sync across your designs and codebase
-
-Anima DSA lets you connect your Figma with GitHub, so you can import code changes, make changes in Figma, and push those changes back to GitHub.
 
 ### 1. Create, update, and delete design tokens
 

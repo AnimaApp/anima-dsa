@@ -35,10 +35,10 @@
 
 ## 4. Push changes to GitHub
 
-- Push your repo to GitHub
-- Create or edit a design token in the plugin
+- Ensure your repo exists in GitHub
 - [Create an access token for the repo](/guide/manage-design-tokens/sync-design-tokens#_1-generate-your-personal-access-token)
 - [Add the credentials to the Figma plugin](/guide/manage-design-tokens/sync-design-tokens#_2-connect-your-github-account-to-anima)
+- In Figma, create or edit a design token using the Anima plugin
 - Push the changes to GitHub
 - Review and merge the pull request
 
