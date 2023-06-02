@@ -1,0 +1,40 @@
+{
+  "name": "@animaapp/style-dictionary",
+  "version": "1.0.0",
+  "description": "Anima parser for style dictionary",
+  "main": "./dist/src/index.cjs",
+  "module": "./dist/src/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/src/index.cjs",
+      "import": "./dist/src/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "@animaapp:registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnimaApp/anima-storybook-cli"
+  },
+  "keywords": [],
+  "author": "Aymeric Beudaert <aymeric@animaapp.com>",
+  "license": "MIT",
+  "dependencies": {
+    "style-dictionary": "^3.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.5",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.2"
+  }
+}
