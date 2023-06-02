@@ -2,30 +2,30 @@
 
 ## Generate Figma components automatically
 
-Use Anima CLI or URL import to generate your entire code components library as a Figma library, in a single click.
+Use Anima DSA to generate your entire code components library as a Figma library, with a single click.
 Anima will translate all of your components (as they are represented in Storybook), as native Figma components.
 
-### 1. Variants matching code props
+### 1. Figma variants matches component's props
 
-Each component property will be translated to a Figma property
+A component's property will be translated to a Figma variant
 
 ![Matching-props](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/aa7d5e90-8519-4ffe-be00-4e944ffb6435)
 
-### 2. Figma's Auto-layout matching CSS layout
+### 2. Figma's Auto-layout matches CSS flex layout
 
-Anima will convert the CSS flex properties into Figma Auto layout, automatically
+Anima will automatically convert the CSS flex styles into Figma Auto-layout
 
 ![css-to-auto-layout](https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/cafc3ad0-dd54-405f-a30b-778a6b727c68)
 
-### 3. Figma Styles matching Design Tokens
+### 3. Figma styles matches design tokens
 
-Anima will create your design tokens as Figma styles and variables, ready to use and edit directly from Figma
+Anima will create your design tokens as Figma styles, ready to use and edit directly from Figma
 
 <img width="475" alt="variants match" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/372e2e3b-207e-4299-a5af-c2f97b0efa96">
 
-### 4. Media-queries as Figma variants
+### 4. Media-queries to Figma variants
 
-Got components that looks differently on different screens? We got you covered. When importing your component to Figma, you'd be able to define which viewports you'd like to see in Figma. Anima will add a "Viewport" size property to your component, with all selected sizes
+Anima DSA also handles responsive layouts. When importing your component to Figma, you'd be able to define which viewports you'd like to see in Figma. Anima will add a "Viewport" size property to your component, with all selected sizes
 
 <img width="821" alt="Media-queries as Variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/94e88059-c175-4eb5-8259-d4713db9f8d0">
 
@@ -35,28 +35,28 @@ Know for each component if it already exists in your source code, and which prop
 
 <img width="1164" alt="snippet_in_variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7c5db3fa-2693-4a83-8b87-1e9a9419fa97">
 
-## Manage Design Tokens
+## Manage design tokens
 
-Whether it's rebranding, accessibility tests, or touch-ups, our design is constantly evolving. But translating those changes into words and tasks often leads to pixels and colors that get lost in translation.
+Whether it's rebranding, accessibility tests, or touch-ups, your design system is constantly evolving. Translating those changes into words and tasks often leads to pixels and colors that get lost in translation.
 
-Use Anima DSA to connect your Figma with GitHub, to import, edit and update your Design Tokens in all platforms.
+Here's how Anima keeps your design tokens in sync across your designs and codebase
 
-### 1. Create, Update and Delete Design Tokens
+Anima DSA lets you connect your Figma with GitHub, so you can import code changes, make changes in Figma, and push those changes back to GitHub.
 
-Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typogtraphy.
+### 1. Create, update, and delete design tokens
+
+Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typography.
 
 <img width="436" alt="typography token creation" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/e6762ab8-f41d-4755-a99c-a32c065ff1f7">
 
-### 2. Create PRs for Design Tokens updates directly from Figma
+### 2. Create pull requests for design tokens updates directly from Figma
 
-Use Anima DSA to push your design changes as PRs to your dev team
+Anima lets you connect your Figma with GitHub, so you can make changes to your design tokens in Figma and push those changes back to GitHub.
 
 <img width="469" alt="Manage Design Tokens - create a PR" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/ccc8cba9-7ec2-47d7-ad0f-5dce72e40f81">
 
-### 3. Pull Design Tokens updates from GitHub to Figma
+### 3. Pull design tokens updates from GitHub to Figma
 
-Use Anima DSA to pull updates from code, to
+By connecting to GitHub, you can pull any changes made to the code and have those changes reflected in Figma.
 
-- Keep your tokens in sync with production
-- Be aware of any changes in production that may affect what your users are seeing
-<img width="441" alt="Pull-updates-from-github" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/06803d5a-f11c-4670-909e-aa58cd8e6818">
+  <img width="441" alt="Pull-updates-from-github" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/06803d5a-f11c-4670-909e-aa58cd8e6818">

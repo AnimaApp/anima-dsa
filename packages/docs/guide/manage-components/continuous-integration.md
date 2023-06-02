@@ -14,17 +14,17 @@ Using our Anima CLI, you can keep your design system components, as well as desi
 >2. You push your changes to your repository
 >3. Your CI/CD environment builds your Storybook and runs the Anima CLI
 >4. The Anima CLI syncs your components and design tokens with Figma
->5. Designers update Design Tokens in Figma
->6. With Anima plugin, create a Pull Request to update your codebase with the latest Design Tokens
+>5. Designers update design tokens in Figma
+>6. With Anima plugin, create a Pull Request to update your codebase with the latest design tokens
 >7. Step 3 — 4 are repeated
 
 ## How to setup CI/CD
 
-### First get your Anima Team Token from the Plugin
+### First get your Anima team token from the Plugin
 
 >1. Open the Anima plugin in Figma -> Go to `Components` section
 >2. Click on `Start with Anima CLI` button
->3. Copy your Anima Team Token
+>3. Copy your Anima team token
 
 ### Then add the Anima CLI to your CI/CD environment
 

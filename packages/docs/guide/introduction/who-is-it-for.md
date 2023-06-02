@@ -1,4 +1,4 @@
-# Who is it for?
+# Who should use Anima DSA?
 
 Anima DSA is for everyone involved in building or utilizing a design system.
 
@@ -6,13 +6,17 @@ Anima DSA is for everyone involved in building or utilizing a design system.
 
 ### Designers {#ds-designers}
 
+Designers use their Figma libraries, which are isolated from the developers' code libraries.
+
 - Get a 100% parity between your code components and your design components:
   - Same prop names
   - Same design tokens
-  - Same responsive behavior  
+  - Same responsive behavior
 - Push design changes directly to code, to make sure your designs won’t get lost in translation.
 
 ### Developers {#ds-developers}
+
+Developers rely on their code libraries to efficiently reproduce designs, but the resulting components do not look the same in real life. In some cases, they end up building the same component from scratch due to the absence of similar components in the codebase or the overwhelming number of components to sift through. This process wastes valuable time for both designers and developers and leads to the creation of inferior products, which take longer to produce.
 
 - Receive PRs to approve design updates, instead of creating the desired changes manually.
 - Connect your code snippets with Figma components, automatically.

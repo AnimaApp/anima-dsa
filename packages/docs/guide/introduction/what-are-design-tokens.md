@@ -9,15 +9,15 @@ They serve as a shared language, enabling a seamless translation of design style
 
 ## What are design tokens for?
 
-### Capturing Design Decisions
+### Capturing design decisions
 
 Design tokens document and organize design decisions, including colors, typography, spacing, and more, to create a cohesive user experience.
 
-### Standardizing Design Attributes
+### Standardizing design attributes
 
 Design tokens establish a set of standardized values for design attributes. For example, instead of manually specifying a color value each time, we can define a design token called `primary-color` and assign a specific color value to it. This token can then be used consistently throughout the design and development process.
 
-### Streamlining Design-to-Code Translation
+### Streamlining design-to-code translation
 
 Design tokens streamline the translation of design styles to code, allowing developers to reference them directly for accurate implementation and saving time by avoiding manual interpretation and potential errors.
 

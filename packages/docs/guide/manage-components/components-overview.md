@@ -18,12 +18,12 @@ Code Component == Figma components
 
 1. Same names
 2. Same responsive behavior
-3. Same styles (via [Design Tokens](/guide/manage-design-tokens/design-tokens-overview))
+3. Same styles (via [design tokens](/guide/manage-design-tokens/design-tokens-overview))
 4. Same variants
 
-See [Full features list](/guide/introduction/features)
+See [full features list](/guide/introduction/features)
 
 ## Next steps
 
 Your Figma and code are in sync? great!
-Now you can ease handoffs, manage your Design Tokens, and create new components with Anima.
+Now you can ease handoffs, manage your design tokens, and create new components with Anima.

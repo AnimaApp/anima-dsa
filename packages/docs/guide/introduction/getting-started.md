@@ -1,6 +1,6 @@
 # Getting Started
 >
-> You’ll learn how Anima can automate your design system workflow. You’ll bridge your developer/designer workflow gap by making sure that your design systems stays in sync with your codebase and Figma designs.
+> You’ll learn how Anima can automate your design system workflow. You’ll bridge your developer/designer workflow gap by making sure that your design system stays in sync with your codebase and Figma designs.
 
 # 5 Steps to start automating your design system workflow
 
@@ -35,8 +35,8 @@
 
 ## 4. Push changes to GitHub
 
-- Create/edit a design token in the plugin
-- Make sure your repo is pushed to GitHub
+- Push your repo to GitHub
+- Create or edit a design token in the plugin
 - [Create an access token for the repo](/guide/manage-design-tokens/sync-design-tokens#_1-generate-your-personal-access-token)
 - [Add the credentials to the Figma plugin](/guide/manage-design-tokens/sync-design-tokens#_2-connect-your-github-account-to-anima)
 - Push the changes to GitHub
@@ -44,5 +44,6 @@
 
 ## 5. Pull changes into Figma
 
-- Make a change to the design system in your code, and push to main
-- Pull these changes the next time we open the Anima plugin
+- Make a change to the design system in your code
+- Sync with the CLI and push to main
+- Open the Figma plugin and pull the latest changes
