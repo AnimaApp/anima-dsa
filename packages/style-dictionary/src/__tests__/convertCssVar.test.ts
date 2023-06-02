@@ -6,7 +6,7 @@ import { expect, afterAll, describe, test } from 'vitest';
 
 const basePath = path.dirname(__filename);
 
-describe.only('common', () => {
+describe('common', () => {
   test('convert to css variables', () => {
     const command = `style-dictionary build -c ${basePath}/styleguide-require.config.js`;
     execSync(command);
