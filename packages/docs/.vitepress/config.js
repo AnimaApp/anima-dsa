@@ -141,7 +141,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/animaapp/anima-storybook-cli',
+        link: 'https://github.com/AnimaApp/anima-dsa',
       },
       {
         icon: 'discord',
