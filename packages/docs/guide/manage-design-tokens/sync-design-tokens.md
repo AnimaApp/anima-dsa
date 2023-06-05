@@ -48,7 +48,7 @@ Where `./design-tokens.json` is the path to your design tokens JSON file.
 #### Go to Anima plugin in Figma
 
 >1. Open the Anima plugin in Figma
->2. Go to `design tokens` section
+>2. Go to `Design Tokens` section
 >3. You'll see your tokens there
 
 ## Connect with Github
@@ -76,9 +76,9 @@ Never share this token with anyone who shouldn't have access to your repository.
 ### 2. Connect your Github account to Anima
 
 <video src="/setup-github.mp4" controls loop autoplay title="Link Title"></video>
->
+
 >1. Open the Anima plugin in Figma
->2. Go to `design tokens` section
+>2. Go to `Design Tokens` section
 >3. Click on :gear: button on the top-right corner
 >4. Click on `Edit GitHub credentials` button
 >5. Paste your Personal Access Token

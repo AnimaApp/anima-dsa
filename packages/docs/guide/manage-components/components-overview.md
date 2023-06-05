@@ -10,7 +10,7 @@ We have 1 library in code, 1 in Figma, and multiple frustrated designers and dev
 
 1. Import your existing component into Figma to create a unified language between design and code.
 2. The design and development teams can iterate on the design system, with production as a starting point.
-<img width="1463" alt="components-sync" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7f681999-1369-4b94-8c6a-3da01190b04e">
+   <img width="1463" alt="components-sync" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7f681999-1369-4b94-8c6a-3da01190b04e">
 
 ## The result
 
@@ -21,7 +21,7 @@ Code Component == Figma components
 3. Same styles (via [design tokens](/guide/manage-design-tokens/design-tokens-overview))
 4. Same variants
 
-See [full features list](/guide/introduction/features)
+Check out the [Full features](/guide/introduction/features) page for a showcase of everything Anima DSA offers.
 
 ## Next steps
 

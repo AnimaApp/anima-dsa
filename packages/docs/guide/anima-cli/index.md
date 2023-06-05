@@ -23,7 +23,7 @@ Run the following command (with your preferred package manager) in the repo with
 ::: code-group
 
 ```sh [npm]
-    npm i -D @animaapp/anima-cli
+    npm add -D @animaapp/anima-cli
 ```
 
 ```sh [yarn]
@@ -47,17 +47,17 @@ Create a `.env` file in the root of your Storybook project with the following co
 ANIMA_TEAM_TOKEN="paste-your-token-here"
 ```
 
-### 3. Save your configuration as a file
+### 3. Specify the path to your design tokens
 
-For convenience, you can create a `anima.config.js` file in your root directory, and save the configuration values like design tokens.
+If you want to sync your design tokens, you can also specify the path to your tokens in the CLI command.
 
-```js
-// anima.config.js
-module.exports = {
-  design_tokens: '<path to design tokens JSON file>', // e.g. "./design-tokens.json"
-  storybook: '<path to your Storybook build folder', // e.g. "./storybook-static"
-};
+```sh
+    npx @animaapp/anima-cli sync --storybook --design-tokens <path-to-design-tokens-JSON-file>
 ```
+
+::: tip Heads up!
+You can also specify the path to your design tokens in a `anima.config.js` file, you can learn more about other configuration options over [here](#configuration-file-api)
+:::
 
 ## Usage
 
@@ -116,7 +116,7 @@ Syncs your Storybook and/or design tokens to your Anima team so that it can be t
 
 ## `anima generate-tokens`
 
-Generates design tokens from your framework config file. Learn more about these work with our built-in [design token transformers](/guide/manage-design-tokens/token-transformers).
+Generates design tokens from your framework config file. Learn more about these work in [Design token transformers](/guide/manage-design-tokens/token-transformers).
 
 ### Usage
 
@@ -131,3 +131,21 @@ Generates design tokens from your framework config file. Learn more about these 
 | `--framework`, `-f` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Provide your framework name i.e. `tailwind`                                    | `string` |
 | `--config` , `-c`                                        | Provide your framework config file i.e. `./tailwind.config.cjs`                | `string` |
 | `--output` , `-o`                                        | Provide an output path of your Design Tokens file, i.e. `./design-tokens.json` | `string` |
+
+### Configuration file API
+
+You can specify a number of variables in an `anima.config.js` file.
+
+| Option        | Description                                      |   Type   |
+| :------------ | :----------------------------------------------- | :------: |
+| design_tokens | Provide the path to your design tokens file      | `string` |
+| build_command | Provide the command used to build your storybook | `string` |
+
+#### Example
+
+```js
+// anima.config.js
+module.exports = {
+  design_tokens: '<path to design tokens JSON file>', // e.g. "./design-tokens.json"
+};
+```
