@@ -1,39 +1,39 @@
 # Compatibility
 
-## Manage Components
+## Manage components
 
-Since we leverage Storybook's rendering engine, Anima works with any framework supported by Storybook.
+Anima works with any framework supported by Storybook.
 
-| Framework | Supported |
-| :-------- | :-------: |
-| React     |    ✅     |
-| Vue       |    ✅     |
-| Angular   |    ✅     |
-| Web-Components      |    ✅     |
-| Svelte    |    ✅     |
-| React Native (Web)    |    ✅ [With Addon](https://www.dannyhwilliams.co.uk/introducing-react-native-web-storybook)     |
+| Framework          |                                        Supported                                         |
+| :----------------- | :--------------------------------------------------------------------------------------: |
+| React              |                                            ✅                                            |
+| Vue                |                                            ✅                                            |
+| Angular            |                                            ✅                                            |
+| Web-Components     |                                            ✅                                            |
+| Svelte             |                                            ✅                                            |
+| React Native (Web) | ✅ [With Addon](https://www.dannyhwilliams.co.uk/introducing-react-native-web-storybook) |
 
-## Design Tokens
+## Design tokens
 
 We support the W3C Design Tokens Community Group [format specification](https://tr.designtokens.org/format/).
 
-In regards to double way sync between Figma and your codebase, we currently support the following frameworks/libraries transformers:
+We also support transformers for codebases that use the following frameworks/libraries:
 
-| Framework/Library | Supported | How |
-| :-------- | :-------: | :------- |
-| TailwindCSS     |    ✅     | [Guide](/guide/manage-design-tokens/design-tokens-tailwind) |
-|Ant Design v5|✅| [Guide](/guide/manage-design-tokens/design-tokens-ant-design)|
-| Material UI | coming soon | - |
-| Mantine | coming soon | - |
-| CSS-variables | coming soon | - |
+| Framework/Library |  Supported  | How                                                           |
+| :---------------- | :---------: | :------------------------------------------------------------ |
+| TailwindCSS       |     ✅      | [Guide](/guide/manage-design-tokens/design-tokens-tailwind)   |
+| Ant Design v5     |     ✅      | [Guide](/guide/manage-design-tokens/design-tokens-ant-design) |
+| Material UI       | coming soon | -                                                             |
+| Mantine           | coming soon | -                                                             |
+| CSS-variables     | coming soon | -                                                             |
 
-## Generate Pull Requests from Figma
+## Generate pull requests from Figma
 
-Currently we're only supporting Github, but we're working on adding support for other Git providers.
+We also support pushing changes from Figma to the following Git providers:
 
-| Git Provider | Supported |
-| :-------- | :-------: |
-| Github     |    ✅     |
-| Gitlab       |    coming soon     |
-| Bitbucket   |    coming soon     |
-| Azure DevOps   |    coming soon     |
+| Git Provider |  Supported  |
+| :----------- | :---------: |
+| GitHub       |     ✅      |
+| Gitlab       | coming soon |
+| Bitbucket    | coming soon |
+| Azure DevOps | coming soon |

@@ -33,11 +33,11 @@ It allows your team to integrate with **CI/CD environments**, but is also the on
 
 <video src="/sync-ci-cd.mp4" controls loop autoplay title="Link Title"></video>
 
-#### First get your Anima Team Token from the Plugin
+#### First get your Anima team token from the Plugin
 
 >1. Open the Anima plugin in Figma -> Go to `Components` section
 >2. Click on `Start with Anima CLI` button
->3. Copy your Anima Team Token
+>3. Copy your Anima team token
 
 #### Then add the Anima CLI to your CI/CD environment
 >
@@ -108,11 +108,11 @@ jobs:
 
 If you are using Storybook behind a firewall or if you don't have a public URL setup yet, you can use the Anima CLI to sync your components to Anima.
 
-#### Get your Anima Team Token from the Plugin
+#### Get your Anima team token from the Plugin
 
 >1. Open the Anima plugin in Figma -> Go to `Components` section
 >2. Click on `Start with Anima CLI` button
->3. Copy your Anima Team Token
+>3. Copy your Anima team token
 
 #### 1. Install the Anima CLI
 

@@ -20,6 +20,6 @@ With Anima DSA, developers no longer need to waste time going back and forth wit
 - Design token updates made in Figma can be automatically synced with the codebase **through pull requests**
 - Ensuring that developers have access to the latest design styles and avoiding the risk of discrepancies between design and implementation.
 
-## The real magic - uniting Design Tokens and components
+## The real magic - uniting design tokens and components
 
 By managing your component library with Anima DSA, every change made to design tokens has a cascading effect, automatically updating all components across the codebase and Figma. This synchronization ensures consistency, accuracy, and efficiency throughout the design-to-development process, enabling designers to have greater control over the final product and developers to focus on writing robust code.

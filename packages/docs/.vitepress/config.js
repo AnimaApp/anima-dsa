@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Anima DSA',
-  description: 'Anima Design system Automation solution',
+  description: 'Anima design system automation solution',
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -29,8 +29,8 @@ export default defineConfig({
                 link: '/guide/introduction/',
               },
               {
-                text: 'Who is it for?',
-                link: '/guide/introduction/who-is-it-for',
+                text: 'Who should use Anima DSA?',
+                link: '/guide/introduction/who-should-use-anima-dsa',
               },
               { text: 'Features', link: '/guide/introduction/features' },
             ],
@@ -40,7 +40,7 @@ export default defineConfig({
             link: '/guide/introduction/getting-started',
           },
           {
-            text: 'Basic oncepts',
+            text: 'Basic concepts',
             collapsed: false,
             items: [
               {
@@ -48,7 +48,7 @@ export default defineConfig({
                 link: '/guide/introduction/what-is-storybook',
               },
               {
-                text: 'What are Design Tokens?',
+                text: 'What are design tokens?',
                 link: '/guide/introduction/what-are-design-tokens',
               },
             ],
@@ -73,12 +73,12 @@ export default defineConfig({
             link: '/guide/manage-components/components-overview',
           },
           {
-            text: 'Sync with URL or CLI?',
-            link: '/guide/manage-components/cli-vs-url',
-          },
-          {
             text: 'How to sync components',
             link: '/guide/manage-components/sync-components',
+          },
+          {
+            text: 'Syncing with a URL vs CLI',
+            link: '/guide/manage-components/cli-vs-url',
           },
           {
             text: 'Continuous integration',
@@ -91,18 +91,18 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Manage Design Tokens',
+        text: 'Manage design tokens',
         items: [
           {
             text: 'Overview',
             link: '/guide/manage-design-tokens/design-tokens-overview',
           },
           {
-            text: 'How to sync Design Tokens',
+            text: 'How to sync design tokens',
             link: '/guide/manage-design-tokens/sync-design-tokens',
           },
           {
-            text: 'Anima Token transformers',
+            text: 'Anima token transformers',
             link: '/guide/manage-design-tokens/token-transformers',
             collapsed: false,
             items: [
@@ -119,7 +119,7 @@ export default defineConfig({
                 link: '/guide/manage-design-tokens/design-tokens-ant-design',
               },
               {
-                text: 'CSS-variables',
+                text: 'CSS variables',
               },
               {
                 text: 'Coming soon',

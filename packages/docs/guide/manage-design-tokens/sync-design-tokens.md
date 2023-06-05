@@ -14,7 +14,7 @@
 
 If you are using a CI/CD environment, you can use the Anima CLI to sync your design tokens to Anima, making them syncable with Figma.
 
-### Get your Anima Team Token from the Plugin
+### Get your Anima team token from the Plugin
 
 >1. Open the Anima plugin in Figma -> Go to `...` button on the top left corner
 >2. Copy the Anima team token
@@ -27,7 +27,7 @@ Run the following command in your terminal:
 npx @animaapp/anima-cli sync -t <anima-team-token> --design-tokens ./design-tokens.json
 ```
 
->Where `<anima-team-token>` is your Anima Team Token and `./design-tokens.json` is the path to your design tokens JSON file.
+>Where `<anima-team-token>` is your Anima team token and `./design-tokens.json` is the path to your design tokens JSON file.
 
 ### Installing the package in the project
 
@@ -76,11 +76,11 @@ Never share this token with anyone who shouldn't have access to your repository.
 ### 2. Connect your Github account to Anima
 
 <video src="/setup-github.mp4" controls loop autoplay title="Link Title"></video>
->
+
 >1. Open the Anima plugin in Figma
 >2. Go to `Design Tokens` section
 >3. Click on :gear: button on the top-right corner
 >4. Click on `Edit GitHub credentials` button
 >5. Paste your Personal Access Token
 >6. Provide your Repository URL
->7. Provide your Design Tokens file path
+>7. Provide your design tokens file path

@@ -3,7 +3,7 @@
 Anima DSA, also provides a two-way transformation of your design tokens.
 So if you use a framework like TailwindCSS or Ant Design, you can transform your design tokens to the format that is compatible with those frameworks.
 
-To generate Design Tokens from your framework config file, first install the Anima CLI,
+To generate design tokens from your framework config file, first install the Anima CLI,
 
 ::: code-group
 
@@ -33,13 +33,13 @@ Check [TailwindCSS](/guide/manage-design-tokens/design-tokens-tailwind), or [Ant
 
 ### Commads
 
-| Options       | Short | Description                                                                    |   Type   |
-| :------------ | :---: | :----------------------------------------------------------------------------- | :------: |
-| `--framework` &nbsp;&nbsp;&nbsp;| `-f`  | Provide your framework name i.e. `tailwind`                                    | `string` |
-| `--config`    | `-c`  | Provide your framework config file i.e. `./tailwind.config.cjs`                | `string` |
-| `--output`    | `-o`  | Provide an output path of your Design Tokens file, i.e. `./design-tokens.json` | `string` |
+| Options                          | Short | Description                                                                    |   Type   |
+| :------------------------------- | :---: | :----------------------------------------------------------------------------- | :------: |
+| `--framework` &nbsp;&nbsp;&nbsp; | `-f`  | Provide your framework name i.e. `tailwind`                                    | `string` |
+| `--config`                       | `-c`  | Provide your framework config file i.e. `./tailwind.config.cjs`                | `string` |
+| `--output`                       | `-o`  | Provide an output path of your design tokens file, i.e. `./design-tokens.json` | `string` |
 
-## To transform Design Tokens JSON into a framework's theme
+## To transform design tokens JSON into a framework's theme
 
 We provide a package named `@animaapp/framework-helpers` that you can use to transform the design tokens JSON into a theme object.
 
