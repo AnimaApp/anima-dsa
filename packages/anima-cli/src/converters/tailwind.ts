@@ -58,7 +58,9 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: theme.colors,
+    extends: {
+      colors: theme.colors,
+    },
   },
 };
 `;
