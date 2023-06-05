@@ -120,6 +120,7 @@ export default defineConfig({
               },
               {
                 text: 'CSS variables',
+                link: '/guide/manage-design-tokens/design-tokens-css-variables',
               },
               {
                 text: 'Coming soon',
