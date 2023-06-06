@@ -177,7 +177,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         .syncOnlyDesignTokens(token, designTokens)
         .catch((e) => {
           Sentry.captureException(e);
-          log.yellow(`Failed to update designTokens, ${e.message}`);
+          log.yellow(`Failed to update designTokens, ${e.message} \n`);
         });
       trackEvent([
         {
