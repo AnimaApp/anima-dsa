@@ -20,7 +20,7 @@ registerAnima(StyleDictionary);
 module.exports = {
   source: ['./src/design-tokens/anima-ds-tokens.json'],
   platforms: {
-    scss: {
+    css: {
       transformGroup: 'css',
       buildPath: 'src/generated/',
       files: [
@@ -45,7 +45,7 @@ module.exports = {
   source: ['./ds-tokens-example.json'], // [!code --]
   source: ['*tokens.json'], // [!code ++]
   platforms: {
-    scss: {
+    css: {
       transformGroup: 'css',
       buildPath: 'src/generated/',
       files: [
