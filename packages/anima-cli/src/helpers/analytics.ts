@@ -7,6 +7,7 @@ export type EventParams = {
 };
 
 export type Event = {
+  userID: string;
   action: string;
   time: number;
   eventParams: EventParams;
