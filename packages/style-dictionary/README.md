@@ -1,6 +1,6 @@
 # Style Dictionary helper to convert design tokens
 
-This package contain transforms and parser for design tokens.
+This package contains transformers and parsers for design token workflows that use Style Dictionary
 
 ## Install
 
