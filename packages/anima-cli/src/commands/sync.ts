@@ -67,9 +67,10 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     const token = getToken(_argv);
     const response = await authenticate(token);
     const teamId = response.data.team_id;
+    const ownerId = response.data.owner_id;
     Sentry.configureScope((scope) => {
       scope.setUser({
-        id: response.data.team_slug,
+        id: ownerId,
         team_id: teamId,
       });
       scope.setTag('teamId', response.data.team_id);
@@ -100,6 +101,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         );
       trackEvent([
         {
+          userID: ownerId,
           action: 'anima-cli.sync.started',
           time: Date.now(),
           eventParams: {
@@ -179,6 +181,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
         });
       trackEvent([
         {
+          userID: ownerId,
           action: 'anima-cli.sync.only-tokens.started',
           time: Date.now(),
           eventParams: {
