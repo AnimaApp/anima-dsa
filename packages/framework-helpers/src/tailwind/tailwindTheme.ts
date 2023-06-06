@@ -1,6 +1,6 @@
 import { type DesignTokenMap } from '@animaapp/token-core';
 import type { TailwindConfig } from './types';
-import { get, isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
+import { isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
 
 export const getTailwindTheme = (
   dsToken: DesignTokenMap,
