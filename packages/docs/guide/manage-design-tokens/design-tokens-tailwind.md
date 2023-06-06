@@ -46,11 +46,12 @@ We provide a function to convert your design tokens JSON into a TailwindCSS them
     module.exports = {
       content: ['./src/**/*.{js,ts,jsx,tsx}'],
       theme: {
-        colors: { // [!code --]
-          your existing colors, // [!code --]
-        } // [!code --]
-        colors: themeColors.colors, // [!code ++]
-        extend: {}
+        extend: {
+          colors: { // [!code --]
+            your existing colors, // [!code --]
+          } // [!code --]
+          colors: themeColors.colors, // [!code ++]
+        }
       },
       plugins: []
     }
@@ -71,8 +72,9 @@ const themeColors = getTailwindTheme(dsToken)
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    colors: themeColors.colors,
-    extend: {}
+    extend: {
+      colors: themeColors.colors,
+    }
   },
   plugins: []
 }
