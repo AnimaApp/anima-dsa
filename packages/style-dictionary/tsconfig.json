@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "outDir": "dist",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["ESNext", "dom"],
+    "strict": true,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitThis": true,
+    "types": ["node"],
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "__tests__", "dist"]
+}
