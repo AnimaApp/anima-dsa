@@ -129,6 +129,9 @@ importers:
       vitepress:
         specifier: 1.0.0-alpha.75
         version: 1.0.0-alpha.75(@algolia/client-search@4.17.1)
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
 
   packages/framework-helpers:
     dependencies:
