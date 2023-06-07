@@ -3,7 +3,7 @@ name: publish docs
 on:
   push:
     branches:
-      - docs/init-docs
+      - 'docs/**'
     paths:
       - 'packages/docs/**'
 
