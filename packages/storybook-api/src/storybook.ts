@@ -22,9 +22,12 @@ export class StorybookApi {
     hash: string,
   ): Promise<StorybookEntity | null> => {
     const res = await axios<StorybookEntity | null>(
-      `${this.#endpoint}/storybook?hash=${hash}`,
+      `${this.#endpoint}/storybook`,
       {
-        method: 'GET',
+        params: {
+          hash,
+        },
+        method: 'get',
         headers: this.#getHeaders(token),
         validateStatus: function (status) {
           return status < 500;
@@ -68,7 +71,7 @@ export class StorybookApi {
     const res = await axios<StorybookEntity | null>(
       `${this.#endpoint}/storybook`,
       {
-        method: 'POST',
+        method: 'post',
         headers: this.#getHeaders(token),
         data: params,
       },
@@ -81,24 +84,26 @@ export class StorybookApi {
 
   getMostRecentStorybook = async (
     token: string,
-  ): Promise<StorybookEntity[]> => {
+  ): Promise<StorybookEntity | null> => {
     const query = new URLSearchParams({
       order_by: '-updated_at',
       limit: '1',
-    }).toString();
+    });
 
     const headers: { [key: string]: string } = {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     };
-    const res = await axios<StorybookEntity[]>(
-      `${this.#endpoint}/storybooks?${query}`,
+    const res = await axios<{ results: StorybookEntity[] }>(
+      `${this.#endpoint}/storybooks`,
       {
-        method: 'GET',
+        params: query,
+        method: 'get',
         headers,
       },
     );
-    return res.data;
+    if (!res.data.results.length) return null;
+    return res.data.results[0];
   };
 
   updateStorybook = async (
@@ -107,7 +112,7 @@ export class StorybookApi {
     fields: Partial<StorybookEntity>,
   ): Promise<StorybookEntity> => {
     const res = await axios(`${this.#endpoint}/storybook/${id}`, {
-      method: 'PUT',
+      method: 'put',
       headers: this.#getHeaders(token),
       data: fields,
     });
@@ -150,12 +155,12 @@ export class StorybookApi {
     raw_ds_tokens: Record<string, unknown> = {},
   ): Promise<getOrCreateStorybookResponse> => {
     try {
-      const results = await this.getMostRecentStorybook(token);
+      const storybook = await this.getMostRecentStorybook(token);
 
       let data: StorybookEntity | null = null;
 
-      if (results.length) {
-        data = results[0];
+      if (storybook) {
+        data = storybook;
       } else {
         // Not a good solution for hashing, we probably need to separate DS from storybook
         const hash = hashString(token);
