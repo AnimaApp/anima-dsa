@@ -57,7 +57,7 @@ workflows:
 jobs:
   build-and-lint:
     docker:
-      - image: node:18
+      - image: node:16
     working_directory: /mnt/project
     steps:
       - checkout
@@ -90,7 +90,7 @@ jobs:
             - project
   tests:
     docker:
-      - image: node:18
+      - image: node:16
     working_directory: /mnt/project
     steps:
       - attach_workspace:
