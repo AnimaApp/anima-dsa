@@ -31,7 +31,7 @@ Have components that look different on different screens? We’ve got you covere
 
 ### 5. Code snippets embedded in instances
 
-Know for each component if it already exists in your source code, and which properties to used for the selected instance
+Know for each component if it already exists in your source code, and which properties to use for the selected instance
 
 <img width="1164" alt="snippet_in_variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7c5db3fa-2693-4a83-8b87-1e9a9419fa97">
 

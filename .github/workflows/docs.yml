@@ -48,25 +48,45 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          args: deploy -d packages/docs/.vitepress/dist/ -p
+          args: deploy -d packages/docs/.vitepress/dist/
 
-      - name: Get PR number
-        id: pr
-        run: |
-          echo "::set-output name=number::$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)"
+      # - name: Get PR number
+      #   id: pr
+      #   run: |
+      #     echo "{number}=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_OUTPUT
 
       - name: Extract Netlify URL
         id: extract-url
         run: |
-          echo "::set-output name=url::$(grep -o 'Website URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)"
+          echo "{url}=$(grep -o 'Unique Deploy URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)" >> $GITHUB_OUTPUT
 
+      - uses: actions/github-script@v6
+        id: get_issue_number
+        with:
+          script: |
+            if (context.issue.number) {
+              // Return issue number if present
+              return context.issue.number;
+            } else {
+              // Otherwise return issue number from commit
+              return (
+                await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  commit_sha: context.sha,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                })
+              ).data[0].number;
+            }
+          result-encoding: string
+      - name: Issue number
+        run: echo '${{steps.get_issue_number.outputs.result}}'
       - name: Comment on PR
         uses: actions/github-script@v6
         with:
           script: |
             github.rest.pulls.createReview({
-              pull_number: ${{ steps.pr.outputs.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
+              pull_number: ${{steps.get_issue_number.outputs.result}},
               body: `Deploy preview: ${{ steps.extract-url.outputs.url }}`
             })
