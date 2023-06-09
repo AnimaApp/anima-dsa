@@ -50,22 +50,16 @@ jobs:
         with:
           args: deploy -d packages/docs/.vitepress/dist/
 
-      # - name: Get PR number
-      #   id: pr
-      #   run: |
-      #     echo "{number}=$(jq --raw-output .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_OUTPUT
-
-      - name: Extract Netlify URL
+      - name: Extract Website Draft URL
         id: extract-url
         run: |
-          echo "${{ steps.netlify-deploy.outputs.stdout }}" | grep -oP 'Website Draft URL: \K(.*)'
+          draft_url=$(echo "$LOGS" | grep -o 'Website Draft URL: [^ ]*' | awk '{print $4}')
+          echo "::set-output name=draft_url::$draft_url"
+        env:
+          LOGS: ${{ steps.netlify-deploy.outputs.logs }}
 
-      # - name: Extract Netlify URL
-      #   id: extract-url
-      #   run: |
-      #     echo "{url}=$(grep -o 'Website Draft URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)" >> $GITHUB_OUTPUT
-
-      - uses: actions/github-script@v6
+      - name: Extract PR number
+        uses: actions/github-script@v6
         id: get_issue_number
         with:
           script: |
@@ -87,21 +81,11 @@ jobs:
       - name: Results
         run: |
           echo 'PR number:${{steps.get_issue_number.outputs.result}}'
-          echo 'URL:${{ steps.extract-url.outputs.url }}'
+          echo 'URL:${{ steps.extract-url.outputs.draft_url }}'
 
-      # - name: Comment on PR
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.pulls.createReview({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         pull_number: ${{steps.get_issue_number.outputs.result}},
-      #         body: `Deploy preview: ${{ steps.extract-url.outputs.url }}`
-      #       })
-      - name: Comment PR
+      - name: Comment URL in PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Deploy preview: ${{ steps.extract-url.outputs.url }}
+            Deploy preview: ${{ steps.extract-url.outputs.draft_url }}
           pr_number: ${{steps.get_issue_number.outputs.result}}

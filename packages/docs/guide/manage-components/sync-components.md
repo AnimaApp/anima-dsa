@@ -8,7 +8,7 @@ You can sync any Storybook with a public URL to Anima.
 
 ::: warning This method should be used for testing purposes
 
-Using this method, you won't be able to autmoaticaly sync your Design Tokens to Anima as well as you'll not receive updates when the components change.
+Using this method, you won't be able to automatically sync your Design Tokens to Anima nor will you receive updates when the components change.
 
 :::
 
