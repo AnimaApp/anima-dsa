@@ -13,7 +13,7 @@ You can learn more about the whole Design System workflow in our [Anima Design S
 Run the following command in the folder you have Storybook installed:
 
 ```sh
-    npx @animaapp/anima-cli sync -t <anima-team-token> --storybook
+npx @animaapp/anima-cli sync -t <anima-team-token> --storybook
 ```
 
 > **Warning** Heads up!
@@ -26,15 +26,15 @@ Run the following command in the folder you have Storybook installed:
 Run the following command (with your preferred package manager) in the repo with your Storybook:
 
 ```sh [npm]
-    npm add -D @animaapp/anima-cli
+npm add -D @animaapp/anima-cli
 ```
 
 ```sh [yarn]
-    yarn add -D @animaapp/anima-cli
+yarn add -D @animaapp/anima-cli
 ```
 
 ```sh [pnpm]
-    pnpm add -D @animaapp/anima-cli
+pnpm add -D @animaapp/anima-cli
 ```
 
 ### 2. Add your unique Anima team token
@@ -53,7 +53,7 @@ ANIMA_TEAM_TOKEN="paste-your-token-here"
 If you want to sync your design tokens, you can also specify the path to your tokens in the CLI command.
 
 ```sh
-    npx @animaapp/anima-cli sync --storybook --design-tokens <path-to-design-tokens-JSON-file>
+npx @animaapp/anima-cli sync --storybook --design-tokens <path-to-design-tokens-JSON-file>
 ```
 
 > **Warning** Heads up!
@@ -66,13 +66,13 @@ If you want to sync your design tokens, you can also specify the path to your to
 To sync your Storybook with Anima, run the following command:
 
 ```sh
-    anima sync --storybook
+anima sync --storybook
 ```
 
 >If you are not using the default Storybook build folder `storybook-static`, you'll need to specify the path to your custom Storybook build folder. For example:
 >
 >```sh
->    anima sync --storybook ./custom-bulid-folder
+>anima sync --storybook ./custom-bulid-folder
 >```
 
 ### Sync your Storybook and design tokens to Anima
@@ -80,13 +80,13 @@ To sync your Storybook with Anima, run the following command:
 To sync both your design tokens and Storybook, run the following command:
 
 ```sh
-    anima sync --storybook --design-tokens ./design-tokens.json
+anima sync --storybook --design-tokens ./design-tokens.json
 ```
 
 ### Sync your design tokens only
 
 ```sh
-    anima sync --design-tokens ./design-tokens.json
+anima sync --design-tokens ./design-tokens.json
 ```
 
 ## Command API
@@ -98,12 +98,12 @@ Syncs your Storybook and/or design tokens to your Anima team so that it can be t
 ### Usage
 
 ```sh
-    anima sync [options]
+anima sync [options]
 ```
 
 ### Options
 
-| Option                                                                                                 | Description                                                                                     |                                                                        Type                                                                        |
+| Option                                                                                                | Description                                                                                     |                                                                        Type                                                                        |
 | :----------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `--token`, `-t`                                                                                        | Provide an Anima team token if it was not set as environment variable                           |                                                                      `string`                                                                      |
 | `--storybook`, `-s`                                                                                    | To specify the Storybook build folder, otherwise it uses Storybook's default `storybook-static` | &nbsp;`boolean \| string` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
@@ -117,7 +117,7 @@ Generates design tokens from your framework config file. Learn more about these 
 ### Usage
 
 ```sh
-    anima generate-tokens [options]
+anima generate-tokens [options]
 ```
 
 #### Options

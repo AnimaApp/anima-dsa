@@ -32,4 +32,4 @@ Check our detailed guides for each framework:
 
 > Other frameworks comming soon
 
-### If you're looking to transform design tokens into css variables, check out our [Style Dictionary transformer](../framework-helpers)
+### If you're looking to transform design tokens into css variables, check out our [Style Dictionary transformer](../style-dictionary)
