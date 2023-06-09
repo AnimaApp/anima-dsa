@@ -78,15 +78,25 @@ jobs:
               ).data[0].number;
             }
           result-encoding: string
-      - name: Issue number
-        run: echo '${{steps.get_issue_number.outputs.result}}'
-      - name: Comment on PR
-        uses: actions/github-script@v6
+
+      - name: Results
+        run: |
+          echo 'PR number:${{steps.get_issue_number.outputs.result}}'
+          echo 'URL:${{ steps.extract-url.outputs.url }}'
+
+      # - name: Comment on PR
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.pulls.createReview({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         pull_number: ${{steps.get_issue_number.outputs.result}},
+      #         body: `Deploy preview: ${{ steps.extract-url.outputs.url }}`
+      #       })
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          script: |
-            github.rest.pulls.createReview({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: ${{steps.get_issue_number.outputs.result}},
-              body: `Deploy preview: ${{ steps.extract-url.outputs.url }}`
-            })
+          message: |
+            Deploy preview: ${{ steps.extract-url.outputs.url }}
+          pr_number: ${{steps.get_issue_number.outputs.result}}
