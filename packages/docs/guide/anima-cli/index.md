@@ -56,7 +56,7 @@ If you want to sync your design tokens, you can also specify the path to your to
 ```
 
 ::: tip Heads up!
-You can also specify the path to your design tokens in a `anima.config.js` file, you can learn more about other configuration options over [here](#configuration-file-api)
+You can also specify the path to your design tokens in a `anima.config.js` file, you can learn more about other [configuration options](#configuration-file-api)
 :::
 
 ## Usage
