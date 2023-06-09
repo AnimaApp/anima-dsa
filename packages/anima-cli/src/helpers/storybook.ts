@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { isDebug } from './debug';
 import { API_URL } from '../constants/api';
 
 const JS_EXTENSIONS = ["js", "jsx", "ts", "tsx", "vue"];
@@ -23,7 +24,7 @@ export const getJSFiles = (folder: string) => {
 };
 
 export const generateStorybookConfig = async (file: string, token: string) => {
-    const res = await fetch(`${API_URL}/generate_storybook/`, {
+    const res = await fetch(`${API_URL}/rpc/generate_storybook`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -31,6 +32,10 @@ export const generateStorybookConfig = async (file: string, token: string) => {
         },
         body: JSON.stringify({ code: file }),
     });
+
+    if (isDebug()) {
+        console.log('response =>', await res.json());
+    }
 
     if (res.status === 200) {
         const data = await res.json();
