@@ -95,6 +95,21 @@ To sync both your design tokens and Storybook, run the following command:
 
 ## Command API
 
+## `anima init-sb` (experimental)
+
+Initialize and generate storybook config for your project (only needed if you do not already have storybook).
+
+```sh
+anima-storybook init-sb [option]
+```
+
+#### Options
+
+| Options | Description | Type |
+| :---------------- | :---------------------------------------------------------------------------------------------- | :------: |
+| `--token`, `-t` | Provide an Anima team token if it was not set as environment variable | `string` |
+| `--components`, `-c` | To specify the components folder of your project, otherwise it uses `src` | `string` |
+
 ## `anima sync`
 
 Syncs your Storybook and/or design tokens to your Anima team so that it can be then generated in Figma.
