@@ -139,6 +139,21 @@ npm run sync
 
 ## Commands & Options
 
+### `init-sb` (experimental)
+
+Command to initialize and generate storybook config for your project (only needed if you do not have storybook set up for your project).
+
+```sh
+anima-storybook init-sb [option]
+```
+
+#### Options
+
+| Options           | Short | Description                                                                                     |   Type   |
+| :---------------- | :---: | :---------------------------------------------------------------------------------------------- | :------: |
+| `--token`         | `-t`  | Provide Anima's token if it was not set as environment variable                                 | `string` |
+| `--components`     | `-c`  | To specify the components folder of your project, otherwise it uses `src` | `string` |
+
 ### `sync`
 
 Command to sync the storybook project to Anima team so that it can be then generated in Figma.
