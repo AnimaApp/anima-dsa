@@ -16,7 +16,7 @@ export const builder: CommandBuilder = (yargs) =>
   yargs
     .options({
       token: { type: 'string', alias: 't' },
-      componentsDir: { type: 'string', alias: 'c' },
+      components: { type: 'string', alias: 'c' },
       debug: { type: 'boolean' },
     })
     .example([['$0 init-sb -c <components-dir>']]);
@@ -40,7 +40,8 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       fs.rmSync(sampleStoriesPath, { recursive: true, force: true });
     }
     loader.newStage('Fetching components');
-    const files = getJSFiles(_argv.componentsDir as string);
+    const componentsDir = _argv.components as string || 'src';
+    const files = getJSFiles(componentsDir);
     const componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !files.includes(`${f.split(".")[0]}.stories.js`));
     loader.newStage(`Creating ${componentsWithoutStorybook.length} component configurations`);
     for(const componentFile of componentsWithoutStorybook){
