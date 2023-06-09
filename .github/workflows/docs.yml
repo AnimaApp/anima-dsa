@@ -58,7 +58,12 @@ jobs:
       - name: Extract Netlify URL
         id: extract-url
         run: |
-          echo "{url}=$(grep -o 'Website Draft URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)" >> $GITHUB_OUTPUT
+          echo "${{ steps.netlify-deploy.outputs.stdout }}" | grep -oP 'Website Draft URL: \K(.*)'
+
+      # - name: Extract Netlify URL
+      #   id: extract-url
+      #   run: |
+      #     echo "{url}=$(grep -o 'Website Draft URL: .*' ${{ steps.netlify-deploy.outputs.stdout }} | cut -d' ' -f3-)" >> $GITHUB_OUTPUT
 
       - uses: actions/github-script@v6
         id: get_issue_number

@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Sync from an Storybook URL {#sync-from-url}
+## Sync from a Storybook URL {#sync-from-url}
 
 You can sync any Storybook with a public URL to Anima.
 
