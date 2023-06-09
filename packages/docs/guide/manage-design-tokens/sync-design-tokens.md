@@ -51,10 +51,10 @@ Where `./design-tokens.json` is the path to your design tokens JSON file.
 >2. Go to `Design Tokens` section
 >3. You'll see your tokens there
 
-## Connect with Github
+## Connect with GitHub
 
 ::: tip Heads up!
-You'll need a Github account. If you dont have one, you can [create one for free :arrow_upper_right:](https://github.com/signup).
+You'll need a GitHub account. If you dont have one, you can [create one for free :arrow_upper_right:](https://github.com/signup).
 :::
 
 ### 1. Generate your Personal Access Token
@@ -73,7 +73,7 @@ Never share this token with anyone who shouldn't have access to your repository.
 
 :::
 
-### 2. Connect your Github account to Anima
+### 2. Connect your GitHub account to Anima
 
 <video src="/setup-github.mp4" controls loop autoplay title="Link Title"></video>
 

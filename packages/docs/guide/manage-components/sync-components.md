@@ -45,7 +45,7 @@ It allows your team to integrate with **CI/CD environments**, but is also the on
 
 ::: code-group
 
-```yml [Github Actions]
+```yml [GitHub Actions]
 #.github/workflows/sync-with-anima.yml
 
 name: Sync with Anima
@@ -102,7 +102,7 @@ jobs:
 
 :::
 
-> **Note**: you can review the documentation of [Github Actions](https://docs.github.com/en/actions/learn-github-actions) and [CircleCI](https://circleci.com/developer) to learn more about how to setup your CI/CD environment.
+> **Note**: you can review the documentation of [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions) and [CircleCI](https://circleci.com/developer) to learn more about how to setup your CI/CD environment.
 
 ### Sync from a local Storybook
 
