@@ -43,7 +43,7 @@ Here's how Anima keeps your design tokens in sync across your designs and codeba
 
 ### 1. Create, update, and delete design tokens
 
-Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typography.
+Anima supports all of Figma's native styles and converts them into design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typography.
 
 <img width="436" alt="typography token creation" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/e6762ab8-f41d-4755-a99c-a32c065ff1f7">
 
