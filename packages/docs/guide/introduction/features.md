@@ -25,7 +25,7 @@ Anima will create your design tokens as Figma styles, ready to use and edit dire
 
 ### 4. Media-queries to Figma variants
 
-Anima DSA also handles responsive layouts. When importing your component to Figma, you'd be able to define which viewports you'd like to see in Figma. Anima will add a "Viewport" size property to your component, with all selected sizes
+Have components that look different on different screens? We’ve got you covered. When importing your component to Figma, you’re able to define which viewports you’d like to see in Figma. Anima will add a “Viewport” size property to your component, with all selected sizes
 
 <img width="821" alt="Media-queries as Variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/94e88059-c175-4eb5-8259-d4713db9f8d0">
 

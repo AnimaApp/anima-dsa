@@ -23,4 +23,4 @@ Anima DSA enables design system teams to integrate their live code components, i
 
 ## Managing design tokens
 
-Anima DSA allows design system teams to push and pull style changes directly from Figma to GitHub (and vice versa), eliminating the tedious ping-pong. pushing pixels or fighting with colors.
+Anima DSA allows design system teams to push and pull style changes directly from Figma to GitHub (and vice versa), eliminating the tedious ping-pong, pushing pixels or fighting with colors.
