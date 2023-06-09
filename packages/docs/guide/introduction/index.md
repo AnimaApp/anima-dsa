@@ -1,6 +1,12 @@
 # What is Anima DSA?
 
-Anima DSA (Design System Automation) is a workflow that connects your component library in code with Figma, enabling you to create and manage a single source of truth for your design system.
+Anima DSA _(Design System Automation)_ is a workflow that connects your component library in code with Figma, enabling you to create and manage a single source of truth for your design system.
+
+<div style="display: flex; justify-content: center;">
+
+![Anima DSA](/anima-dsa-graphic.svg)
+
+</div>
 
 ::: info TL;DR
 
