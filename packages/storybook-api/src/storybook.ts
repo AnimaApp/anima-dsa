@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { hashString } from './hash';
 
 import type {
@@ -20,13 +21,22 @@ export class StorybookApi {
     token: string,
     hash: string,
   ): Promise<StorybookEntity | null> => {
-    const res = await fetch(`${this.#endpoint}/storybook?hash=${hash}`, {
-      method: 'GET',
-      headers: this.#getHeaders(token),
-    });
+    const res = await axios<StorybookEntity | null>(
+      `${this.#endpoint}/storybook`,
+      {
+        params: {
+          hash,
+        },
+        method: 'get',
+        headers: this.#getHeaders(token),
+        validateStatus: function (status) {
+          return status < 500;
+        },
+      },
+    );
     if (res.status === 404) return null;
-    if (!res.ok) throw new Error('Failed to get Storybook');
-    const storybook = await res.json();
+    if (res.status !== 200) throw new Error('Failed to get Storybook');
+    const storybook = res.data;
     return storybook;
   };
 
@@ -43,11 +53,12 @@ export class StorybookApi {
     const ds_tokensAsString = JSON.stringify(currentDSToken);
 
     if (ds_tokens !== ds_tokensAsString) {
-      const response = await this.updateStorybook(token, id, {
-        ds_tokens: ds_tokensAsString,
-        upload_status,
-      });
-      if (response.status !== 200) {
+      try {
+        await this.updateStorybook(token, id, {
+          ds_tokens: ds_tokensAsString,
+          upload_status,
+        });
+      } catch (e) {
         throw new Error('Network request failed, response status !== 200');
       }
     }
@@ -57,46 +68,55 @@ export class StorybookApi {
     token: string,
     params: CreateStorybookParams,
   ): Promise<StorybookEntity | null> => {
-    const res = await fetch(`${this.#endpoint}/storybook`, {
-      method: 'POST',
-      headers: this.#getHeaders(token),
-      body: JSON.stringify(params),
-    });
-
+    const res = await axios<StorybookEntity | null>(
+      `${this.#endpoint}/storybook`,
+      {
+        method: 'post',
+        headers: this.#getHeaders(token),
+        data: params,
+      },
+    );
     if (res.status === 200) {
-      const data = await res.json();
-      return data;
+      return res.data;
     }
-
     return null;
   };
 
-  getMostRecentStorybook = async (token: string): Promise<Response> => {
+  getMostRecentStorybook = async (
+    token: string,
+  ): Promise<StorybookEntity | null> => {
     const query = new URLSearchParams({
       order_by: '-updated_at',
       limit: '1',
-    }).toString();
+    });
 
     const headers: { [key: string]: string } = {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     };
-    return fetch(`${this.#endpoint}/storybooks?${query}`, {
-      method: 'GET',
-      headers,
-    });
+    const res = await axios<{ results: StorybookEntity[] }>(
+      `${this.#endpoint}/storybooks`,
+      {
+        params: query,
+        method: 'get',
+        headers,
+      },
+    );
+    if (!res.data.results.length) return null;
+    return res.data.results[0];
   };
 
   updateStorybook = async (
     token: string,
     id: string,
     fields: Partial<StorybookEntity>,
-  ): Promise<Response> => {
-    return fetch(`${this.#endpoint}/storybook/${id}`, {
-      method: 'PUT',
+  ): Promise<StorybookEntity> => {
+    const res = await axios(`${this.#endpoint}/storybook/${id}`, {
+      method: 'put',
       headers: this.#getHeaders(token),
-      body: JSON.stringify(fields),
+      data: fields,
     });
+    return res.data;
   };
 
   getOrCreateStorybook = async (
@@ -134,47 +154,45 @@ export class StorybookApi {
     token: string,
     raw_ds_tokens: Record<string, unknown> = {},
   ): Promise<getOrCreateStorybookResponse> => {
-    const res = await this.getMostRecentStorybook(token);
+    try {
+      const storybook = await this.getMostRecentStorybook(token);
 
-    let data: StorybookEntity | null = null;
+      let data: StorybookEntity | null = null;
 
-    if (res.status !== 200) {
+      if (storybook) {
+        data = storybook;
+      } else {
+        // Not a good solution for hashing, we probably need to separate DS from storybook
+        const hash = hashString(token);
+
+        data = await this.createStorybook(token, {
+          ds_tokens: JSON.stringify(raw_ds_tokens),
+          storybook_hash: hash,
+          status: 'ready',
+          upload_status: 'complete',
+        });
+      }
+
+      const {
+        id,
+        upload_signed_url,
+        upload_status = 'complete',
+        ds_tokens: dsTokens,
+        storybook_hash = '',
+      } = data ?? {};
+
+      return {
+        storybookId: id,
+        uploadUrl: upload_signed_url,
+        uploadStatus: upload_status,
+        hash: storybook_hash,
+        designTokens: dsTokens,
+      };
+    } catch (e) {
       throw new Error(
         'We had an issue making a request to our server. Please try again, or reach out to the Anima team if the problem persists',
       );
     }
-
-    const { results } = await res.json();
-
-    if (results.length) {
-      data = results[0];
-    } else {
-      // Not a good solution for hashing, we probably need to separate DS from storybook
-      const hash = hashString(token);
-
-      data = await this.createStorybook(token, {
-        ds_tokens: JSON.stringify(raw_ds_tokens),
-        storybook_hash: hash,
-        status: 'ready',
-        upload_status: 'complete',
-      });
-    }
-
-    const {
-      id,
-      upload_signed_url,
-      upload_status = 'complete',
-      ds_tokens: dsTokens,
-      storybook_hash = '',
-    } = data ?? {};
-
-    return {
-      storybookId: id,
-      uploadUrl: upload_signed_url,
-      uploadStatus: upload_status,
-      hash: storybook_hash,
-      designTokens: dsTokens,
-    };
   };
 
   #getHeaders = (token: string) => {
