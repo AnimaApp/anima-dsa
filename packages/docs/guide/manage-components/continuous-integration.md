@@ -1,6 +1,6 @@
 # Continuous Integration
 
-Using our Anima CLI, you can keep your design system components, as well as design tokens,in sync with Figma, making sure that your design system is always up to date on both sides.
+Using our Anima CLI, you can keep your design system components, as well as design tokens, in sync with Figma, making sure that your design system is always up to date on both sides.
 
 [[toc]]
 
