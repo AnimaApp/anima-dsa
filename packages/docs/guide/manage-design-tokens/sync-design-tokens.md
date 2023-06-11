@@ -54,7 +54,7 @@ Where `./design-tokens.json` is the path to your design tokens JSON file.
 ## Connect with GitHub
 
 ::: tip Heads up!
-You'll need a GitHub account. If you dont have one, you can [create one for free :arrow_upper_right:](https://github.com/signup).
+You'll need a GitHub account. If you don't have one, you can [create one for free :arrow_upper_right:](https://github.com/signup).
 :::
 
 ### 1. Generate your Personal Access Token

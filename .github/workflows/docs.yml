@@ -41,54 +41,6 @@ jobs:
           npm i
           npm run docs:build
 
-      # - name: Deploy to Netlify
-      #   id: netlify-deploy
-      #   uses: netlify/actions/cli@master
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      #   with:
-      #     args: deploy -d packages/docs/.vitepress/dist/
-
-      # - name: Extract Website Draft URL
-      #   id: extract-url
-      #   run: |
-      #     echo "::set-output name=draft_url::$(echo '${{ steps.netlify-deploy.outputs.logs }}' | grep -oP 'Website Draft URL: \K.*')"
-      #   env:
-      #     LOGS: ${{ steps.netlify-deploy.outputs.logs }}
-
-      # - name: Extract PR number
-      #   uses: actions/github-script@v6
-      #   id: get_issue_number
-      #   with:
-      #     script: |
-      #       if (context.issue.number) {
-      #         // Return issue number if present
-      #         return context.issue.number;
-      #       } else {
-      #         // Otherwise return issue number from commit
-      #         return (
-      #           await github.rest.repos.listPullRequestsAssociatedWithCommit({
-      #             commit_sha: context.sha,
-      #             owner: context.repo.owner,
-      #             repo: context.repo.repo,
-      #           })
-      #         ).data[0].number;
-      #       }
-      #     result-encoding: string
-
-      # - name: Results
-      #   run: |
-      #     echo 'PR number:${{steps.get_issue_number.outputs.result}}'
-      #     echo 'URL:${{ steps.extract-url.outputs.draft_url }}'
-
-      # - name: Comment URL in PR
-      #   uses: thollander/actions-comment-pull-request@v2
-      #   with:
-      #     message: |
-      #       Deploy preview: ${{ steps.extract-url.outputs.draft_url }}
-      #     pr_number: ${{steps.get_issue_number.outputs.result}}
-
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
