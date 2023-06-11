@@ -18,7 +18,7 @@ Code Component == Figma components
 
 1. Same names
 2. Same responsive behavior
-3. Same styles (via [design tokens](/guide/manage-design-tokens/design-tokens-overview))
+3. Same styles (via [design tokens](/guide/manage-design-tokens/))
 4. Same variants
 
 Check out the [Full features](/guide/introduction/features) page for a showcase of everything Anima DSA offers.

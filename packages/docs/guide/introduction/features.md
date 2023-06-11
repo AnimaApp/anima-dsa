@@ -25,13 +25,13 @@ Anima will create your design tokens as Figma styles, ready to use and edit dire
 
 ### 4. Media-queries to Figma variants
 
-Anima DSA also handles responsive layouts. When importing your component to Figma, you'd be able to define which viewports you'd like to see in Figma. Anima will add a "Viewport" size property to your component, with all selected sizes
+Have components that look different on different screens? We’ve got you covered. When importing your component to Figma, you’re able to define which viewports you’d like to see in Figma. Anima will add a “Viewport” size property to your component, with all selected sizes
 
 <img width="821" alt="Media-queries as Variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/94e88059-c175-4eb5-8259-d4713db9f8d0">
 
 ### 5. Code snippets embedded in instances
 
-Know for each component if it already exists in your source code, and which properties to used for the selected instance
+Know for each component if it already exists in your source code, and which properties to use for the selected instance
 
 <img width="1164" alt="snippet_in_variants" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7c5db3fa-2693-4a83-8b87-1e9a9419fa97">
 
@@ -43,7 +43,7 @@ Here's how Anima keeps your design tokens in sync across your designs and codeba
 
 ### 1. Create, update, and delete design tokens
 
-Anima supports all of Figma's native styles and converts them to design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typography.
+Anima supports all of Figma's native styles and converts them into design tokens. You can use the Anima plugin to create tokens that are not (yet) supported by Figma, like typography.
 
 <img width="436" alt="typography token creation" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/e6762ab8-f41d-4755-a99c-a32c065ff1f7">
 

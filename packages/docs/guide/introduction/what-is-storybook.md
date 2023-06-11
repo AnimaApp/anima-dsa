@@ -17,7 +17,7 @@ A story is an additional file we add to a component, that defines the different 
 ### Example
 
 1. We can have in our library components for Avatar, Badge, Button, Card.
-2. Each component will have a story, that represent it
+2. Each component will have a story that represent it.
 
 <img width="211" alt="storybook-components" src="https://github.com/AnimaApp/anima-storybook-cli/assets/96059044/7c6a4922-f9ab-44ef-91e9-ffdb8b08a077">
 

@@ -1,6 +1,6 @@
 # Continuous Integration
 
-Using our Anima CLI, you can keep your design system components, as well as design tokens,in sync with Figma, making sure that your design system is always up to date on both sides.
+Using our Anima CLI, you can keep your design system components, as well as design tokens, in sync with Figma, making sure that your design system is always up to date on both sides.
 
 [[toc]]
 
@@ -32,7 +32,7 @@ Here is an example of configuration you can add to the components repository:
 
 ::: code-group
 
-```yml [Github Actions]
+```yml [GitHub Actions]
 #.github/workflows/sync-with-anima.yml
 
 name: Sync with Anima
@@ -89,4 +89,4 @@ jobs:
 
 :::
 
-> **Note**: you can review the documentation of [Github Actions](https://docs.github.com/en/actions/learn-github-actions) and [CircleCI](https://circleci.com/developer) to learn more about how to setup your CI/CD environment.
+> **Note**: you can review the documentation of [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions) and [CircleCI](https://circleci.com/developer) to learn more about how to setup your CI/CD environment.

@@ -70,7 +70,7 @@ export default defineConfig({
         items: [
           {
             text: 'Overview',
-            link: '/guide/manage-components/components-overview',
+            link: '/guide/manage-components/',
           },
           {
             text: 'How to sync components',
@@ -95,7 +95,7 @@ export default defineConfig({
         items: [
           {
             text: 'Overview',
-            link: '/guide/manage-design-tokens/design-tokens-overview',
+            link: '/guide/manage-design-tokens/',
           },
           {
             text: 'How to sync design tokens',
@@ -103,7 +103,6 @@ export default defineConfig({
           },
           {
             text: 'Anima token transformers',
-            link: '/guide/manage-design-tokens/token-transformers',
             collapsed: false,
             items: [
               {
