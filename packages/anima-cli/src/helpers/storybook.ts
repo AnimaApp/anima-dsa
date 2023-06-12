@@ -33,13 +33,12 @@ export const generateStorybookConfig = async (file: string, token: string) => {
         body: JSON.stringify({ code: file }),
     });
 
-    if (isDebug()) {
-        console.log('response =>', await res.json());
-    }
-
     if (res.status === 200) {
         const data = await res.json();
         return data;
+    } else if (isDebug()){
+        console.log('response status =>', res.status);
+        console.log('response data =>', await res.text());
     }
 
     return null;

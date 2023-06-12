@@ -8,6 +8,7 @@ import { generateStorybookConfig, getJSFiles } from '../helpers/storybook';
 import { getToken } from '../helpers/token';
 import { authenticate } from '../api';
 import { execSync } from 'child_process';
+import { setDebug } from '../helpers/debug';
 
 export const command = 'init-sb';
 export const desc = 'Initialise storybook on your project';
@@ -30,6 +31,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     Sentry.getCurrentHub().configureScope((scope) =>
       scope.setSpan(transaction),
     );
+    setDebug(!!_argv.debug);
     const token = getToken(_argv);
     await authenticate(token);
     loader.newStage('Install storybook');
