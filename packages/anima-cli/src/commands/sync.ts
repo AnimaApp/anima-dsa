@@ -67,7 +67,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     const token = getToken(_argv);
     const response = await authenticate(token);
     const teamId = response.data.team_id;
-    const ownerId = response.data.owner_id;
+    const ownerId = response.data.team_owner_id;
     Sentry.configureScope((scope) => {
       scope.setUser({
         id: ownerId,
@@ -75,7 +75,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       });
       scope.setTag('teamId', response.data.team_id);
     });
-
     if (_argv.storybook) {
       const buildDir = await parseBuildDirArg(
         _argv.storybook as string | undefined,
