@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/node';
 import fs from 'fs';
 import path from 'path';
 import { log } from '../helpers';
-import { generateStorybookConfig, getJSFiles } from '../helpers/storybook';
+import { generateStorybookConfig, getJSFiles, hasStorybook } from '../helpers/storybook';
 import { getToken } from '../helpers/token';
 import { authenticate } from '../api';
 import { execSync } from 'child_process';
@@ -44,7 +44,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     loader.newStage('Fetching components');
     const componentsDir = _argv.components as string || 'src';
     const files = getJSFiles(componentsDir);
-    const componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !files.includes(`${f.split(".")[0]}.stories.js`));
+    const componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !f.includes(".stories.") && !hasStorybook(files, f));
     loader.newStage(`Creating ${componentsWithoutStorybook.length} component configurations`);
     for(const componentFile of componentsWithoutStorybook){
       console.log(`Creating ${componentFile}...`);
@@ -60,6 +60,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     console.log("");
     loader.stop();
     log.green('  - Done');
+    log.yellow("Now run 'anima sync' to sync your project");
     transaction.status = 'ok';
     transaction.finish();
   } catch (e) {

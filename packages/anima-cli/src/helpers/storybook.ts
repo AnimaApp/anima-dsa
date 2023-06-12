@@ -4,6 +4,7 @@ import { isDebug } from './debug';
 import { API_URL } from '../constants/api';
 
 const JS_EXTENSIONS = ["js", "jsx", "ts", "tsx", "vue"];
+const STORYBOOK_EXTENSIONS = ["js", "jsx", "ts", "tsx"];
 
 export const getJSFiles = (folder: string) => {
     const JSFiles: string[] = [];
@@ -22,6 +23,17 @@ export const getJSFiles = (folder: string) => {
 
     return JSFiles;
 };
+
+export const hasStorybook = (files: string[], file: string) => {
+    const componentName = file.split(".")[0];
+    const potentialStoryFiles = STORYBOOK_EXTENSIONS.map(ext => `${componentName}.stories.${ext}`);
+    for(const storyFile of potentialStoryFiles){
+        if(files.includes(storyFile)){
+            return true;
+        }
+    }
+    return false;
+}
 
 export const generateStorybookConfig = async (file: string, token: string) => {
     const res = await fetch(`${API_URL}/rpc/generate_storybook`, {
