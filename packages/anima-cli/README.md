@@ -108,7 +108,7 @@ anima-storybook init-sb [option]
 
 ## `anima sync`
 
-Syncs your Storybook and/or design tokens to your Anima team so that it can be then generated in Figma.
+Syncs your Storybook and/or design tokens to your Anima team so that it cant then be generated in Figma.
 
 ### Usage
 

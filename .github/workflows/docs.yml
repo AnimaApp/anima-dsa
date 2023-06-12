@@ -40,10 +40,15 @@ jobs:
           cd packages/docs
           npm i
           npm run docs:build
+
       - name: Deploy to Netlify
-        uses: netlify/actions/cli@master
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: 'packages/docs/.vitepress/dist/'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy -d packages/docs/.vitepress/dist/ -p
