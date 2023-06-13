@@ -26,6 +26,7 @@ export const trackEvent = async (events: Event[]) => {
   }
   try {
     const eventsMapped = events.map((event) => ({
+      userID: event.userID,
       eventCategory: 'General',
       clientVersion: version,
       eventAction: event.action,
