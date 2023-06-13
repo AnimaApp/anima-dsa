@@ -65,6 +65,7 @@ export default defineConfig({
           // { text: 'Command API', link: '/guide/anima-cli#commands' },
         ],
       },
+
       {
         text: 'Manage components',
         items: [
@@ -136,6 +137,12 @@ export default defineConfig({
           },
         ],
       },
+      {
+        text: 'Other tools',
+        items: [
+          { text: 'Design Tokens Validator', link: '/guide/other-tools/design-tokens-validator' },
+        ],
+      }
     ],
 
     socialLinks: [
