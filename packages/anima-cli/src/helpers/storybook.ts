@@ -58,7 +58,6 @@ export const extractComponentInformation = async (file: string, token: string) =
 
 export const generateStorybookConfig = (filename: string, resp: {default_export: string, component_name: string, props: {example: string, name: string, type: string}[]}) => {
     const convertPropType = (type: string) => {
-        console.log("type", type);
         switch(type){
             case "boolean": return "{ type: 'boolean' }";
             case "string": return "{ type: 'string' }";
@@ -72,8 +71,8 @@ export const generateStorybookConfig = (filename: string, resp: {default_export:
     const componentFilename = path.parse(filename).base.split(".")[0];
     const componentImport = resp.default_export ? resp.component_name : `{ ${resp.component_name} }`;
     const importLine = `import ${componentImport} from './${componentFilename}';`;
-    const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `\t\t${name}: ${convertPropType(type)}`).filter(item => item);
-    const propExamples = resp.props.map(({name, example}) => `\t\t${name}: ${example}`);
+    const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `      ${name}: ${convertPropType(type)}`).filter(item => item);
+    const propExamples = resp.props.map(({name, example}) => `      ${name}: ${example}`);
 
     return `${importLine}
 

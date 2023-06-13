@@ -17,16 +17,23 @@ export const builder: CommandBuilder = (yargs) =>
   yargs
     .options({
       token: { type: 'string', alias: 't' },
-      components: { type: 'string', alias: 'c' },
+      components: { type: 'string', alias: 'd' },
+      component: { type: 'string', alias: 'c' },
       debug: { type: 'boolean' },
     })
-    .example([['$0 init-sb -c <components-dir>']]);
+    .example([['$0 init-sb -d <components-dir>']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
   const transaction = Sentry.startTransaction({
     op: 'init-sb',
     name: 'initialise storybook',
   });
+  if(!_argv.components && !_argv.component){
+    throw Error("Must pass components (-d) or component (-c) argument");
+  }
+  if(_argv.components && _argv.component){
+    throw Error("Cannot pass both components (-d) and component (-c) arguments");
+  }
   try {
     Sentry.getCurrentHub().configureScope((scope) =>
       scope.setSpan(transaction),
@@ -46,9 +53,14 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       console.log('Skipping storybook install');
     }
     loader.newStage('Fetching components');
-    const componentsDir = _argv.components as string || 'src';
-    const files = getJSFiles(componentsDir);
-    const componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !f.includes(".stories.") && !hasStorybook(files, f));
+    let componentsWithoutStorybook: string[] = [];
+    if(_argv.components){
+      const componentsDir = _argv.components as string || 'src';
+      const files = getJSFiles(componentsDir);
+      componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !f.includes(".stories.") && !hasStorybook(files, f));
+    } else {
+      componentsWithoutStorybook = [_argv.component as string];
+    }
     loader.newStage(`Creating ${componentsWithoutStorybook.length} component configurations`);
     for(const componentFile of componentsWithoutStorybook){
       console.log(`Creating ${componentFile}...`);

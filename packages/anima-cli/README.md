@@ -104,7 +104,8 @@ anima-storybook init-sb [option]
 | Options | Description | Type |
 | :---------------- | :---------------------------------------------------------------------------------------------- | :------: |
 | `--token`, `-t` | Provide an Anima team token if it was not set as environment variable | `string` |
-| `--components`, `-c` | To specify the components folder of your project, otherwise it uses `src` | `string` |
+| `--components`, `-d` | To specify the components folder of your project | `string` |
+| `--component`, `-c` | To specify a single component to generate config for | `string` |
 
 ## `anima sync`
 
