@@ -9,5 +9,7 @@ tmp
 node_modules
 .turbo
 
+.vscode/settings.json
+
 # Local Netlify folder
 .netlify
