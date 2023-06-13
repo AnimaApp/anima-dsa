@@ -35,8 +35,8 @@ export const hasStorybook = (files: string[], file: string) => {
     return false;
 }
 
-export const generateStorybookConfig = async (file: string, token: string) => {
-    const res = await fetch(`${API_URL}/rpc/generate_storybook`, {
+export const extractComponentInformation = async (file: string, token: string) => {
+    const res = await fetch(`${API_URL}/rpc/extract_component_data`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -55,3 +55,40 @@ export const generateStorybookConfig = async (file: string, token: string) => {
 
     return null;
 };
+
+export const generateStorybookConfig = (filename: string, resp: {default_export: string, component_name: string, props: {example: string, name: string, type: string}[]}) => {
+    const convertPropType = (type: string) => {
+        console.log("type", type);
+        switch(type){
+            case "boolean": return "{ type: 'boolean' }";
+            case "string": return "{ type: 'string' }";
+            default:
+                if(Array.isArray(type)){
+                    return `{ control: 'select', options: [${type}]}`
+                }
+        }
+    }
+
+    const componentFilename = path.parse(filename).base.split(".")[0];
+    const componentImport = resp.default_export ? resp.component_name : `{ ${resp.component_name} }`;
+    const importLine = `import ${componentImport} from './${componentFilename}';`;
+    const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `\t\t${name}: ${convertPropType(type)}`).filter(item => item);
+    const propExamples = resp.props.map(({name, example}) => `\t\t${name}: ${example}`);
+
+    return `${importLine}
+
+export default {
+    title: "Components/${resp.component_name}",
+    component: ${resp.component_name},
+    argTypes: {
+${propTypes.join(',\n')}
+    }
+};
+
+export const Default = {
+    args: {
+${propExamples.join(',\n')}
+    }
+};
+`
+}
