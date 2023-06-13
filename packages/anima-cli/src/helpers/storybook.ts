@@ -61,6 +61,7 @@ export const generateStorybookConfig = (filename: string, resp: {default_export:
         switch(type){
             case "boolean": return "{ type: 'boolean' }";
             case "string": return "{ type: 'string' }";
+            case "object": return "{ type: 'object' }";
             default:
                 if(Array.isArray(type)){
                     return `{ control: 'select', options: [${type}]}`
@@ -71,23 +72,23 @@ export const generateStorybookConfig = (filename: string, resp: {default_export:
     const componentFilename = path.parse(filename).base.split(".")[0];
     const componentImport = resp.default_export ? resp.component_name : `{ ${resp.component_name} }`;
     const importLine = `import ${componentImport} from './${componentFilename}';`;
-    const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `      ${name}: ${convertPropType(type)}`).filter(item => item);
-    const propExamples = resp.props.map(({name, example}) => `      ${name}: ${example}`);
+    const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `    ${name}: ${convertPropType(type)}`).filter(item => item);
+    const propExamples = resp.props.map(({name, example}) => `    ${name}: ${example}`);
 
     return `${importLine}
 
 export default {
-    title: "Components/${resp.component_name}",
-    component: ${resp.component_name},
-    argTypes: {
+  title: "Components/${resp.component_name}",
+  component: ${resp.component_name},
+  ${propTypes.length > 0 ? `argTypes: {
 ${propTypes.join(',\n')}
-    }
+  }` : ''}
 };
 
 export const Default = {
-    args: {
+  args: {
 ${propExamples.join(',\n')}
-    }
+  }
 };
 `
 }
