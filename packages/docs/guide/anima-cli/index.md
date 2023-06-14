@@ -4,7 +4,12 @@ Anima CLI is a command line tool that works in conjunction with the [Anima Figma
 
 ## Quick start
 
-Run the following command in the folder you have Storybook installed:
+If you don’t have storybook yet, you can run:
+```sh
+    npx @animaapp/anima-cli init-sb -t <anima-team-token> -d ./path/to/components
+```
+
+Then run the following command in the folder you have Storybook installed:
 
 ```sh
     npx @animaapp/anima-cli sync -t <anima-team-token> --storybook
