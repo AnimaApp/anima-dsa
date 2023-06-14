@@ -96,7 +96,7 @@ anima sync --design-tokens ./design-tokens.json
 Initialize and generate storybook config for your project (only needed if you do not already have storybook).
 
 ```sh
-anima-storybook init-sb [option]
+anima init-sb [option]
 ```
 
 #### Options

@@ -87,7 +87,7 @@ ${propTypes.join(',\n')}
 
 export const Default = {
   ${propExamples.length > 0 ? `args: {
-    ${propExamples.join(',\n')}
+${propExamples.join(',\n')}
   }` : ''}
 };
 `

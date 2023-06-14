@@ -86,7 +86,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     console.log("");
     loader.stop();
     log.green('  - Done');
-    log.yellow("Now run 'anima sync' to sync your project");
+    log.yellow("Now run 'npm run storybook' to check your storybook");
     transaction.status = 'ok';
     transaction.finish();
   } catch (e) {
