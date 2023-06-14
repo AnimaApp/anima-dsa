@@ -68,10 +68,11 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       const response = await extractComponentInformation(componentContent, token).catch((e) => {throw e});
       if(response){
         if(isDebug()){
-          fs.writeFileSync(`${componentFile.split(".")[0]}.stories.log`, response.reply);
+          fs.writeFileSync(`${componentFile.split(".")[0]}.stories.log.json`, JSON.stringify(response));
         }
         const storybookConfig = generateStorybookConfig(componentFile, response);
         fs.writeFileSync(`${componentFile.split(".")[0]}.stories.js`, storybookConfig);
+        console.log(`Created ${componentFile}`);
       } else {
         console.log(`Skipped ${componentFile}. Couldn't generate story config`);
       }

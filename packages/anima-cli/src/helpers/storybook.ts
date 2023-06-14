@@ -73,7 +73,7 @@ export const generateStorybookConfig = (filename: string, resp: {default_export:
     const componentImport = resp.default_export ? resp.component_name : `{ ${resp.component_name} }`;
     const importLine = `import ${componentImport} from './${componentFilename}';`;
     const propTypes = resp.props.map(({name, type}) => convertPropType(type) && `    ${name}: ${convertPropType(type)}`).filter(item => item);
-    const propExamples = resp.props.map(({name, example}) => `    ${name}: ${example}`);
+    const propExamples = resp.props.map(({name, example}) => example && `    ${name}: ${example}`).filter(item => item);
 
     return `${importLine}
 
@@ -86,9 +86,9 @@ ${propTypes.join(',\n')}
 };
 
 export const Default = {
-  args: {
-${propExamples.join(',\n')}
-  }
+  ${propExamples.length > 0 ? `args: {
+    ${propExamples.join(',\n')}
+  }` : ''}
 };
 `
 }
