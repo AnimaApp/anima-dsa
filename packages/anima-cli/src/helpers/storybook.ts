@@ -52,7 +52,7 @@ export const hasStorybook = (files: string[], file: string) => {
   return false;
 };
 
-export const extractComponentInformation = async (
+const extractComponentInformation = async (
   file: string,
   token: string,
 ) => {
@@ -76,7 +76,7 @@ export const extractComponentInformation = async (
   return null;
 };
 
-export const generateStorybookConfig = (
+const generateStorybookConfig = (
   filename: string,
   resp: {
     default_export: string;
