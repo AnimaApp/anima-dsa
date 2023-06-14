@@ -2,13 +2,11 @@ import { Arguments, CommandBuilder } from 'yargs';
 import { loader } from '../helpers/loader';
 import * as Sentry from '@sentry/node';
 import fs from 'fs';
-import path from 'path';
 import { log } from '../helpers';
-import { extractComponentInformation, generateStorybookConfig, getJSFiles, hasStorybook } from '../helpers/storybook';
+import { generateStories, getJSFiles, hasStorybook, initialiseStorybook } from '../helpers/storybook';
 import { getToken } from '../helpers/token';
+import { setDebug } from '../helpers/debug';
 import { authenticate } from '../api';
-import { execSync } from 'child_process';
-import { isDebug, setDebug } from '../helpers/debug';
 
 export const command = 'generate-storybook';
 export const desc = 'Initialise storybook on your project';
@@ -44,43 +42,28 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     setDebug(!!_argv.debug);
     const token = getToken(_argv);
     await authenticate(token);
+  
+    // Install storybook
     if(!fs.existsSync(".storybook")){
       loader.newStage('Install storybook');
-      const sampleStoriesPath = path.join('src', 'stories');
-      const hadStorybookFolderBefore = fs.existsSync(sampleStoriesPath);
-      execSync('npx storybook@latest init -y', {stdio: 'inherit'});
-      if(!hadStorybookFolderBefore && fs.existsSync(sampleStoriesPath)){
-        fs.rmSync(sampleStoriesPath, { recursive: true, force: true });
-      }
+      initialiseStorybook();
     } else {
       console.log('Skipping storybook install');
     }
+
+    // Create stories
     loader.newStage('Fetching components');
-    let componentsWithoutStorybook: string[] = [];
+    let filesToGenerateStoryFor: string[] = [];
     if(_argv.component){
-      componentsWithoutStorybook = [_argv.component as string];
+      filesToGenerateStoryFor = [_argv.component as string];
     } else {
       const componentsDir = _argv.components as string || 'src';
       const files = getJSFiles(componentsDir);
-      componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !f.includes(".stories.") && !hasStorybook(files, f));
+      filesToGenerateStoryFor = files.filter(f => !f.includes(".test.") && !f.includes(".spec.") && !f.includes(".stories.") && !hasStorybook(files, f));
     }
-    loader.newStage(`Creating ${componentsWithoutStorybook.length} component configurations`);
-    for(const componentFile of componentsWithoutStorybook){
-      console.log(`Creating ${componentFile}...`);
-      const componentContent = fs.readFileSync(componentFile, 'utf8');
-      const response = await extractComponentInformation(componentContent, token).catch((e) => {throw e});
-      if(response){
-        if(isDebug()){
-          fs.writeFileSync(`${componentFile.split(".")[0]}.stories.log.json`, JSON.stringify(response));
-        }
-        const storybookConfig = generateStorybookConfig(componentFile, response);
-        fs.writeFileSync(`${componentFile.split(".")[0]}.stories.js`, storybookConfig);
-        console.log(`Created ${componentFile}`);
-      } else {
-        console.log(`Skipped ${componentFile}. Couldn't generate story config`);
-      }
-    }
-    console.log("");
+    loader.newStage(`Creating ${filesToGenerateStoryFor.length} component configurations`);
+    await generateStories(filesToGenerateStoryFor, token);
+  
     loader.stop();
     log.green('  - Done');
     log.yellow("Now run 'npm run storybook' to check your storybook");
