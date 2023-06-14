@@ -28,9 +28,6 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     op: 'init-sb',
     name: 'initialise storybook',
   });
-  if(!_argv.components && !_argv.component){
-    throw Error("Must pass components (-d) or component (-c) argument");
-  }
   if(_argv.components && _argv.component){
     throw Error("Cannot pass both components (-d) and component (-c) arguments");
   }
@@ -60,12 +57,12 @@ export const handler = async (_argv: Arguments): Promise<void> => {
     }
     loader.newStage('Fetching components');
     let componentsWithoutStorybook: string[] = [];
-    if(_argv.components){
+    if(_argv.component){
+      componentsWithoutStorybook = [_argv.component as string];
+    } else {
       const componentsDir = _argv.components as string || 'src';
       const files = getJSFiles(componentsDir);
       componentsWithoutStorybook = files.filter(f => !f.includes(".test.") && !f.includes(".stories.") && !hasStorybook(files, f));
-    } else {
-      componentsWithoutStorybook = [_argv.component as string];
     }
     loader.newStage(`Creating ${componentsWithoutStorybook.length} component configurations`);
     for(const componentFile of componentsWithoutStorybook){
