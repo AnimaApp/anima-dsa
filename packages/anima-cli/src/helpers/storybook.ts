@@ -3,6 +3,7 @@ import path from 'path';
 import { isDebug } from './debug';
 import { API_URL } from '../constants/api';
 import { execSync } from 'child_process';
+import fetch from "node-fetch";
 
 const JS_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx', 'vue'];
 const STORYBOOK_EXTENSIONS = ['js', 'jsx', 'ts', 'tsx'];
