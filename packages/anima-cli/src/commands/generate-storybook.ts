@@ -10,7 +10,7 @@ import { authenticate } from '../api';
 import { execSync } from 'child_process';
 import { isDebug, setDebug } from '../helpers/debug';
 
-export const command = 'init-sb';
+export const command = 'generate-storybook';
 export const desc = 'Initialise storybook on your project';
 
 export const builder: CommandBuilder = (yargs) =>
@@ -21,11 +21,11 @@ export const builder: CommandBuilder = (yargs) =>
       component: { type: 'string', alias: 'c' },
       debug: { type: 'boolean' },
     })
-    .example([['$0 init-sb -d <components-dir>']]);
+    .example([['$0 generate-storybook -d <components-dir>']]);
 
 export const handler = async (_argv: Arguments): Promise<void> => {
   const transaction = Sentry.startTransaction({
-    op: 'init-sb',
+    op: 'generate-storybook',
     name: 'initialise storybook',
   });
   if(_argv.components && _argv.component){
