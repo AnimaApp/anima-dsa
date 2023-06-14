@@ -34,6 +34,12 @@ export const handler = async (_argv: Arguments): Promise<void> => {
   if(_argv.components && _argv.component){
     throw Error("Cannot pass both components (-d) and component (-c) arguments");
   }
+  if(_argv.components && !fs.lstatSync(_argv.components as string).isDirectory()){
+    throw Error("Components (-d) must be a directory");
+  }
+  if(_argv.component && !fs.lstatSync(_argv.component as string).isFile()){
+    throw Error("Component (-c) must be a file");
+  }
   try {
     Sentry.getCurrentHub().configureScope((scope) =>
       scope.setSpan(transaction),
