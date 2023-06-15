@@ -61,7 +61,7 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       const files = getJSFiles(componentsDir);
       filesToGenerateStoryFor = files.filter(f => !f.includes(".test.") && !f.includes(".spec.") && !f.includes(".stories.") && !hasStorybook(files, f));
     }
-    loader.newStage(`Creating ${filesToGenerateStoryFor.length} component configurations`);
+    loader.newStage(`Creating ${filesToGenerateStoryFor.length} component stories`);
     await generateStories(filesToGenerateStoryFor, token);
   
     loader.stop();

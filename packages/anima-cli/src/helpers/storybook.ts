@@ -145,12 +145,17 @@ export const generateStories = async (files: string[], token: string) => {
   for (const componentFile of files) {
     console.log(`Creating ${componentFile}...`);
     const componentContent = fs.readFileSync(componentFile, 'utf8');
+    const start = Date.now();
     const response = await extractComponentInformation(
       componentContent,
       token,
     ).catch((e) => {
       throw e;
     });
+    const end = Date.now();
+    if (isDebug()) {
+      console.log(`Component information time: ${end - start} ms`);
+    }
     if (response) {
       if (isDebug()) {
         fs.writeFileSync(
@@ -159,11 +164,9 @@ export const generateStories = async (files: string[], token: string) => {
         );
       }
       const storybookConfig = generateStorybookConfig(componentFile, response);
-      fs.writeFileSync(
-        `${componentFile.split('.')[0]}.stories.js`,
-        storybookConfig,
-      );
-      console.log(`Created ${componentFile}`);
+      const storyFile = `${componentFile.split('.')[0]}.stories.js`;
+      fs.writeFileSync(storyFile, storybookConfig);
+      console.log(`Created ${storyFile}`);
     } else {
       console.log(`Skipped ${componentFile}. Couldn't generate story config`);
     }
