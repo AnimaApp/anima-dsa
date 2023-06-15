@@ -53,7 +53,7 @@ export const hasStorybook = (files: string[], file: string) => {
   return false;
 };
 
-const extractComponentInformation = async (
+export const extractComponentInformation = async (
   file: string,
   token: string,
 ) => {
