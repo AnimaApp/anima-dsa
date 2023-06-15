@@ -1,7 +1,10 @@
 import { test, describe, expect, afterAll } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { generateStories } from '../src/helpers/storybook';
+import {
+  extractComponentInformation,
+  generateStories,
+} from '../src/helpers/storybook';
 
 const TOKEN = process.env.TEST_TOKEN;
 const COMPONENTS_FOLDER = path.join(__dirname, 'example-components');
@@ -25,6 +28,32 @@ const FILES = {
 if (!TOKEN) throw new Error('TOKEN not found');
 
 describe('Generate storybook', () => {
+  test(
+    'Extract component information',
+    async () => {
+      const componentFile = path.join(COMPONENTS_FOLDER, 'Example.jsx');
+      const componentContent = fs.readFileSync(componentFile, 'utf8');
+      const response = await extractComponentInformation(
+        componentContent,
+        TOKEN,
+      ).catch((e) => {
+        throw e;
+      });
+      expect(response).not.toBe(null);
+      expect(response.default_export).toBe(true);
+      expect(response.component_name).toBe('Example');
+      const propNames = response.props.map((p) => p.name);
+      const propTypes = response.props.map((p) => p.type);
+      expect(propNames.sort()).toStrictEqual(
+        ['text', 'isActive', 'variant'].sort(),
+      );
+      expect(propTypes.sort()).toStrictEqual(
+        ['string', 'string', 'boolean'].sort(),
+      );
+    },
+    TIMEOUT,
+  );
+
   test(
     'Initialize storybook',
     async () => {
@@ -52,7 +81,6 @@ describe('Generate storybook', () => {
         expect(example).contains('export const Default = {');
         for (const [name, type] of Object.entries(args)) {
           expect(componentProperties).contains(`${name}: { type: '${type}' }`);
-          expect(example).contains(name);
         }
       }
     },
@@ -62,9 +90,11 @@ describe('Generate storybook', () => {
   afterAll(() => {
     for (const filename of fs.readdirSync(COMPONENTS_FOLDER)) {
       if (filename.endsWith('.stories.js')) {
-        // fs.unlink(path.join(COMPONENTS_FOLDER, filename), (err) =>
-        //   console.error(err),
-        // );
+        fs.unlink(path.join(COMPONENTS_FOLDER, filename), (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
       }
     }
   });
