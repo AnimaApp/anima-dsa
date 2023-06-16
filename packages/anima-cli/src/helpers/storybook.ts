@@ -80,9 +80,10 @@ export const extractComponentInformation = async (
 const generateStorybookConfig = (
   filename: string,
   resp: {
-    default_export: string;
+    default_export: boolean;
     component_name: string;
-    props: { example: string; name: string; type: string }[];
+    prop_data_types: boolean;
+    props: { name: string; type: string }[];
   },
 ) => {
   const convertPropType = (type: string) => {
@@ -105,24 +106,20 @@ const generateStorybookConfig = (
     ? resp.component_name
     : `{ ${resp.component_name} }`;
   const importLine = `import ${componentImport} from './${componentFilename}';`;
-  const propTypes = resp.props
+  const propTypes = !resp.prop_data_types ? resp.props
     .map(
       ({ name, type }) =>
         convertPropType(type) && `    ${name}: ${convertPropType(type)}`,
     )
-    .filter((item) => item);
-  const propExamples = resp.props
-    .map(({ name, example }) => example && `    ${name}: ${example}`)
-    .filter((item) => item);
+    .filter((item) => item) : [];
 
   return `${importLine}
 
 export default {
   title: "Components/${resp.component_name}",
-  component: ${resp.component_name},
-  ${
+  component: ${resp.component_name},${
     propTypes.length > 0
-      ? `argTypes: {
+      ? `\n  argTypes: {
 ${propTypes.join(',\n')}
   }`
       : ''
@@ -130,13 +127,7 @@ ${propTypes.join(',\n')}
 };
 
 export const Default = {
-  ${
-    propExamples.length > 0
-      ? `args: {
-${propExamples.join(',\n')}
-  }`
-      : ''
-  }
+  // Add default args here
 };
 `;
 };
