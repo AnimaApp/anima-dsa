@@ -4,12 +4,12 @@ const tokens = {
   colors: {
     blue: {
       1: {
-        $value: "#000000",
-        $type: "color",
+        $value: '#000000',
+        $type: 'color',
       },
-    }
+    },
   },
-  seed: {
+  antd: {
     colorPrimary: {
       $value: '#ffffff',
       $type: 'color',
@@ -41,22 +41,24 @@ describe('antd converters', () => {
   });
   test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {
     const invalidToken = {
-      test: "etc",
-      seed: {
-        $value: "lol",
+      test: 'etc',
+      antd: {
+        $value: 'lol',
       },
-    }
+    };
     // @ts-expect-error testing fail
     expect(() => getAntdTheme(invalidToken)).toThrow(/\$value as a root key/);
   });
   test('convert invalid design tokens to antd theme, no tokens (fail)', async () => {
     const invalidToken = {
-      test: "etc",
-      seed: {
-        primaryColor: "lol",
+      test: 'etc',
+      antd: {
+        primaryColor: 'lol',
       },
-    }
+    };
     // @ts-expect-error testing fail
-    expect(() => getAntdTheme(invalidToken)).toThrow(/Unexpected value in design/);
+    expect(() => getAntdTheme(invalidToken)).toThrow(
+      /Unexpected value in design/,
+    );
   });
 });
