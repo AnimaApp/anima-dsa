@@ -9,18 +9,20 @@ export default defineConfig({
     [
       'script',
       {
-        src: 'https://t.usermaven.com/lib.js',
-        'data-key': 'UMmuZAUoTL',
-        'data-tracking-host': 'https://events.usermaven.com',
-        'data-autocapture': 'true',
-        'data-privacy-policy': 'strict',
-        defer: true,
+        async: true,
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-NFE10GQH38',
       },
     ],
     [
       'script',
       {},
-      `window.usermaven = window.usermaven || (function(){(window.usermavenQ = window.usermavenQ || []).push(arguments);})`,
+      `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NFE10GQH38');
+      `,
     ],
   ],
   themeConfig: {
