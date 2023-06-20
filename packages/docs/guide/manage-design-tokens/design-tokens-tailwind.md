@@ -21,6 +21,24 @@ We provide a function to convert your design tokens JSON into a TailwindCSS them
 
 ## Design tokens JSON -> TailwindCSS theme
 
+1. Install our `@animaapp/framework-helpers` package
+
+    ::: code-group
+
+    ```sh [npm]
+        npm add -D @animaapp/framework-helpers
+    ```
+
+    ```sh [yarn]
+        yarn add -D @animaapp/framework-helpers
+    ```
+
+    ```sh [pnpm]
+        pnpm add -D @animaapp/framework-helpers
+    ```
+
+    :::
+
 1. On your `tailwind.config.js` file in your project root directory, import our converter function `getTailwindTheme`
 
     ```js

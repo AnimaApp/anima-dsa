@@ -9,13 +9,13 @@ Ant Design v5 uses a new theme format, so we provide a function to convert your 
     ```js
     // theme.js
     module.exports = {
-      primaryColor: '#1890ff',
-      secondaryColor: '#f5222d',
+      colorPrimary: '#1890ff',
+      colorSuccess: "#52c41a",
       // ...
     }
     ```
 
-1. Run our Anima CLI with the `generate-tokens` command:
+1. Run our [Anima CLI](../anima-cli/index#usage-2) with the `generate-tokens` command:
 
     ```sh
         anima generate-tokens -f antd -c ./theme.js -o ./design-tokens.json
@@ -31,6 +31,24 @@ Ant Design v5 uses a new theme format, so we provide a function to convert your 
     ```
 
 ## Design tokens JSON -> Ant Design theme
+
+1. Install our `@animaapp/framework-helpers` package
+
+    ::: code-group
+
+    ```sh [npm]
+        npm add -D @animaapp/framework-helpers
+    ```
+
+    ```sh [yarn]
+        yarn add -D @animaapp/framework-helpers
+    ```
+
+    ```sh [pnpm]
+        pnpm add -D @animaapp/framework-helpers
+    ```
+
+    :::
 
 1. On the file that provides context to your app (i.e. App.jsx) import our converter function `getAntdTheme`
 
