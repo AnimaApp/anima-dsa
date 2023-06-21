@@ -18,26 +18,35 @@ export const initialiseStorybook = () => {
   }
 };
 
-export const getJSFiles = (folder: string) => {
-  const JSFiles: string[] = [];
+const getFiles = (folder: string, condition: Function) => {
+  const files: string[] = [];
 
   for (const item of fs.readdirSync(folder)) {
     const fullPath = path.join(folder, item);
     if (fs.lstatSync(fullPath).isDirectory()) {
-      JSFiles.push(...getJSFiles(fullPath));
+      files.push(...getFiles(fullPath, condition));
     } else {
-      const extension = item.split('.').pop();
-      if (
-        extension &&
-        JS_EXTENSIONS.includes(extension) &&
-        item.charAt(0) === item.charAt(0).toUpperCase()
-      ) {
-        JSFiles.push(fullPath);
+      if(condition(item)){
+        files.push(fullPath);
       }
     }
   }
 
-  return JSFiles;
+  return files;
+}
+
+export const getJSFiles = (folder: string) => {
+  const condition = (filename: string) => {
+    const extension = filename.split('.').pop();
+    return (
+      extension &&
+      JS_EXTENSIONS.includes(extension) &&
+      !filename.endsWith(".d.ts") &&
+      filename.charAt(0) === filename.charAt(0).toUpperCase()
+    );
+  }
+
+  return getFiles(folder, condition);
 };
 
 export const hasStorybook = (files: string[], file: string) => {
@@ -53,8 +62,45 @@ export const hasStorybook = (files: string[], file: string) => {
   return false;
 };
 
+export const extractTypes = (buildDir?: string) => {
+  const typeFileCondition = (filename: string) => {
+    return filename === "types.d.ts";
+  }
+
+  if(!buildDir && fs.existsSync("tsconfig.json")){
+    const tsConfig = JSON.parse(fs.readFileSync("tsconfig.json", "utf-8"));
+    const tsConfigBuildDir = tsConfig.compilerOptions.outDir;
+    if(tsConfigBuildDir && fs.existsSync(tsConfigBuildDir)){
+      buildDir = tsConfigBuildDir;
+    } else if (!fs.existsSync(tsConfigBuildDir)) {
+      throw Error(`tsconfig.json found but build folder ${tsConfigBuildDir} is not. Please cancel & compile your project, or pass your build folder with the -b argument`);
+    }
+  }
+
+  let types = "";
+  if(buildDir && fs.existsSync(buildDir)){
+    const typeFiles = getFiles(buildDir, typeFileCondition);
+    for(const typeFile of typeFiles){
+      const content = fs.readFileSync(typeFile, "utf-8");
+      for(const line of content.split("\n")){
+        if(line && !line.includes(" from ")){
+          types += line + "\n";
+        }
+      }
+    }
+  } else if (buildDir && !fs.existsSync(buildDir)) {
+    throw Error(`Build folder ${buildDir} not found`)
+  }
+
+  if(types.length < 10000){
+    return types;
+  }
+  return "";
+}
+
 export const extractComponentInformation = async (
   file: string,
+  types: string,
   token: string,
 ) => {
   const res = await fetch(`${API_URL}/rpc/extract_component_data`, {
@@ -63,7 +109,7 @@ export const extractComponentInformation = async (
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token,
     },
-    body: JSON.stringify({ code: file }),
+    body: JSON.stringify({ code: file, types }),
   });
 
   if (res.status === 200) {
@@ -89,11 +135,11 @@ const generateStorybookConfig = (
   const convertPropType = (type: string) => {
     switch (type) {
       case 'boolean':
-        return "{ type: 'boolean' }";
+        return "{ control: 'boolean' }";
       case 'string':
-        return "{ type: 'string' }";
+        return "{ control: 'text' }";
       case 'object':
-        return "{ type: 'object' }";
+        return "{ control: 'object' }";
       default:
         if (Array.isArray(type)) {
           return `{ control: 'select', options: [${type}]}`;
@@ -132,13 +178,14 @@ export const Default = {
 `;
 };
 
-export const generateStories = async (files: string[], token: string) => {
+export const generateStories = async (files: string[], types: string, token: string) => {
   for (const componentFile of files) {
     console.log(`Creating ${componentFile}...`);
     const componentContent = fs.readFileSync(componentFile, 'utf8');
     const start = Date.now();
     const response = await extractComponentInformation(
       componentContent,
+      types,
       token,
     ).catch((e) => {
       throw e;

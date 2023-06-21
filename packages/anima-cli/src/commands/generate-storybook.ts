@@ -3,7 +3,7 @@ import { loader } from '../helpers/loader';
 import * as Sentry from '@sentry/node';
 import fs from 'fs';
 import { log } from '../helpers';
-import { generateStories, getJSFiles, hasStorybook, initialiseStorybook } from '../helpers/storybook';
+import { extractTypes, generateStories, getJSFiles, hasStorybook, initialiseStorybook } from '../helpers/storybook';
 import { getToken } from '../helpers/token';
 import { setDebug } from '../helpers/debug';
 import { authenticate } from '../api';
@@ -17,6 +17,7 @@ export const builder: CommandBuilder = (yargs) =>
       token: { type: 'string', alias: 't' },
       components: { type: 'string', alias: 'd' },
       component: { type: 'string', alias: 'c' },
+      buildDir: { type: 'string', alias: 'b' },
       debug: { type: 'boolean' },
     })
     .example([['$0 generate-storybook -d <components-dir>']]);
@@ -62,8 +63,9 @@ export const handler = async (_argv: Arguments): Promise<void> => {
       filesToGenerateStoryFor = files.filter(f => !f.includes(".test.") && !f.includes(".spec.") && !f.includes(".stories.") && !hasStorybook(files, f));
     }
     loader.newStage(`Creating ${filesToGenerateStoryFor.length} component stories`);
-    await generateStories(filesToGenerateStoryFor, token);
-  
+    const types = extractTypes(_argv.buildDir as string || '');
+    await generateStories(filesToGenerateStoryFor, types, token);
+    console.log("");
     loader.stop();
     log.green('  - Done');
     log.yellow("Now run 'npm run storybook' to check your storybook");
