@@ -142,7 +142,7 @@ const generateStorybookConfig = (
         return "{ control: 'object' }";
       default:
         if (Array.isArray(type)) {
-          return `{ control: 'select', options: [${type}]}`;
+          return `{ control: 'select', options: [${type.map(i => `'${i}'`)}]}`;
         }
     }
   };
