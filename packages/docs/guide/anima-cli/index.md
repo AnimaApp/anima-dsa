@@ -115,6 +115,7 @@ Initialize and generate storybook config for your project (only needed if you do
 | `--token`, `-t` | Provide an Anima team token if it was not set as environment variable | `string` |
 | `--components`, `-d` | To specify the components folder of your project | `string` |
 | `--component`, `-c` | To specify a single component to generate config for | `string` |
+| `--buildDir`, `-b` | To specify the build directory of your project | `string` |
 
 ## `anima sync`
 
