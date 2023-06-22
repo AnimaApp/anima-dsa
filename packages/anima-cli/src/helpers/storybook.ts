@@ -72,7 +72,7 @@ export const extractTypes = (buildDir?: string) => {
     const tsConfigBuildDir = tsConfig.compilerOptions.outDir;
     if(tsConfigBuildDir && fs.existsSync(tsConfigBuildDir)){
       buildDir = tsConfigBuildDir;
-    } else if (!fs.existsSync(tsConfigBuildDir)) {
+    } else if (tsConfigBuildDir &&!fs.existsSync(tsConfigBuildDir)) {
       throw Error(`tsconfig.json found but build folder ${tsConfigBuildDir} is not. Please cancel & compile your project, or pass your build folder with the -b argument`);
     }
   }
@@ -140,6 +140,8 @@ const generateStorybookConfig = (
         return "{ control: 'text' }";
       case 'object':
         return "{ control: 'object' }";
+      case 'number':
+        return "{ control: 'number' }";
       default:
         if (Array.isArray(type)) {
           return `{ control: 'select', options: [${type.map(i => `'${i}'`)}]}`;
