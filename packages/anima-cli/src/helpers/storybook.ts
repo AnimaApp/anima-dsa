@@ -222,13 +222,13 @@ const extractTypes = (source: string) => {
   const interfaceRegex = /interface\s+(\w+[\w\s<>?=]*)\s*{([^}]*)}/g;
   const interfaceMatches = source.match(interfaceRegex) || [];
   const interfaces = interfaceMatches.map(match => match.trim());
-  const typeRegex = /type\s+([\w]+)\s*=\s*([^;]+)/g;
+  const typeRegex = /type\s+([\w]+)\s*=\s*([^;{}]+(?:{[^}]+})?)/g;
   const typeMatches = source.match(typeRegex)|| [];
   const types = typeMatches.map(match => match.trim());
   return types.concat(interfaces);
 }
 
-const getTypeImports = (content: string, filePath: string) => {
+export const getTypeImports = (content: string, filePath: string) => {
   const typeImports = new Set<string>();
   const importAliases = getImportAliases();
   const currentDirectory = path.dirname(filePath);

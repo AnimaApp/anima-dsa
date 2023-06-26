@@ -4,10 +4,12 @@ import path from 'path';
 import {
   extractComponentInformation,
   generateStories,
+  getTypeImports
 } from '../src/helpers/storybook';
 
 const TOKEN = process.env.TEST_TOKEN;
 const COMPONENTS_FOLDER = path.join(__dirname, 'example-components');
+const PROJECT_FOLDER = path.join(__dirname, 'example-project');
 const TIMEOUT = 1000 * 60 * 3; // 3 minutes
 const FILES = {
   'Example.stories.js': {
@@ -35,6 +37,7 @@ describe('Generate storybook', () => {
       const componentContent = fs.readFileSync(componentFile, 'utf8');
       const response = await extractComponentInformation(
         componentContent,
+        "",
         TOKEN,
       ).catch((e) => {
         throw e;
@@ -65,7 +68,7 @@ describe('Generate storybook', () => {
       const componentFilesFullPath = componentFiles.map((f) =>
         path.join(COMPONENTS_FOLDER, f),
       );
-      await generateStories(componentFilesFullPath, TOKEN);
+      await generateStories(componentFilesFullPath, new Set<string>(), TOKEN);
       componentFiles = fs.readdirSync(COMPONENTS_FOLDER);
       for (const [filename, { name, args }] of Object.entries(FILES)) {
         expect(componentFiles).include(filename);
@@ -83,6 +86,24 @@ describe('Generate storybook', () => {
           expect(componentProperties).contains(`${name}: { type: '${type}' }`);
         }
       }
+    },
+    TIMEOUT,
+  );
+
+  test(
+    'Extract types',
+    () => {
+      const componentFile = path.join(PROJECT_FOLDER, "Example.jsx");
+      const componentContent = fs.readFileSync(componentFile, 'utf-8');
+      const typeImports = getTypeImports(componentContent, componentFile);
+      const expected = `type ExampleProps = {
+    text: string,
+    isActive: boolean,
+    variant: 'primary' | 'secondary'
+}`;
+      expect(typeImports.size).toBe(1);
+      const actual = Array.from(typeImports)[0];
+      expect(actual).toBe(expected);
     },
     TIMEOUT,
   );
