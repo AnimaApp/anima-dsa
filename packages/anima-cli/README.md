@@ -107,6 +107,7 @@ anima generate-storybook [option]
 | `--components`, `-d` | To specify the components folder of your project | `string` |
 | `--component`, `-c` | To specify a single component to generate config for | `string` |
 | `--buildDir`, `-b` | To specify the build directory of your project | `string` |
+| `--skipInstall` | To skip storybook install | `boolean` |
 
 ## `anima sync`
 

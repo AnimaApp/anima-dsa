@@ -62,7 +62,7 @@ export const hasStorybook = (files: string[], file: string) => {
   return false;
 };
 
-export const extractTypes = (buildDir?: string) => {
+export const getTypes = (buildDir?: string) => {
   const typeFileCondition = (filename: string) => {
     return filename === "types.d.ts";
   }
@@ -77,25 +77,26 @@ export const extractTypes = (buildDir?: string) => {
     }
   }
 
-  let types = "";
+  if(!buildDir){
+    console.error("No build folder passed (-b). Pass this property for the best performance!");
+  }
+
+  const types = new Set<string>();
   if(buildDir && fs.existsSync(buildDir)){
     const typeFiles = getFiles(buildDir, typeFileCondition);
     for(const typeFile of typeFiles){
       const content = fs.readFileSync(typeFile, "utf-8");
-      for(const line of content.split("\n")){
-        if(line && !line.includes(" from ")){
-          types += line + "\n";
-        }
-      }
+      const typeFileTypes = extractTypes(content);
+      typeFileTypes.forEach(t => types.add(t));
     }
   } else if (buildDir && !fs.existsSync(buildDir)) {
     throw Error(`Build folder ${buildDir} not found`)
   }
 
-  if(types.length < 10000){
+  if(types.size < 100){
     return types;
   }
-  return "";
+  return new Set<string>();
 }
 
 export const extractComponentInformation = async (
@@ -144,7 +145,8 @@ const generateStorybookConfig = (
         return "{ control: 'number' }";
       default:
         if (Array.isArray(type)) {
-          return `{ control: 'select', options: [${type.map(i => `'${i}'`)}]}`;
+          const isNumberArray = type.every(i => !isNaN(i));
+          return `{ control: 'select', options: [${type.map(i => isNumberArray ? i : `'${i}'`)}]}`;
         }
     }
   };
@@ -180,14 +182,104 @@ export const Default = {
 `;
 };
 
-export const generateStories = async (files: string[], types: string, token: string) => {
+const extractImports = (source: string) => {
+  const importRegex = /import\s+([\w{},\s]+)\s+from\s+['"]([^'"]+)['"]/g;
+  const imports = [];
+
+  let match;
+  while ((match = importRegex.exec(source)) !== null) {
+    const importSpecifier = match[1].replace(/[{}\s]/g, '').split(',').filter(i => i);
+    const importPath = match[2];
+    imports.push({ specifiers: importSpecifier, path: importPath });
+  }
+
+  return imports;
+}
+
+const findJSFile = (importPath: string) => {
+  for(const extension of JS_EXTENSIONS){
+    const fullPath = `${importPath}.${extension}`;
+    if(fs.existsSync(fullPath)){
+      return fullPath;
+    }
+  }
+  const indexPath = `${importPath}/index.ts`;
+  if(fs.existsSync(indexPath)){
+    return indexPath;
+  }
+}
+
+const getImportAliases = () => {
+  if(fs.existsSync("tsconfig.json")){
+    const tsConfig = JSON.parse(fs.readFileSync("tsconfig.json", "utf-8"));
+    const tsConfigPaths: {[key: string]: string[]} = tsConfig.compilerOptions.paths || [];
+    return Object.entries(tsConfigPaths).map(([k,v]) => ({[k]: v[0]})).reduce((r, c) => ({ ...r, ...c }), {});
+  }
+  return {};
+}
+
+const extractTypes = (source: string) => {
+  const interfaceRegex = /interface\s+(\w+[\w\s<>?=]*)\s*{([^}]*)}/g;
+  const interfaceMatches = source.match(interfaceRegex) || [];
+  const interfaces = interfaceMatches.map(match => match.trim());
+  const typeRegex = /type\s+([\w]+)\s*=\s*([^;]+)/g;
+  const typeMatches = source.match(typeRegex)|| [];
+  const types = typeMatches.map(match => match.trim());
+  return types.concat(interfaces);
+}
+
+const getTypeImports = (content: string, filePath: string) => {
+  const typeImports = new Set<string>();
+  const importAliases = getImportAliases();
+  const currentDirectory = path.dirname(filePath);
+  const imports = extractImports(content);
+  const relativeImports = imports.filter(i => i.path.startsWith("./") || i.path.startsWith("../") || i.path.startsWith("@") && Object.keys(importAliases).includes(i.path));
+  for(const {specifiers, path: relativePath} of relativeImports){
+    let importPath;
+    if(relativePath.startsWith("@")){
+      importPath = path.resolve(importAliases[relativePath]);
+    } else {
+      importPath = path.resolve(currentDirectory, relativePath);
+    }
+    const jsFile = findJSFile(importPath);
+    if(jsFile) {
+      console.log(jsFile);
+      const importContent = fs.readFileSync(jsFile, 'utf8');
+      const importTypes = extractTypes(importContent);
+      let importFound = false;
+      for(const specifier of specifiers){
+        for(const line of importTypes){
+          if(line.includes(`type ${specifier}`) || line.includes(`interface ${specifier}`)){
+            typeImports.add(line);
+            importFound = true;
+          }
+        }
+      }
+      if(importFound){
+        const childTypes = getTypeImports(importContent, jsFile);
+        childTypes.forEach(childType => typeImports.add(childType));
+      }
+    }
+  }
+  return typeImports;
+};
+
+export const generateStories = async (files: string[], buildTypes: Set<string>, token: string) => {
   for (const componentFile of files) {
     console.log(`Creating ${componentFile}...`);
     const componentContent = fs.readFileSync(componentFile, 'utf8');
+    const importTypes = getTypeImports(componentContent, componentFile);
+    const allTypes = Array.from(new Set([...buildTypes, ...importTypes])).join("\n");
+    if (isDebug()) {
+      fs.writeFileSync(
+        `${componentFile.split('.')[0]}.types.txt`,
+        allTypes,
+      );
+    }
     const start = Date.now();
     const response = await extractComponentInformation(
       componentContent,
-      types,
+      allTypes,
       token,
     ).catch((e) => {
       throw e;
