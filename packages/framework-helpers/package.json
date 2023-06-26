@@ -1,6 +1,6 @@
 {
   "name": "@animaapp/framework-helpers",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,7 +17,7 @@
     "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
   },
- "publishConfig": {
+  "publishConfig": {
     "@animaapp:registry": "https://registry.npmjs.org/"
   },
   "scripts": {
