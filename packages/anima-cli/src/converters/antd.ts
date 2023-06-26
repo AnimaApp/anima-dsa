@@ -18,7 +18,7 @@ export class AntdConverter implements IConverter {
     const tokens = this.config.token;
     const colors: Record<string, string> = {};
     Object.entries(tokens).forEach(([key, value]) => {
-      if (key.includes('color')) {
+      if (key.includes('color') && typeof value === 'string') {
         colors[key] = value;
       }
     });

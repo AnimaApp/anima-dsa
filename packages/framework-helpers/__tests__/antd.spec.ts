@@ -26,6 +26,10 @@ const tokens = {
       $value: '{colors.blue.1}',
       $type: 'color',
     },
+    primaryGap: {
+      $value: 10,
+      $type: 'number',
+    },
   },
 } as const;
 
@@ -37,6 +41,7 @@ describe('antd converters', () => {
       colorBgBase: '#ffffff',
       colorSuccess: '#ffffff',
       colorError: '#000000',
+      primaryGap: 10,
     });
   });
   test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {

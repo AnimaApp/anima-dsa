@@ -4,7 +4,27 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'Anima DSA',
   description: 'Anima design system automation solution',
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    [
+      'script',
+      {
+        async: true,
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-NFE10GQH38',
+      },
+    ],
+    [
+      'script',
+      {},
+      `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NFE10GQH38');
+      `,
+    ],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -65,6 +85,7 @@ export default defineConfig({
           // { text: 'Command API', link: '/guide/anima-cli#commands' },
         ],
       },
+
       {
         text: 'Manage components',
         items: [
@@ -136,6 +157,12 @@ export default defineConfig({
           },
         ],
       },
+      {
+        text: 'Other tools',
+        items: [
+          { text: 'Design Tokens Validator', link: '/guide/other-tools/design-tokens-validator' },
+        ],
+      }
     ],
 
     socialLinks: [
