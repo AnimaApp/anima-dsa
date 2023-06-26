@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExampleProps } from './ExampleTypes';
 
-function Example(props: ExamExamplePropspleTypes) {
+function Example(props: ExampleProps) {
   return (
     <span>
       {text}

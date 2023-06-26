@@ -13,17 +13,10 @@ const PROJECT_FOLDER = path.join(__dirname, 'example-project');
 const TIMEOUT = 1000 * 60 * 3; // 3 minutes
 const FILES = {
   'Example.stories.js': {
-    name: 'Example',
-    args: { text: 'string', isActive: 'boolean', variant: 'string' },
+    name: 'Example'
   },
   'Button.stories.js': {
-    name: 'Button',
-    args: {
-      iconPosition: 'string',
-      size: 'string',
-      active: 'boolean',
-      style: 'object',
-    },
+    name: 'Button'
   },
 };
 
@@ -44,7 +37,6 @@ describe('Generate storybook', () => {
       });
       expect(response).not.toBe(null);
       expect(response.default_export).toBe(true);
-      expect(response.prop_data_types).toBe(false);
       expect(response.component_name).toBe('Example');
       const propNames = response.props.map((p) => p.name);
       const propTypes = response.props.map((p) => p.type);
@@ -52,7 +44,7 @@ describe('Generate storybook', () => {
         ['text', 'isActive', 'variant'].sort(),
       );
       expect(propTypes.sort()).toStrictEqual(
-        ['string', 'string', 'boolean'].sort(),
+        ['string', ["primary","secondary"], 'boolean'].sort(),
       );
     },
     TIMEOUT,
@@ -70,7 +62,7 @@ describe('Generate storybook', () => {
       );
       await generateStories(componentFilesFullPath, new Set<string>(), TOKEN);
       componentFiles = fs.readdirSync(COMPONENTS_FOLDER);
-      for (const [filename, { name, args }] of Object.entries(FILES)) {
+      for (const [filename, { name }] of Object.entries(FILES)) {
         expect(componentFiles).include(filename);
         const content = fs.readFileSync(
           path.join(COMPONENTS_FOLDER, filename),
@@ -80,12 +72,20 @@ describe('Generate storybook', () => {
           content.split('\n\n');
         expect(importLine).contains(`from './${name}'`);
         expect(componentProperties).contains('export default {');
+        expect(componentProperties).contains('argTypes: {');
         expect(componentProperties).contains(`title: "Components/${name}"`);
         expect(componentProperties).contains(`component: ${name}`);
-        for (const [name, type] of Object.entries(args)) {
-          expect(componentProperties).contains(`${name}: { type: '${type}' }`);
-        }
       }
+
+      const content = fs.readFileSync(
+        path.join(COMPONENTS_FOLDER, 'Example.stories.js'),
+        'utf-8',
+      );
+      expect(content).contains(`argTypes: {
+    text: { control: 'text' },
+    isActive: { control: 'boolean' },
+    variant: { control: 'select', options: ['primary','secondary']}
+  }`);
     },
     TIMEOUT,
   );
