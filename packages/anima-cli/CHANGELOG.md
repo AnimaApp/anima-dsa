@@ -1,5 +1,11 @@
 # @animaapp/anima-cli
 
+## 1.1.2
+
+### Patch Changes
+
+- a0481ecd: changes to changeset
+
 ## 1.1.1
 
 ### Patch Changes
