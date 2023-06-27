@@ -1,3 +1,0 @@
-import { type DesignToken, type DesignTokenMap } from './types';
-export declare function getToken(tokens: DesignTokenMap, pathToKey: string): DesignToken | undefined;
-//# sourceMappingURL=getToken.d.ts.map

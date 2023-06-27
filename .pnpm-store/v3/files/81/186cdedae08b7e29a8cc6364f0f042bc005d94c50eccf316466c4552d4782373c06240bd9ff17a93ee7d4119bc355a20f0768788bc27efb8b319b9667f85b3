@@ -1,6 +1,0 @@
-export * from '@animaapp/store-provider';
-export * from './designTokenManager';
-export * from './types';
-export { getDiffForTokens } from './getDiffForTokens';
-export type { TokenDiff } from './getDiffForTokens';
-//# sourceMappingURL=index.d.ts.map

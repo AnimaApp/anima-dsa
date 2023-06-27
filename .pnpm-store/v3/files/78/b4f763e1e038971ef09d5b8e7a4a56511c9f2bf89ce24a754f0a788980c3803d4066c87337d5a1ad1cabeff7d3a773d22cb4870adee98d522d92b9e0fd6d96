@@ -1,8 +1,0 @@
-export const isDesignToken = (value) => {
-    return typeof value === 'object' && value !== null && '$value' in value;
-};
-export const isDesignTokenMap = (value) => {
-    if (value == null || typeof value !== 'object')
-        return false;
-    return !('$value' in value) && !('$type' in value);
-};
