@@ -10,11 +10,14 @@
     "test": "turbo test",
     "build": "turbo build",
     "lint": "turbo lint",
-    "clean": "turbo clean && rm -rf ./node_modules"
+    "clean": "turbo clean && rm -rf ./node_modules",
+    "create-changeset": "pnpm changeset",
+    "release": "pnpm publish -r --access public"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@typescript-eslint/eslint-plugin": "5.59.1",
     "@typescript-eslint/parser": "5.59.1",
     "eslint": "^8.0.1",
