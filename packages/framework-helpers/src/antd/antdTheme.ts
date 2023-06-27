@@ -24,7 +24,7 @@ const convertDesignTokenColorsToTheme = (
   const tokens = designTokens[ANTD_TOKEN_KEY];
   if (!tokens) {
     console.warn(
-      `Couldn't find any antd seed tokens (${ANTD_TOKEN_KEY})`,
+      `Couldn't find any antd tokens (${ANTD_TOKEN_KEY})`,
     );
     return {};
   }
