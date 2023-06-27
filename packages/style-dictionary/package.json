@@ -1,6 +1,6 @@
 {
   "name": "@animaapp/style-dictionary",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Anima parser for style dictionary",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
