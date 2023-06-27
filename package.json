@@ -1,9 +1,13 @@
 {
   "name": "Anima-design-token",
+  "private": true,
   "version": "1.0.1",
   "description": "Anima Storybook CLI",
   "directories": {
     "example": "example"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "dev": "turbo dev",
