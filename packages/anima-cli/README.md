@@ -91,6 +91,24 @@ anima sync --design-tokens ./design-tokens.json
 
 ## Command API
 
+## `anima generate-storybook` (experimental)
+
+Initialize and generate storybook config for your project (only needed if you do not already have storybook).
+
+```sh
+anima generate-storybook [option]
+```
+
+#### Options
+
+| Options | Description | Type |
+| :---------------- | :---------------------------------------------------------------------------------------------- | :------: |
+| `--token`, `-t` | Provide an Anima team token if it was not set as environment variable | `string` |
+| `--components`, `-d` | To specify the components folder of your project | `string` |
+| `--component`, `-c` | To specify a single component to generate config for | `string` |
+| `--buildDir`, `-b` | To specify the build directory of your project | `string` |
+| `--skipInstall` | To skip storybook install | `boolean` |
+
 ## `anima sync`
 
 Syncs your Storybook and/or design tokens to your Anima team so that it cant then be generated in Figma.
