@@ -1,0 +1,32 @@
+import { PathValidationError } from './errors';
+import { isDesignToken } from './types/validators';
+export function getToken(tokens, pathToKey) {
+    const splitPath = pathToKey.split('.');
+    let currentTokenMap = tokens;
+    let currentPath = pathToKey;
+    for (let i = 0; i < splitPath.length - 1; i++) {
+        const fullPath = splitPath.slice(i, splitPath.length).join('.');
+        // This allows us to handle both nested tokens and tokens with periods in their names
+        if (currentTokenMap[fullPath]) {
+            const candidate = currentTokenMap[fullPath];
+            if (isDesignToken(candidate)) {
+                currentPath = fullPath;
+                break;
+            }
+        }
+        const deeperTokenMap = currentTokenMap[splitPath[i]];
+        if (isDesignToken(deeperTokenMap)) {
+            throw new PathValidationError("Can't access nested value of a token");
+        }
+        if (deeperTokenMap == null) {
+            return;
+        }
+        currentTokenMap = deeperTokenMap;
+        currentPath = splitPath[i + 1];
+    }
+    const candidate = currentTokenMap[currentPath];
+    if (isDesignToken(candidate)) {
+        return candidate;
+    }
+    throw new PathValidationError('The final value for getToken is not a token');
+}

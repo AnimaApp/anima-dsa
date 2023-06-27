@@ -1,0 +1,235 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _GithubRepo_instances, _GithubRepo_createBranch, _GithubRepo_getBranchRef, _GithubRepo_getFile, _GithubRepo_getShaFile, _GithubRepo_createFileOrUpdateInBranch, _GithubRepo_createPullRequestFromBranch, _GithubRepo_branchExist, _GithubRepo_pullRequestExistForBranch;
+import { Octokit } from 'octokit';
+import { Buffer } from 'buffer';
+export class GithubRepo {
+    static create({ repo, owner, token, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const octokit = new Octokit({
+                auth: token,
+            });
+            const { data } = yield octokit.rest.repos.get({
+                owner,
+                repo,
+            });
+            const baseBranch = data.default_branch;
+            return new GithubRepo({
+                octokit,
+                repo,
+                owner,
+                baseBranch,
+            });
+        });
+    }
+    constructor({ repo, owner, baseBranch, octokit }) {
+        _GithubRepo_instances.add(this);
+        this.titleKey = '[Anima]';
+        this.octokit = octokit;
+        this.owner = owner;
+        this.baseBranch = baseBranch;
+        this.repo = repo;
+    }
+    getFileContent(args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { filePath, branch = this.baseBranch } = args;
+            const file = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_getFile).call(this, { filePath, branch });
+            if (file.type === 'file') {
+                const { content } = file;
+                if (content == null) {
+                    throw new Error('The file content is empty');
+                }
+                return Buffer.from(content, 'base64').toString('utf8');
+            }
+            else {
+                throw new Error('The file is a symlink or submodule, impossible to retrieve his content');
+            }
+        });
+    }
+    getFileLastUpdateTime(args) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const { filePath, branch = this.baseBranch } = args;
+            const res = yield this.octokit.rest.repos.listCommits({
+                sha: branch,
+                path: filePath,
+                owner: this.owner,
+                repo: this.repo,
+            });
+            const lastCommit = res.data[0];
+            let date;
+            if (lastCommit != null) {
+                date = (_a = res.data[0].commit.committer) === null || _a === void 0 ? void 0 : _a.date;
+            }
+            if (date == null)
+                throw new Error('No commit date found for this file');
+            return new Date(date).getTime();
+        });
+    }
+    getRequests() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.octokit.rest.search.issuesAndPullRequests({
+                q: `repo:${this.owner}/${this.repo} is:pr is:open ${this.titleKey}`,
+            });
+            const relevantPrs = response.data.items.filter((item) => {
+                return item.title.includes(this.titleKey);
+            });
+            const prPromises = [];
+            relevantPrs.forEach((pr) => {
+                var _a, _b;
+                if (((_a = pr.pull_request) === null || _a === void 0 ? void 0 : _a.url) == null)
+                    return;
+                prPromises.push(this.octokit.request((_b = pr.pull_request) === null || _b === void 0 ? void 0 : _b.url));
+            });
+            const pullRequests = (yield Promise.all(prPromises));
+            return pullRequests.map(({ data }) => ({
+                id: data.id.toString(),
+                title: data.title,
+                url: data.html_url,
+                branch: data.head.label,
+            }));
+        });
+    }
+    writeRequest(args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { filePath, newfileContent, title, description, baseBranch = this.baseBranch, newBranch, } = args;
+            const { object: { sha: baseBranchSha }, } = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_getBranchRef).call(this, baseBranch);
+            const branchExist = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_branchExist).call(this, newBranch);
+            if (!branchExist) {
+                console.log('Branch does not exist, creating a new one');
+                yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_createBranch).call(this, {
+                    newBranchName: newBranch,
+                    baseBranchSha,
+                });
+            }
+            yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_createFileOrUpdateInBranch).call(this, {
+                filePath,
+                fileContent: newfileContent,
+                message: description !== null && description !== void 0 ? description : title,
+                branch: newBranch,
+            });
+            const pullRequestExist = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_pullRequestExistForBranch).call(this, newBranch);
+            if (!pullRequestExist) {
+                console.log('Pull request does not exist, create it');
+                yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_createPullRequestFromBranch).call(this, {
+                    title: `${title} ${this.titleKey} `,
+                    body: description,
+                    head: newBranch,
+                    base: baseBranch,
+                });
+            }
+            else {
+                console.log('Pull request already exist, keep the existing one');
+            }
+        });
+    }
+}
+_GithubRepo_instances = new WeakSet(), _GithubRepo_createBranch = function _GithubRepo_createBranch({ newBranchName, baseBranchSha, }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Create a new branch
+        const createRefRes = yield this.octokit.rest.git.createRef({
+            owner: this.owner,
+            repo: this.repo,
+            ref: `refs/heads/${newBranchName}`,
+            sha: baseBranchSha,
+        });
+        const { data: refData } = createRefRes;
+        return refData;
+    });
+}, _GithubRepo_getBranchRef = function _GithubRepo_getBranchRef(branch) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const baseRef = `heads/${branch}`;
+        const baseRefRes = yield this.octokit.rest.git.getRef({
+            owner: this.owner,
+            repo: this.repo,
+            ref: baseRef,
+        });
+        const { data: baseRefData } = baseRefRes;
+        return baseRefData;
+    });
+}, _GithubRepo_getFile = function _GithubRepo_getFile({ filePath, branch, }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { data: contentRes } = yield this.octokit.rest.repos.getContent({
+            owner: this.owner,
+            repo: this.repo,
+            path: filePath,
+            ref: branch,
+            request: {
+                cache: 'reload',
+            },
+        });
+        if (Array.isArray(contentRes)) {
+            throw new Error('Get file response is an array');
+        }
+        const file = contentRes;
+        return file;
+    });
+}, _GithubRepo_getShaFile = function _GithubRepo_getShaFile({ filePath, branch, }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const file = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_getFile).call(this, { filePath, branch });
+            return file.sha;
+        }
+        catch (e) {
+            console.log('File does not exist');
+        }
+        return undefined;
+    });
+}, _GithubRepo_createFileOrUpdateInBranch = function _GithubRepo_createFileOrUpdateInBranch({ filePath, fileContent, branch, message, }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const shaFile = yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_getShaFile).call(this, { filePath, branch });
+        // GET SHA if file exist
+        yield this.octokit.rest.repos.createOrUpdateFileContents({
+            owner: this.owner,
+            repo: this.repo,
+            path: filePath,
+            content: Buffer.from(fileContent).toString('base64'),
+            message,
+            sha: shaFile,
+            branch,
+        });
+    });
+}, _GithubRepo_createPullRequestFromBranch = function _GithubRepo_createPullRequestFromBranch({ title, body, head, base, }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield this.octokit.rest.pulls.create({
+            owner: this.owner,
+            repo: this.repo,
+            title,
+            body,
+            head,
+            base,
+        });
+    });
+}, _GithubRepo_branchExist = function _GithubRepo_branchExist(branch) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield __classPrivateFieldGet(this, _GithubRepo_instances, "m", _GithubRepo_getBranchRef).call(this, branch);
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+    });
+}, _GithubRepo_pullRequestExistForBranch = function _GithubRepo_pullRequestExistForBranch(branch) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { data: prList } = yield this.octokit.rest.pulls.list({
+            owner: this.owner,
+            repo: this.repo,
+            state: 'open',
+            head: `${this.owner}:${branch}`,
+        });
+        return prList.length > 0;
+    });
+};

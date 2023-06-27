@@ -1,0 +1,19 @@
+import type { DesignTokenValue } from './value';
+export type DesignTokenMapValue = DesignToken | DesignTokenGroup | DesignTokenMap | undefined;
+export interface DesignTokenMap {
+    [key: string]: DesignTokenMapValue;
+}
+export type DesignTokenType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array' | 'color' | 'dimension' | 'fontFamily' | 'fontWeight' | 'duration' | 'cubicBezier' | 'shadow' | 'strokeStyle' | 'border' | 'transition' | 'gradient' | 'typography';
+export type DesignTokenAlias = `{${string}}`;
+export interface DesignToken {
+    $value: DesignTokenValue;
+    $type?: DesignTokenType;
+    $description?: string;
+}
+export interface DesignTokenGroup {
+    $value: never;
+    $type?: DesignTokenType;
+    $description?: string;
+}
+export * from './validators';
+//# sourceMappingURL=index.d.ts.map

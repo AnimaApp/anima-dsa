@@ -1,0 +1,4 @@
+export declare class PathValidationError extends Error {
+    constructor(message: string);
+}
+//# sourceMappingURL=errors.d.ts.map

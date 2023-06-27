@@ -1,0 +1,29 @@
+export interface WriteRequestParams {
+    filePath: string;
+    description?: string;
+    newfileContent: string;
+    title: string;
+    baseBranch?: string;
+    newBranch: string;
+}
+export interface GetFileContentParams {
+    filePath: string;
+    branch?: string;
+}
+export interface GetFileLastUpdateTimeParams {
+    filePath: string;
+    branch?: string;
+}
+export interface WriteRequest {
+    id: string;
+    title: string;
+    url?: string;
+    branch: string;
+}
+export interface IRepo {
+    getFileContent: (args: GetFileContentParams) => Promise<string>;
+    getFileLastUpdateTime: (args: GetFileLastUpdateTimeParams) => Promise<number>;
+    writeRequest: (args: WriteRequestParams) => Promise<void>;
+    getRequests: () => Promise<WriteRequest[]>;
+}
+//# sourceMappingURL=types.d.ts.map

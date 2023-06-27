@@ -1,0 +1,19 @@
+import { isDesignToken, isDesignTokenMap } from './types/validators';
+export const getFlatDesignTokenNames = (dt, prefix = '') => {
+    const names = [];
+    const tokens = Object.keys(dt);
+    const hasPrefix = Boolean(prefix);
+    const prefixWithPeriod = hasPrefix ? `${prefix}.` : prefix;
+    tokens.forEach((tokenName) => {
+        const tokenVal = dt[tokenName];
+        if (isDesignToken(tokenVal)) {
+            names.push(`${prefixWithPeriod}${tokenName}`);
+        }
+        if (isDesignTokenMap(tokenVal)) {
+            const newName = `${prefixWithPeriod}${tokenName}`;
+            const nestedTokenNames = getFlatDesignTokenNames(tokenVal, newName);
+            names.push(...nestedTokenNames);
+        }
+    });
+    return names;
+};

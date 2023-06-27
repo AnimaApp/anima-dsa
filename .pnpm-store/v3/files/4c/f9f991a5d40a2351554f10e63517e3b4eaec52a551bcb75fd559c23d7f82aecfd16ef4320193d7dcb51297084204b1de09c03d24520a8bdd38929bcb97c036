@@ -1,0 +1,42 @@
+{
+  "name": "pkg-types",
+  "version": "0.3.6",
+  "description": "Node.js utilities and TypeScript definitions for `package.json` and `tsconfig.json`",
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "sideEffects": false,
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
+  "types": "./dist/index.d.ts",
+  "repository": "unjs/pkg-types",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "jsonc-parser": "^3.2.0",
+    "mlly": "^0.5.16",
+    "pathe": "^0.3.9"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@types/node": "^18.11.6",
+    "@vitest/coverage-c8": "^0.24.3",
+    "eslint": "^8.26.0",
+    "expect-type": "^0.15.0",
+    "jiti": "^1.16.0",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.8.4",
+    "unbuild": "^0.9.4",
+    "vitest": "^0.24.3"
+  },
+  "packageManager": "pnpm@7.14.0",
+  "scripts": {
+    "dev": "vitest",
+    "release": "pnpm test && standard-version && pnpm publish && git push --follow-tags",
+    "lint": "eslint --ext .ts,.js,.mjs,.cjs .",
+    "test": "vitest run --coverage",
+    "test:types": "tsc --noEmit --module esnext --skipLibCheck --moduleResolution node ./test/*.test.ts"
+  }
+}

@@ -1,0 +1,4 @@
+export * from './github';
+export type { GetFileContentParams, IRepo, WriteRequest, WriteRequestParams, } from './types';
+export type { GetBranchRefReturn, CreateBranchReturn, GetFileReturn, } from './github/types';
+//# sourceMappingURL=index.d.ts.map

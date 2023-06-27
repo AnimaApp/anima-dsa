@@ -1,0 +1,30 @@
+import { Octokit } from 'octokit';
+import type { Octokit as TOctokit } from 'octokit';
+import type { GetFileContentParams, GetFileLastUpdateTimeParams, IRepo, WriteRequest, WriteRequestParams } from '../types';
+interface GithubCreateConfig {
+    repo: string;
+    owner: string;
+    token: string;
+}
+interface GithubConfig {
+    repo: string;
+    owner: string;
+    octokit: TOctokit;
+    baseBranch: string;
+}
+export declare class GithubRepo implements IRepo {
+    #private;
+    titleKey: string;
+    octokit: Octokit;
+    owner: string;
+    repo: string;
+    baseBranch: string;
+    static create({ repo, owner, token, }: GithubCreateConfig): Promise<GithubRepo>;
+    constructor({ repo, owner, baseBranch, octokit }: GithubConfig);
+    getFileContent(args: GetFileContentParams): Promise<string>;
+    getFileLastUpdateTime(args: GetFileLastUpdateTimeParams): Promise<number>;
+    getRequests(): Promise<WriteRequest[]>;
+    writeRequest(args: WriteRequestParams): Promise<void>;
+}
+export {};
+//# sourceMappingURL=index.d.ts.map

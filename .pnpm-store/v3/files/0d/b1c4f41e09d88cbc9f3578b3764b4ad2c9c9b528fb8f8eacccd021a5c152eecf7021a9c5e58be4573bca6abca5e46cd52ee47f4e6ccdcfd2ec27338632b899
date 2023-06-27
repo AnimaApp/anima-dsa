@@ -1,0 +1,4 @@
+import type { DesignToken, DesignTokenMap } from '.';
+export declare const isDesignToken: (value: unknown) => value is DesignToken;
+export declare const isDesignTokenMap: (value: unknown) => value is DesignTokenMap;
+//# sourceMappingURL=validators.d.ts.map

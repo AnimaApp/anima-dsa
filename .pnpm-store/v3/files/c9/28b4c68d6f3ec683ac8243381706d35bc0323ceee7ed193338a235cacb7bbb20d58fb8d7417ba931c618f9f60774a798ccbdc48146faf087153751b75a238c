@@ -1,0 +1,3 @@
+import { type DesignTokenMap } from './types';
+export declare const getFlatDesignTokenNames: (dt: DesignTokenMap, prefix?: string) => string[];
+//# sourceMappingURL=getFlatDesignTokenNames.d.ts.map
