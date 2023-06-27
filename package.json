@@ -6,6 +6,9 @@
   "directories": {
     "example": "example"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "dev": "turbo dev",
     "test": "turbo test",

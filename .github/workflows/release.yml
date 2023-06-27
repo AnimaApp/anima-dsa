@@ -31,7 +31,7 @@ jobs:
         run: |
           cat << EOF > "$HOME/.npmrc"
            registry=https://registry.npmjs.org/
-           @animaapp:registry=https://npm.pkg.github.com
+           @animaapp:registry=https://registry.npmjs.org/
            //npm.pkg.github.com/:_authToken=$GH_PACKAGE_TOKEN
            //registry.npmjs.org/:_authToken=$NPM_TOKEN
           EOF
