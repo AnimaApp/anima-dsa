@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  GH_PACKAGE_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+           registry=https://registry.npmjs.org/
+           @animaapp:registry=https://npm.pkg.github.com
+           //npm.pkg.github.com/:_authToken=$GH_PACKAGE_TOKEN
+           //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+
+      - name: install pnpm
+        run: npm i pnpm@latest -g
+
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build
+
+      # Working tree should be clean
+      - name: Check changes
+        run: git status
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+
+      - name: Update lockfile
+        run: |
+          pnpm i --lockfile-only
+          status=$(git status)
+
+          if [[ "$status" != *"nothing to commit"* ]]; then
+            git config --add --bool push.autoSetupRemote true
+            git add pnpm-lock.yaml
+            git commit -m "chore: update dependencies"
+            git push origin
+          fi

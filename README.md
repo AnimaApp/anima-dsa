@@ -14,3 +14,17 @@ This repository is a mono-repo for all Anima DSA packages.
 | [`@animaapp/anima-cli`](packages/anima-cli) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br> [![npm](https://img.shields.io/npm/v/@animaapp/anima-cli?logo=npm)](https://www.npmjs.com/package/@animaapp/anima-cli) | The Anima CLI is a command line tool that enables you to sync components and design tokens to Figma. | [Anima CLI documentation](https://dsa.animaapp.com/guide/anima-cli/) |
 | [`framework-helpers`](packages/framework-helpers) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br> [![npm](https://img.shields.io/npm/v/@animaapp/framework-helpers?logo=npm)](https://www.npmjs.com/package/@animaapp/framework-helpers) | We've created a set of helpers for popular frameworks to help transform the design tokens JSON into a compatible theme object. | [Anima Framework Helpers documentation](https://dsa.animaapp.com/guide/manage-design-tokens/token-transformers.html) |
 | [`style-dictionary`](packages/style-dictionary) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br> [![npm](https://img.shields.io/npm/v/@animaapp/style-dictionary?logo=npm)](https://www.npmjs.com/package/@animaapp/style-dictionary)  | This package contains transformers and parsers for design token workflows that use Style Dictionary. | [Style Dictionary transformer documentation](https://dsa.animaapp.com/guide/manage-design-tokens/design-tokens-css-variables.html) |
+
+## Publishing
+
+We use Changesets to manage versioning and publishing
+
+When developing a new feature, you'll need to run:
+
+- `pnpm create-changeset`
+
+Follow the prompt and assign the correct version bump.
+
+Once your work is merged in, the GitHub action will run, which will create a PR from a release branch.
+
+Once that PR is merged, the changes will be automatically published.
