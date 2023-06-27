@@ -6,9 +6,6 @@
   "directories": {
     "example": "example"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "scripts": {
     "dev": "turbo dev",
     "test": "turbo test",
@@ -16,7 +13,7 @@
     "lint": "turbo lint",
     "clean": "turbo clean && rm -rf ./node_modules",
     "create-changeset": "pnpm changeset",
-    "release": "pnpm publish -r --access public"
+    "release": "pnpm publish -r"
   },
   "author": "",
   "license": "ISC",
