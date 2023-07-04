@@ -1,1 +1,1 @@
-export const ANTD_TOKEN_KEY = 'seed';
+export const ANTD_TOKEN_KEY = 'antd';

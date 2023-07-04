@@ -9,7 +9,7 @@ const tokens = {
       },
     },
   },
-  seed: {
+  antd: {
     token: {
       colorPrimary: {
         $value: '#ffffff',
@@ -64,7 +64,7 @@ describe('antd converters', () => {
   test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {
     const invalidToken = {
       test: 'etc',
-      seed: {
+      antd: {
         $value: 'lol',
       },
     };
@@ -74,7 +74,7 @@ describe('antd converters', () => {
   test('convert invalid design tokens to antd theme, no tokens (fail)', async () => {
     const invalidToken = {
       test: 'etc',
-      seed: {
+      antd: {
         primaryColor: 'lol',
       },
     };

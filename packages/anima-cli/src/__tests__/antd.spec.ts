@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest';
 const configPath = './src/__tests__/test-antd.config.js';
 
 const tokens = {
-  seed: {
+  antd: {
     colorPrimary: {
       $value: '#ffffff',
       $type: 'color',
