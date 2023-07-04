@@ -17,3 +17,5 @@ node_modules
 # Tests
 packages/anima-cli/e2e-test/example-components/*.stories.js
 .pnpm-store
+packages/.DS_Store
+.DS_Store
