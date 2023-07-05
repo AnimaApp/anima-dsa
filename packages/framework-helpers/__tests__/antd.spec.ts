@@ -10,25 +10,35 @@ const tokens = {
     },
   },
   antd: {
-    colorPrimary: {
-      $value: '#ffffff',
-      $type: 'color',
+    token: {
+      colorPrimary: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
+      colorBgBase: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
+      colorSuccess: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
+      colorError: {
+        $value: '{colors.blue.1}',
+        $type: 'color',
+      },
+      primaryGap: {
+        $value: 10,
+        $type: 'number',
+      },
     },
-    colorBgBase: {
-      $value: '#ffffff',
-      $type: 'color',
-    },
-    colorSuccess: {
-      $value: '#ffffff',
-      $type: 'color',
-    },
-    colorError: {
-      $value: '{colors.blue.1}',
-      $type: 'color',
-    },
-    primaryGap: {
-      $value: 10,
-      $type: 'number',
+    components: {
+      Button: {
+        colorPrimary: {
+          $value: '#ffffff',
+          $type: 'color',
+        },
+      },
     },
   },
 } as const;
@@ -36,12 +46,19 @@ const tokens = {
 describe('antd converters', () => {
   test('convert design tokens to antd theme', async () => {
     const theme = getAntdTheme(tokens);
-    expect(theme.token).toMatchObject({
-      colorPrimary: '#ffffff',
-      colorBgBase: '#ffffff',
-      colorSuccess: '#ffffff',
-      colorError: '#000000',
-      primaryGap: 10,
+    expect(theme).toMatchObject({
+      token: {
+        colorPrimary: '#ffffff',
+        colorBgBase: '#ffffff',
+        colorSuccess: '#ffffff',
+        colorError: '#000000',
+        primaryGap: 10,
+      },
+      components: {
+        Button: {
+          colorPrimary: '#ffffff',
+        },
+      },
     });
   });
   test('convert invalid design tokens to antd theme, seed $value root key (fail)', async () => {
