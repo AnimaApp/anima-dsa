@@ -26,7 +26,11 @@ export class AntdConverter implements IConverter {
     Object.entries(colors).forEach(([key, value]) => {
       designTokens[key] = formatColorToTokenValue(value);
     });
-    return { [ANTD_TOKEN_KEY]: designTokens };
+    return {
+      [ANTD_TOKEN_KEY]: {
+        token: designTokens
+      }
+    };
   }
 
   sampleConfigFile(): string {

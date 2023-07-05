@@ -5,17 +5,19 @@ const configPath = './src/__tests__/test-antd.config.js';
 
 const tokens = {
   antd: {
-    colorPrimary: {
-      $value: '#ffffff',
-      $type: 'color',
-    },
-    colorBgBase: {
-      $value: '#ffffff',
-      $type: 'color',
-    },
-    colorSuccess: {
-      $value: '#ffffff',
-      $type: 'color',
+    token: {
+      colorPrimary: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
+      colorBgBase: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
+      colorSuccess: {
+        $value: '#ffffff',
+        $type: 'color',
+      },
     },
   },
 } as const;
