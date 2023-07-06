@@ -1,5 +1,15 @@
 # @animaapp/anima-cli
 
+## 1.1.4
+
+### Patch Changes
+
+- 83b40caf: handle antd common json schema
+- 5fe85e4b: Update AntD constant, fix old docs links
+- Updated dependencies [83b40caf]
+- Updated dependencies [5fe85e4b]
+  - @animaapp/framework-helpers@1.1.3
+
 ## 1.1.3
 
 ### Patch Changes
