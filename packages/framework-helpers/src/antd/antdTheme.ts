@@ -6,7 +6,10 @@ import { isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
 ): AntdConfig => {
-  return convertDesignTokensToTheme(dsToken);
+  console.log(dsToken);
+  const cleanObj = addDollarSign(dsToken);
+  console.log(cleanObj);
+  return convertDesignTokensToTheme(cleanObj);
 };
 
 const convertDesignTokensToTheme = (
@@ -57,6 +60,7 @@ const tokensToAntdValue = (tokens: DesignTokenMap, ctx: {
       if (typeof newValue === 'number' || typeof newValue === 'boolean') {
         antdTokens[key] = newValue;
       } else if (typeof newValue === 'object') {
+        console.log(newValue);
         const newString = flattenToString(newValue);
         antdTokens[key] = newString;
       } else {
@@ -100,4 +104,22 @@ function flattenToString(input: AnyObject | AnyObject[]): string {
   } else {
     return flatten(input);
   }
+}
+
+function addDollarSign(obj: { [key: string]: any }) {
+  const cleanedObj: { [key: string]: any } = {};
+
+  for (const prop in obj) {
+    if (obj[prop]) {
+      const cleanedProp = prop.replace(/^type$/, '$type').replace(/^value$/, '$value');
+
+      if (typeof obj[prop] === 'object' && obj[prop] !== null && !Array.isArray(obj[prop])) {
+        cleanedObj[cleanedProp] = addDollarSign(obj[prop]);
+      } else {
+        cleanedObj[cleanedProp] = obj[prop];
+      }
+    }
+  }
+
+  return cleanedObj;
 }
