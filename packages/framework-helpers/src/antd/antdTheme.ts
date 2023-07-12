@@ -6,9 +6,7 @@ import { isDesignToken, isTokenValueAlias, resolveAlias } from '../utils';
 export const getAntdTheme = <T extends DesignTokenMap>(
   dsToken: T,
 ): AntdConfig => {
-  console.log(dsToken);
   const cleanObj = addDollarSign(dsToken);
-  console.log(cleanObj);
   return convertDesignTokensToTheme(cleanObj);
 };
 
