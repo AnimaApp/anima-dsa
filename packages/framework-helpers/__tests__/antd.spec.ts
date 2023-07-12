@@ -1,6 +1,7 @@
-import { DesignTokenMap, DesignTokenType } from '@animaapp/token-core';
+import { DesignTokenMap } from '@animaapp/token-core';
 import { getAntdTheme } from '../src/antd/antdTheme';
 
+// @ts-expect-error lineHeight will complain hotfix for dotmatics
 const tokens = {
   colors: {
     blue: {
@@ -72,11 +73,11 @@ const tokens = {
       },
     },
   },
-} as const;
+} as DesignTokenMap;
 
 describe('antd converters', () => {
   test('convert design tokens to antd theme', async () => {
-    const theme = getAntdTheme(tokens as DesignTokenMap);
+    const theme = getAntdTheme(tokens);
     expect(theme).toMatchObject({
       token: {
         colorPrimary: '#ffffff',
