@@ -1,3 +1,4 @@
+import { DesignTokenMap, DesignTokenType } from '@animaapp/token-core';
 import { getAntdTheme } from '../src/antd/antdTheme';
 
 const tokens = {
@@ -72,9 +73,10 @@ const tokens = {
     },
   },
 } as const;
+
 describe('antd converters', () => {
   test('convert design tokens to antd theme', async () => {
-    const theme = getAntdTheme(tokens);
+    const theme = getAntdTheme(tokens as DesignTokenMap);
     expect(theme).toMatchObject({
       token: {
         colorPrimary: '#ffffff',
