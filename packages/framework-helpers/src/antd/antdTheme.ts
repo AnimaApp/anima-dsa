@@ -33,7 +33,7 @@ const convertDesignTokensToTheme = (
 };
 
 const tokensToAntdValue = (tokens: DesignTokenMap, ctx: {
-  antdTokens: Record<string, object | number | string>
+  antdTokens: Record<string, object | number | string | boolean>
   fullDesignTokens: DesignTokenMap
 }) => {
   const { antdTokens, fullDesignTokens } = ctx;
@@ -49,12 +49,24 @@ const tokensToAntdValue = (tokens: DesignTokenMap, ctx: {
       if (isTokenValueAlias(newValue)) {
         newValue = resolveAlias(fullDesignTokens, newValue).$value;
       }
-      if (typeof newValue !== 'string' && typeof newValue !== 'number') {
+      if (newValue == null) {
         throw new Error(
-          `Unexpected value in design tokens json file for key = ${key} expecting string got: ${JSON.stringify(newValue)}, new formats will come soon`,
+          `Unexpected value in design tokens json file for key = ${key} expecting value`,
         );
+      };
+      if (typeof newValue === 'number' || typeof newValue === 'boolean') {
+        antdTokens[key] = newValue;
+      } else if (typeof newValue === 'object') {
+        const newString = flattenToString(newValue);
+        antdTokens[key] = newString;
+      } else {
+        const value = parseFloat(newValue);
+        if (isNaN(value)) {
+          antdTokens[key] = newValue;
+        } else {
+          antdTokens[key] = value;
+        }
       }
-      antdTokens[key] = newValue;
     } else {
       const group = {};
       antdTokens[key] = group;
@@ -66,3 +78,26 @@ const tokensToAntdValue = (tokens: DesignTokenMap, ctx: {
   }
 };
 
+interface AnyObject {
+  [key: string]: any;
+}
+
+function flattenToString(input: AnyObject | AnyObject[]): string {
+  function flatten(obj: AnyObject): string {
+    return Object.values(obj)
+      .map((value) => {
+        if (Array.isArray(value)) {
+          return flattenToString(value);
+        } else {
+          return value.toString();
+        }
+      })
+      .join(' ');
+  }
+
+  if (Array.isArray(input)) {
+    return input.map((item) => flatten(item)).join(', ');
+  } else {
+    return flatten(input);
+  }
+}

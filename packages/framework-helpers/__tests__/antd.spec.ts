@@ -1,5 +1,7 @@
+import { DesignTokenMap } from '@animaapp/token-core';
 import { getAntdTheme } from '../src/antd/antdTheme';
 
+// @ts-expect-error lineHeight will complain hotfix for dotmatics
 const tokens = {
   colors: {
     blue: {
@@ -31,6 +33,36 @@ const tokens = {
         $value: 10,
         $type: 'number',
       },
+      borderRadius: {
+        $value: '6px',
+        $type: 'dimension',
+      },
+      controlHeight: {
+        $value: '32px',
+        $type: 'dimension',
+      },
+      fontSize: {
+        $value: '14px',
+        $type: 'dimension',
+      },
+      opacityImage: {
+        $value: 1,
+        $type: 'number',
+      },
+      lineHeight: {
+        $value: '1.571428571',
+        $type: 'lineHeight',
+      },
+      boxShadow: {
+        $type: 'shadow',
+        $value: {
+          offsetX: '0px',
+          offsetY: '6px',
+          blur: '16px',
+          spread: '0px',
+          color: 'rgba(0, 0, 0, 0.08)',
+        },
+      },
     },
     components: {
       Button: {
@@ -41,7 +73,7 @@ const tokens = {
       },
     },
   },
-} as const;
+} as DesignTokenMap;
 
 describe('antd converters', () => {
   test('convert design tokens to antd theme', async () => {
@@ -53,6 +85,12 @@ describe('antd converters', () => {
         colorSuccess: '#ffffff',
         colorError: '#000000',
         primaryGap: 10,
+        borderRadius: 6,
+        controlHeight: 32,
+        fontSize: 14,
+        opacityImage: 1,
+        lineHeight: 1.571428571,
+        boxShadow: '0px 6px 16px 0px rgba(0, 0, 0, 0.08)',
       },
       components: {
         Button: {
