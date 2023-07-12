@@ -1,5 +1,12 @@
 # @animaapp/anima-cli
 
+## 1.1.5
+
+### Patch Changes
+
+- Updated dependencies [3f62482f]
+  - @animaapp/framework-helpers@1.1.4
+
 ## 1.1.4
 
 ### Patch Changes

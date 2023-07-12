@@ -1,5 +1,11 @@
 # @animaapp/framework-helpers
 
+## 1.1.4
+
+### Patch Changes
+
+- 3f62482f: add support for more token to antd
+
 ## 1.1.3
 
 ### Patch Changes
