@@ -1,5 +1,11 @@
 # @animaapp/framework-helpers
 
+## 1.1.5
+
+### Patch Changes
+
+- f28c29f9: add support for dollar sign
+
 ## 1.1.4
 
 ### Patch Changes
