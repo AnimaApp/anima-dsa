@@ -58,7 +58,6 @@ const tokensToAntdValue = (tokens: DesignTokenMap, ctx: {
       if (typeof newValue === 'number' || typeof newValue === 'boolean') {
         antdTokens[key] = newValue;
       } else if (typeof newValue === 'object') {
-        console.log(newValue);
         const newString = flattenToString(newValue);
         antdTokens[key] = newString;
       } else {
