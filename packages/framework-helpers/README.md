@@ -1,4 +1,4 @@
-# @animaapp/framework-helpers [![npm](https://img.shields.io/npm/v/@animaapp/anima-cli?logo=npm)](https://www.npmjs.com/package/@animaapp/anima-cli)
+# @animaapp/framework-helpers [![npm](https://img.shields.io/npm/v/@animaapp/anima-cli?logo=npm)](https://www.npmjs.com/package/@animaapp/framework-helpers)
 
 This package is part of a set of tools that enable you to create and manage a single source of truth for your design system.
 
