@@ -1,5 +1,17 @@
 # @animaapp/anima-cli
 
+## 1.2.0
+
+### Minor Changes
+
+- e4c26fa8: add storybook components package
+
+### Patch Changes
+
+- Updated dependencies [e4c26fa8]
+  - @animaapp/framework-helpers@1.2.0
+  - @animaapp/storybook-api@1.1.0
+
 ## 1.1.6
 
 ### Patch Changes

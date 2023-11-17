@@ -1,5 +1,11 @@
 # @animaapp/framework-helpers
 
+## 1.2.0
+
+### Minor Changes
+
+- e4c26fa8: add storybook components package
+
 ## 1.1.5
 
 ### Patch Changes
