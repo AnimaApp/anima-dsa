@@ -202,8 +202,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@storybook/theming':
-        specifier: ^7.5.3
-        version: 7.5.3(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^6.5.8
+        version: 6.5.8(react-dom@18.2.0)(react@18.2.0)
       global:
         specifier: ^4.4.0
         version: 4.4.0
@@ -1012,14 +1012,6 @@ packages:
       - '@algolia/client-search'
       - search-insights
     dev: true
-
-  /@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@18.2.0):
-    resolution: {integrity: sha512-jT/qyKZ9rzLErtrjGgdkMBn2OP8wl0G3sQlBb3YPryvKHsjvINUhVaPFfP+fpBcOkmrVOVEEHQFJ7nbj2TH2gw==}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@esbuild/android-arm64@0.17.19:
     resolution: {integrity: sha512-KBMWvEZooR7+kzY0BtbTQn0OAYY7CsiydT63pVEaPtVYF0hXbUaOyZog37DKxK7NF3XacBJOpYT4adIJh+avxA==}
@@ -1965,10 +1957,11 @@ packages:
       '@sinonjs/commons': 3.0.0
     dev: true
 
-  /@storybook/client-logger@7.5.3:
-    resolution: {integrity: sha512-vUFYALypjix5FoJ5M/XUP6KmyTnQJNW1poHdW7WXUVSg+lBM6E5eAtjTm0hdxNNDH8KSrdy24nCLra5h0X0BWg==}
+  /@storybook/client-logger@6.5.8:
+    resolution: {integrity: sha512-dH6HSaVuOIMHy1+rpsqcD3SJxVZEEbuEtsNpdUGwLJaIuduhUJJpM2xQfUW0siZDyrgwoa+znll+G0YNUbv7sg==}
     dependencies:
-      '@storybook/global': 5.0.0
+      core-js: 3.33.2
+      global: 4.4.0
     dev: false
 
   /@storybook/csf@0.1.1:
@@ -1977,22 +1970,17 @@ packages:
       type-fest: 2.19.0
     dev: false
 
-  /@storybook/global@5.0.0:
-    resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
-    dev: false
-
-  /@storybook/theming@7.5.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Cjmthe1MAk0z4RKCZ7m72gAD8YD0zTAH97z5ryM1Qv84QXjiCQ143fGOmYz1xEQdNFpOThPcwW6FEccLHTkVcg==}
+  /@storybook/theming@6.5.8(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1VaKHqj38Ls1bJwDpg3+aEOlvVib/DCFkP6WYrP/AQtNAzxiyw5WkaoRlTVJZvCdu5TxjpG4O6/Ai5TI9QftIg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
-      '@storybook/client-logger': 7.5.3
-      '@storybook/global': 5.0.0
-      memoizerific: 1.11.3
+      '@storybook/client-logger': 6.5.8
+      core-js: 3.33.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      regenerator-runtime: 0.13.11
     dev: false
 
   /@types/archiver@5.3.2:
@@ -3334,6 +3322,11 @@ packages:
   /cookie@0.4.2:
     resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /core-js@3.33.2:
+    resolution: {integrity: sha512-XeBzWI6QL3nJQiHmdzbAOiMYqjrb7hwU7A39Qhvd/POSa/t9E1AeZyEZx3fNvp/vtM8zXwhoL0FsiS0hD0pruQ==}
+    requiresBuild: true
     dev: false
 
   /core-util-is@1.0.3:
@@ -5399,10 +5392,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /map-or-similar@1.5.0:
-    resolution: {integrity: sha512-0aF7ZmVon1igznGI4VS30yugpduQW3y3GkcgGJOp7d8x8QrizhigUxjI/m2UojsXXto+jLAH3KSz+xOJTiORjg==}
-    dev: false
-
   /mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
@@ -5426,12 +5415,6 @@ packages:
     dependencies:
       blueimp-md5: 2.19.0
     dev: true
-
-  /memoizerific@1.11.3:
-    resolution: {integrity: sha512-/EuHYwAPdLtXwAwSZkh/Gutery6pD2KYd44oQLhAvQp/50mpyduZh8Q7PYHXTCJ+wuXxt7oij2LXyIJOOYFPog==}
-    dependencies:
-      map-or-similar: 1.5.0
-    dev: false
 
   /meow@6.1.1:
     resolution: {integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==}
