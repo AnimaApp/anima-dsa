@@ -1,0 +1,57 @@
+{
+  "name": "@animaapp/storybook-components",
+  "version": "1.0.0",
+  "description": "Collection of Storybook components for Anima",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify"
+  },
+  "publishConfig": {
+    "@animaapp:registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnimaApp/anima-storybook-cli"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@storybook/csf": "^0.1.1",
+    "@storybook/theming": "^7.5.3",
+    "global": "^4.4.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.pickby": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
+    "markdown-to-jsx": "^7.3.2",
+    "polished": "^4.2.2",
+    "react-textarea-autosize": "^8.5.3"
+  },
+  "devDependencies": {
+    "@types/lodash.clonedeep": "^4.5.9",
+    "@types/lodash.pickby": "^4.6.9",
+    "@types/lodash.uniq": "^4.5.9",
+    "@types/node": "^18.11.5",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^6.7.0",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
+  }
+}
